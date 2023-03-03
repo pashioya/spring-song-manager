@@ -62,7 +62,13 @@ body > section {
 
 .table-row{
     cursor: pointer;
+    background-color: #ddf;
+    padding: 30px;
+    margin: 10px;
+    border: 1px solid #333;
+    transition: 0.15s;
 }
+
 /*Table Ends*/
 
 .album-item{

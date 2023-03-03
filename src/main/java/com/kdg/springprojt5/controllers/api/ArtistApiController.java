@@ -26,4 +26,5 @@ public class ArtistApiController {
                 new ArtistDto(artist.getArtistName(), artist.getArtistFollowers())
                 , HttpStatus.OK);
     }
+
 }

@@ -42,43 +42,44 @@ public class AlbumsController {
 
     @GetMapping()
     public String albums(Model model, HttpSession session){
-        setHistory(session, "All Albums");
-        try {
+        model.addAttribute("title", "Albums");
 
-        } catch (Exception e) {
-//            throw new ServerError("Something went wrong", e);
-        }
         model.addAttribute("title", "Albums");
         model.addAttribute("headerList", new ArrayList<>(Arrays.asList(
                 new DataItem("homeButton"),
                 new DataItem("allSongs"),
                 new DataItem("allAlbums", "active"),
                 new DataItem("allArtists")
-
         )));
+
         model.addAttribute(("footerList"), new ArrayList<>(Arrays.asList(
                 new DataItem("gitLab"),
                 new DataItem("pageHistory")
         )));
-
-
         if(session.getAttribute("alPageNumbers") == null){
             session.setAttribute("alPageNumbers", 1);
         }
         int alPageNumbers = (int) session.getAttribute("alPageNumbers");
-
-        model.addAttribute("totalPages", artistService.getAllArtists().size() / 20 + 1);
+        model.addAttribute("totalPages", albumService.getAllAlbums().size() / 20 + 1);
         model.addAttribute("alPageNumbers", alPageNumbers);
-
-        model.addAttribute("albums", getArtists(alPageNumbers, 20));
+        model.addAttribute("albums", getAlbums(alPageNumbers, 20));
+        setHistory(session, "All Albums");
         return "allAlbums";
     }
 
-    public List<Album> getArtists(int page, int pageSize) {
+    public List<AlbumViewModel> getAlbums(int page, int pageSize) {
         List<Album> artists = albumService.getAllAlbums();
         int start = (page - 1) * pageSize;
         int end = Math.min(start + pageSize, artists.size());
-        return artists.subList(start, end);
+
+        return artists.subList(start, end).stream().map(a -> new AlbumViewModel(
+                a.getId(),
+                a.getAlbumName(),
+                a.getOfficialTrackCount(),
+                a.getAlbumStatus().toString(),
+                a.getGenre(),
+                a.getReleaseDate()
+        )).toList();
     }
 
 
@@ -114,8 +115,17 @@ public class AlbumsController {
     @GetMapping("/fullAlbum/{id}")
     public String fullAlbum(Model model, @PathVariable long id, HttpSession session) {
         setHistory(session, "FullAlbum: " + id);
+
+        var album = albumService.getAlbumById(id);
         try {
-            model.addAttribute("album", albumService.getAlbumById(id));
+            model.addAttribute("album", new AlbumViewModel(
+                    album.getId(),
+                    album.getAlbumName(),
+                    album.getOfficialTrackCount(),
+                    album.getAlbumStatus().toString(),
+                    album.getGenre(),
+                    album.getReleaseDate()
+            ));
         } catch (Exception e) {
             throw new EntityNotFoundException("Album not found",e);
         }
@@ -132,8 +142,6 @@ public class AlbumsController {
                 new DataItem("createSong", String.valueOf(id)),
                 new DataItem("printAlbum")
         )));
-
-
         return "fullAlbum";
     }
 

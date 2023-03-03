@@ -5,6 +5,8 @@ import jakarta.validation.constraints.NotBlank;
 import java.time.LocalDate;
 
 public class AlbumViewModel {
+
+    private long id;
     @NotBlank(message = "Album Name is mandatory")
     private String albumName;
     private int officialTrackCount;
@@ -12,6 +14,27 @@ public class AlbumViewModel {
     @NotBlank(message = "Genre is mandatory")
     private String genre;
     private LocalDate releaseDate;
+
+
+    public AlbumViewModel() {
+    }
+
+    public AlbumViewModel(long id, String albumName, int officialTrackCount, String albumStatus, String genre, LocalDate releaseDate) {
+        this.id = id;
+        this.albumName = albumName;
+        this.officialTrackCount = officialTrackCount;
+        this.albumStatus = albumStatus;
+        this.genre = genre;
+        this.releaseDate = releaseDate;
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
 
     public String getAlbumName() {
         return albumName;

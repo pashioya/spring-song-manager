@@ -5,10 +5,9 @@ import com.kdg.springprojt5.service.AlbumService;
 import com.kdg.springprojt5.service.SongService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 //returns information rather than a full page
 @RestController
@@ -27,7 +26,7 @@ public class AlbumApiController {
 
 
     @GetMapping("/album/{id}")
-    public ResponseEntity<AlbumDto> getAlbum(
+    public ResponseEntity<AlbumDto> getSingleAlbum(
             @PathVariable("id") Long albumId
     ) {
         var album = albumService.getAlbumById(albumId);
@@ -41,6 +40,33 @@ public class AlbumApiController {
                     ), HttpStatus.OK);
         }
         return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+    }
+
+    @GetMapping("/albums")
+    public ResponseEntity<List<AlbumDto>> getAlbums() {
+        var albums = albumService.getAllAlbums();
+        if (albums != null) {
+            return new ResponseEntity<>(
+                    albums.stream().map(album -> new AlbumDto(
+                            album.getAlbumName(),
+                            album.getArtists().get(0).getArtistName(),
+                            album.getGenre(),
+                            album.getReleaseDate().toString()
+                    )).toList(), HttpStatus.OK);
+        }
+        return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+    }
+
+    @DeleteMapping("/album/{id}")
+    public ResponseEntity<String> deleteAlbum(
+            @PathVariable("id") Long albumId
+    ) {
+        var album = albumService.getAlbumById(albumId);
+        if (album != null) {
+            albumService.deleteAlbum(albumId);
+            return new ResponseEntity<>("Album deleted", HttpStatus.OK);
+        }
+        return new ResponseEntity<>("Album not found", HttpStatus.NOT_FOUND);
     }
 
 
