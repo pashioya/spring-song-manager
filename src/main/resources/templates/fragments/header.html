@@ -1,0 +1,16 @@
+
+<header th:fragment="header (list)">
+  <div class="m-4">
+    <nav class="navbar navbar-default">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <a class="navbar-brand" href="/">Song Manager</a>
+        </div>
+        <ul th:each="item : ${list}"  class="nav navbar-nav" id="navbarCollapse">
+          <li class="navbar-nav" th:replace="~{fragments/fragment_parts/header-parts :: ${item.type}(${item.content})}"></li>
+        </ul>
+      </div>
+
+    </nav>
+  </div>
+</header>

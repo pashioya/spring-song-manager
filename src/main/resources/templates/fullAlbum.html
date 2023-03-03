@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head th:replace="~{fragments/head :: head (${title})}"></head>
+<body id="full">
+<header th:replace="~{fragments/header :: header (${headerList})}"></header>
+<section>
+    <table class='table table-bordered table-condensed table-striped table-hover'>
+        <thead class="table-header">
+        <th>All Artists</th>
+        </thead>
+        <tbody>
+        <tr class="table-row" th:each="artist : ${album.getArtists()}" th:data-href="${'/allArtists/fullArtist/' + artist.getId()}">
+            <td th:text="${artist.getArtistName()}"></td>
+        </tr>
+        </tbody>
+    </table>
+    <div class="button-container">
+        <a th:href="${'/allArtists/fullAlbum/'+ album.getId() + '/addArtist'}" class="btn btn-primary">Add Artist To Album</a>
+    </div>
+    <div class="album-item">
+        <span>Album Name: </span>
+        <span th:text="${album.getAlbumName()}"></span>
+    </div>
+<!--    <div class="album-item">-->
+<!--        <span>Artist: </span>-->
+<!--        <span th:text="${album.getArtistName()}"></span>-->
+<!--    </div>-->
+    <div class="album-item">
+        <span>Release Date</span>
+        <span th:text="${album.getReleaseDate()}"></span>
+    </div>
+    <div class="album-item">
+        <span>Genre: </span>
+        <span th:text="${album.getGenre()}"></span>
+    </div>
+    <div class="album-item">
+        <span>Track Count: </span>
+        <span th:text="${album.getOfficialTrackCount()}"></span>
+    </div>
+    <div class="album-item">
+        <span>Official Track Count: </span>
+        <span th:text="${album.getOfficialTrackCount()}"></span>
+    </div>
+    <div class="album-item">
+        <span>Album Status: </span>
+        <span th:text="${album.getAlbumStatus()}"></span>
+    </div>
+    <div class="table-caption">
+        <h1>Albums Songs</h1>
+    </div>
+    <table class='table table-bordered table-condensed table-striped table-hover'>
+        <thead class="table-header">
+            <th class="row-item">songURL</th>
+            <th class="row-item">songName</th>
+<!--            <th class="row-item">songArtist</th>-->
+            <th class="row-item">trackNumber</th>
+            <th class="row-item">DurationMS</th>
+            <th class="row-item">Explicit?</th>
+        </thead>
+        <tbody>
+            <tr class="table-row" th:each="song : ${album.getSongs()}" th:data-href="${'/allSongs/fullSong/' + song.getId()}">
+                <td class="row-item" th:text="${song.getUrl()}"></td>
+                <td class="row-item" th:text="${song.getSongTitle()}"></td>
+<!--                <td class="row-item" th:text="${song.getArtistName()}"></td>-->
+                <td class="row-item" th:text="${song.getTrackNumber()}"></td>
+                <td class="row-item" th:text="${song.getDurationMS()}"></td>
+                <td class="row-item" th:text="${song.isExplicit()}"></td>
+            </tr>
+        </tbody>
+    </table>
+
+</section>
+<footer th:replace="~{fragments/footer :: footer (${footerList})}"></footer>
+</body>
+</html>

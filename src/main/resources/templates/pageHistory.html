@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head th:replace="~{fragments/head :: head (${title})}"></head>
+    <body>
+    <header th:replace="~{fragments/header :: header (${headerList})}"></header>
+    <section>
+            <div class="table-caption">
+                <h1>Page History</h1>
+            </div>
+            <table class='table table-bordered table-condensed table-striped table-hover'>
+                <thead class="table-header">
+                <th>Page</th>
+                <th>Time</th>
+                </thead>
+                <tbody>
+                <tr class="table-row2" th:each="page : ${pageHistory}">
+                    <td th:text="${page.getTimeStamp()}"></td>
+                    <td th:text="${page.getMessage()}"></td>
+                </tr>
+                </tbody>
+            </table>
+        </section>
+        <footer th:replace="~{fragments/footer :: footer (${footerList})}"></footer>
+    </body>
+</html>

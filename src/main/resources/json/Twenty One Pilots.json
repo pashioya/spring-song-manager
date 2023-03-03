@@ -1,0 +1,64 @@
+{
+  "id": 658,
+  "artistName": "Twenty One Pilots",
+  "artistFollowers": 1.870321E7,
+  "favoriteGenre": "modern rock",
+  "albums": [
+    {
+      "id": 249,
+      "albumName": "Blurryface",
+      "officialTrackCount": 14,
+      "albumStatus": "ALBUM",
+      "genre": "modern rock",
+      "releaseDate": "2015-05-15"
+    },
+    {
+      "id": 684,
+      "albumName": "Heathens",
+      "officialTrackCount": 1,
+      "albumStatus": "SINGLE",
+      "genre": "modern rock",
+      "releaseDate": "2016-06-16"
+    },
+    {
+      "id": 812,
+      "albumName": "Jumpsuit / Levitate / Nico And The Niners",
+      "officialTrackCount": 3,
+      "albumStatus": "SINGLE",
+      "genre": "modern rock",
+      "releaseDate": "2018-08-08"
+    },
+    {
+      "id": 813,
+      "albumName": "Jumpsuit / Nico And The Niners",
+      "officialTrackCount": 2,
+      "albumStatus": "SINGLE",
+      "genre": "modern rock",
+      "releaseDate": "2018-07-11"
+    },
+    {
+      "id": 890,
+      "albumName": "Level of Concern",
+      "officialTrackCount": 1,
+      "albumStatus": "SINGLE",
+      "genre": "modern rock",
+      "releaseDate": "2020-04-09"
+    },
+    {
+      "id": 1049,
+      "albumName": "My Blood And A Few Others From Trench",
+      "officialTrackCount": 4,
+      "albumStatus": "SINGLE",
+      "genre": "modern rock",
+      "releaseDate": "2018-08-27"
+    },
+    {
+      "id": 1632,
+      "albumName": "Trench",
+      "officialTrackCount": 14,
+      "albumStatus": "ALBUM",
+      "genre": "modern rock",
+      "releaseDate": "2018-10-05"
+    }
+  ]
+}

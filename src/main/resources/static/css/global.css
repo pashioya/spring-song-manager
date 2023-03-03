@@ -1,0 +1,173 @@
+
+body{
+    margin-bottom: 100px ;
+    background-color: ghostwhite;
+}
+
+body > section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin-left: 100px;
+    width: 80%;
+    gap: 10px;
+}
+
+.index-containers{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    gap: 10px;
+    margin-top: 200px;
+}
+
+/*Table Starts*/
+
+.table{
+    width: 80%;
+    align-self: center;
+    font-size: small;
+}
+
+.table-container{
+    display: table;
+    width: 80%;
+
+}
+.table-caption{
+    display: table-caption;
+    text-align: center;
+    font-weight: bold;
+    font-size: 1.2em;
+}
+
+.table-header{
+    display: table-header-group;
+    background-color: gray;
+    font-weight: bold;
+    font-size: 15px;
+}
+
+.table-item{
+    display: table-row;
+}
+.row-item{
+    display: table-cell;
+    padding: 5px;
+    border: 1px solid black;
+}
+
+.table-row{
+    cursor: pointer;
+}
+/*Table Ends*/
+
+.album-item{
+    width: 80%;
+    background-color: white;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px 0 rgba(0,0,0,.2);
+}
+.song-item{
+    width: 80%;
+    background-color: white;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px 0 rgba(0,0,0,.2);
+}
+
+.artist-item{
+    width: 80%;
+    background-color: white;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px 0 rgba(0,0,0,.2);
+}
+
+.table-item{
+    cursor: pointer;
+}
+
+
+footer {
+    --white: white;
+    --dark-color: #505052;
+    --dark-color-transparent: rgba(155, 155, 160, 0.6);
+    --light-color: rgb(189, 188, 188);
+    --box-shadow-up: 0px -5px 15px rgba(0, 0, 0, 0.2);
+    --box-shadow-down: 2px 5px 15px rgba(0, 0, 0, 0.2);
+    --button-shadow-down: 2px 5px 15px rgba(0, 0, 0, 0.3);
+
+
+    width: calc(100vw - 20px);
+    padding: 10px;
+    display: flex;
+    justify-content: space-between;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: var(--dark-color-transparent);
+    border: 0 solid gray;
+    border-radius: 10px 10px 0 0;
+    box-shadow: var(--box-shadow-up);
+}
+
+footer > .footer-section {
+    display: flex;
+
+}
+
+footer > .footer-section > .button-container {
+    width: 70px;
+    height: 70px;
+    background-color: var(--white);
+    margin: 0 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+    margin-bottom: 50px;
+}
+a {
+    text-decoration: none;
+    color: #ffffff;
+}
+
+.pagination div {
+    display: inline-block;
+    color: #ffffff;
+    font-size: 20px;
+    padding: 10px 15px;
+    background-color: dodgerblue;
+    border-radius: 4px;
+    margin: 0 5px;
+    text-decoration: none;
+    transition: background-color 0.3s ease;
+    border-radius: 5px;
+}
+
+.pagination div:hover {
+    background-color: dodgerblue;
+    border-radius: 5px;
+}
+
+.pagination .active {
+    background-color: #555;
+    border-radius: 5px;
+}
+
+.pagination .disabled {
+    opacity: 0.5;
+    pointer-events: none;
+}

@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head th:replace="~{fragments/head :: head (${title})}"></head>
+<body>
+<header th:replace="~{fragments/header :: header (${headerList})}"></header>
+<section>
+    <div class="artist-item">
+        <span>Artist Name: </span>
+        <span th:text="${artist.getArtistName()}"></span>
+    </div>
+    <div class="artist-item">
+        <span>Artist Followers: </span>
+        <span th:text="${artist.getArtistFollowers()}"></span>
+    </div>
+    <div class="artist-item">
+        <span>Favorite Genre: </span>
+        <span th:text="${artist.getFavoriteGenre()}"></span>
+    </div>
+    <div class="table-caption">
+        <h1>Artists Albums</h1>
+    </div>
+    <table class='table table-bordered table-condensed table-striped table-hover'>
+        <thead class="table-header">
+<!--            <th >artistName</th>-->
+            <th >albumName</th>
+            <!--            <div class="row-item">tracksInAlbum</div>-->
+            <th >officialTrackCount</th>
+            <th >albumStatus</th>
+            <th >genre</th>
+            <th >releaseDate</th>
+        </thead>
+        <tbody>
+            <tr class="table-row" th:each="album: ${albums}" th:data-href="${'/allAlbums/fullAlbum/' + album.getId()}">
+<!--                <td th:text="${album.getArtistName()}"></td>-->
+                <td th:text="${album.getAlbumName()}"></td>
+                <!--            <div class="row-item" th:text="${album.getTracksInAlbum()}"></div>-->
+                <td th:text="${album.getOfficialTrackCount()}"></td>
+                <td th:text="${album.getAlbumStatus()}"></td>
+                <td th:text="${album.getGenre()}"></td>
+                <td th:text="${album.getReleaseDate()}"></td>
+            </tr>
+        </tbody>
+    </table>
+</section>
+<footer th:replace="~{fragments/footer :: footer (${footerList})}"></footer>
+</body>
+</html>

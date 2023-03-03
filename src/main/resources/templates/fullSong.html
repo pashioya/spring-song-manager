@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head th:replace="~{fragments/head :: head (${title})}"></head>
+<body>
+<header th:replace="~{fragments/header :: header (${headerList})}"></header>
+<section>
+    <div class="song-item">
+        <span>URL: </span>
+        <span th:text="${song.getUrl()}"></span>
+    </div>
+    <div class="song-item">
+        <span>Song Name: </span>
+        <span th:text="${song.getSongTitle()}"></span>
+    </div>
+<!--    <div class="song-item">-->
+<!--        <span>Artist: </span>-->
+<!--        <span th:text="${song.getArtistName()}"></span>-->
+<!--    </div>-->
+<!--    <div class="song-item">-->
+<!--        <span>Album: </span>-->
+<!--        <span th:text="${song.getAlbumName()}"></span>-->
+<!--    </div>-->
+    <div class="song-item">
+        <span>Track Number: </span>
+        <span th:text="${song.getTrackNumber()}"></span>
+    </div>
+    <div class="song-item">
+        <span>Duration MS: </span>
+        <span th:text="${song.getDurationMS()}"></span>
+    </div>
+    <div class="song-item">
+        <span>Explicit?: </span>
+        <span th:text="${song.isExplicit()}"></span>
+    </div>
+</section>
+<footer th:replace="~{fragments/footer :: footer (${footerList})}"></footer>
+</body>
+</html>

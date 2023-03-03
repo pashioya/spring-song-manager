@@ -1,0 +1,58 @@
+
+
+<a th:fragment="gitLab (content)" href="https://gitlab.com/pashioya/spring-proj-t3">
+    <button type="button" class="btn btn-primary" >
+        Gitlab
+    </button>
+</a>
+
+
+<a th:fragment="createSong (content)" th:href="@{'/allSongs/album/' + ${content} + '/addSong'}">
+    <button type="button" class="btn btn-primary" >
+        Create Song
+    </button>
+</a>
+
+
+<a th:fragment="createArtist (content)" href="/allArtists/addArtist">
+    <button  type="button" class="btn btn-primary">
+        Create Artist
+    </button>
+</a>
+
+
+<a th:fragment="createAlbum (content)" th:href="@{'/allAlbums/artist/' + ${content} + '/addAlbum'}" >
+    <button type="button" class="btn btn-primary">
+        Create Album
+    </button>
+</a>
+
+<a th:fragment="deleteSong (content)" th:href="${'/allSongs/fullSong/deleteSong/' + song.getId()}" class="btn btn-danger">
+    <button type="button" class="btn btn-danger">Delete Song</button>
+</a>
+
+<a th:fragment="printSong (content)" th:href="${'/allSongs/fullSong/printSong/' + song.getId()}" >
+    <button type="button" class="btn btn-primary">Print Song</button>
+</a>
+
+<a th:fragment="deleteAlbum (content)" th:href="${'/allAlbums/fullAlbum/deleteAlbum/' + album.getId()}" class="btn btn-danger">
+    <button type="button" class="btn btn-danger">Delete</button>
+</a>
+
+
+<a th:fragment="printAlbum (content)" th:href="${'/allAlbums/fullAlbum/printAlbum/' + album.getId()}" class="btn btn-primary">
+    <button type="button" class="btn btn-primary">Print Album</button>
+</a>
+
+<a th:fragment="deleteArtist (content)" th:href="${'/allArtists/fullArtist/deleteArtist/' + artist.getId()}" class="btn btn-danger">
+    <button type="button" class="btn btn-danger">Delete</button>
+</a>
+<a th:fragment="printArtist (content)" th:href="${'/allArtists/fullArtist/printArtist/' + artist.getId()}" class="btn btn-primary">
+    <button type="button" class="btn btn-primary">
+        Print Artist
+    </button>
+</a>
+
+<a th:fragment="pageHistory (content)" th:href="${'/pageHistory'}" >
+    <button type="button" class="btn btn-primary">Page History</button>
+</a>

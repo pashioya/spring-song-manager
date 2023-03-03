@@ -1,0 +1,10 @@
+<!DOCTYPE html>
+<html lang="en">
+<head th:replace="~{fragments/head :: head (${title})}"></head>
+<body>
+<header th:replace="~{fragments/header :: header (${headerList})}"></header>
+<h1> Small problem here...</h1>
+<p th:text="'Message:' + ${message}"></p>
+<p th:text="'StackTrace:' + ${stackTrace}"></p>
+</body>
+</html>

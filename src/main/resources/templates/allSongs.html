@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head th:replace="~{fragments/head :: head (${title})}"></head>
+<body>
+<header th:replace="~{fragments/header :: header (${headerList})}"></header>
+<section>
+    <div class="table-caption">
+        <h1>All Songs</h1>
+    </div>
+    <table class='table table-bordered table-condensed table-striped table-hover'>
+        <thead class="table-header">
+            <th >songTitle</th>
+<!--            <th >artistName</th>-->
+<!--            <th >albumName</th>-->
+            <th >officialTrackNumber</th>
+            <th >durationMS</th>
+            <th >explicit</th>
+<!--            <th >featuredArtists</th>-->
+        </thead>
+        <tbody>
+            <tr class="table-row" th:each="song: ${songs}" th:data-href="${'/allSongs/fullSong/' + song.getId()}">
+                <td  th:text="${song.getSongTitle()}"></td>
+<!--                <td  th:text="${song.getArtistName}"></td>-->
+<!--                <td  th:text="${song.getAlbumName}"></td>-->
+                <td  th:text="${song.getTrackNumber}"></td>
+                <td  th:text="${song.getDurationMS}"></td>
+                <td  th:text="${song.isExplicit}"></td>
+<!--                <td th:text="${song.getFeaturedArtists().size()}"></td>-->
+            </tr>
+        </tbody>
+    </table>
+    <div class="pagination">
+
+        <div class="page-viewer__button" th:if="${sPageNumbers > 0}">
+            <a th:href="${'/allArtists/firstPage'}" class="page-viewer__button__link">First</a>
+        </div>
+        <div class="page-viewer__button" th:if="${sPageNumbers > 0}">
+            <a th:href="${'/allArtists/previousPage'}" class="page-viewer__button__link">Previous</a>
+        </div>
+        <!--            current page viewer div-->
+        <div class="page-viewer__button">
+            <span class="page-viewer__button__link" th:text="${sPageNumbers}"></span>
+        </div>
+        <div class="page-viewer__button" th:if="${sPageNumbers < totalPages - 1}">
+            <a th:href="${'/allSongs/nextPage'}" class="page-viewer__button__link">Next</a>
+        </div>
+
+        <div class="page-viewer__button" th:if="${sPageNumbers < totalPages - 1}">
+            <a th:href="${'/allSongs/lastPage'}" class="page-viewer__button__link">Last</a>
+        </div>
+    </div>
+</section>
+<footer th:replace="~{fragments/footer :: footer (${footerList})}"></footer>
+</body>
+</html>

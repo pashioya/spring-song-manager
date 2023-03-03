@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head th:replace="~{fragments/head :: head (${title})}"></head>
+<body id="all-albums">
+<header th:replace="~{fragments/header :: header (${headerList})}"></header>
+<section>
+    <div class="table-caption">
+        <h1>All Albums</h1>
+    </div>
+    <table class='table table-bordered table-condensed table-striped table-hover'>
+        <thead class="table-header">
+<!--            <th >artistName</th>-->
+            <th >albumName</th>
+<!--            <div class="row-item">tracksInAlbum</div>-->
+            <th >officialTrackCount</th>
+            <th >albumStatus</th>
+            <th >genre</th>
+            <th >releaseDate</th>
+        </thead>
+        <tbody>
+            <tr class="table-row" th:each="album: ${albums}" th:data-href="${'/allAlbums/fullAlbum/' + album.getId()}">
+<!--                <td th:text="${album.getArtists()}"></td>-->
+                <td th:text="${album.getAlbumName()}"></td>
+                <!--            <div class="row-item" th:text="${album.getTracksInAlbum()}"></div>-->
+                <td th:text="${album.getOfficialTrackCount()}"></td>
+                <td th:text="${album.getAlbumStatus()}"></td>
+                <td th:text="${album.getGenre()}"></td>
+                <td th:text="${album.getReleaseDate()}"></td>
+            </tr>
+        </tbody>
+    </table>
+    <div class="pagination">
+
+        <div class="page-viewer__button" th:if="${alPageNumbers > 1}">
+            <a th:href="${'/allArtists/firstPage'}" class="page-viewer__button__link">First</a>
+        </div>
+        <div class="page-viewer__button" th:if="${alPageNumbers > 1}">
+            <a th:href="${'/allArtists/previousPage'}" class="page-viewer__button__link">Previous</a>
+        </div>
+        <!--            current page viewer div-->
+        <div class="page-viewer__button">
+            <span class="page-viewer__button__link" th:text="${alPageNumbers}"></span>
+        </div>
+        <div class="page-viewer__button" th:if="${alPageNumbers < totalPages}">
+            <a th:href="${'/allArtists/nextPage'}" class="page-viewer__button__link">Next</a>
+        </div>
+
+        <div class="page-viewer__button" th:if="${alPageNumbers < totalPages }">
+            <a th:href="${'/allArtists/lastPage'}" class="page-viewer__button__link">Last</a>
+        </div>
+    </div>
+</section>
+<footer th:replace="~{fragments/footer :: footer (${footerList})}"></footer>
+</body>
+</html>
