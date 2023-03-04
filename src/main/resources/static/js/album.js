@@ -2,7 +2,6 @@ const songPreviewColumn = document.getElementById("preview-song-names");
 const allRows = document.querySelectorAll("#all-albums-table tbody tr");
     allRows.forEach(row => {
         row.addEventListener("mouseover", () => {
-            // clear the preview
             songPreviewColumn.innerHTML = "";
 
             let id = row.getAttribute("data-href").split("/")[3];
@@ -36,9 +35,12 @@ const allRows = document.querySelectorAll("#all-albums-table tbody tr");
                 console.log(data);
                 data.forEach(song => {
                     let songItem = document.createElement("tr");
+                    songItem.setAttribute("scope","row");
                     songItem.innerHTML = song.songTitle;
                     songPreviewColumn.appendChild(songItem);
                 });
             }
         )
     }
+
+

@@ -5,6 +5,8 @@ public class SongDto {
     private double durationMs;
     private String url;
 
+
+
     public SongDto(String songTitle, double durationMs, String url) {
         this.songTitle = songTitle;
         this.durationMs = durationMs;

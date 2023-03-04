@@ -52,13 +52,14 @@ public class AlbumApiController {
     public ResponseEntity<Iterable<AlbumDto>> getAlbumsForArtist(
             @PathVariable("id") Long artistId
     ) {
-        var albums = artistService.getArtistById(artistId).getAlbums();
+        var artist = artistService.getArtistById(artistId);
+        var albums = artist.getAlbums();
         if (albums != null) {
             List<AlbumDto> albumDtos = new ArrayList<>();
             for (Album album: albums) {
                 albumDtos.add(new AlbumDto(
                         album.getAlbumName(),
-                        album.getArtists().get(0).getArtistName(),
+                        artist.getArtistName(),
                         album.getGenre(),
                         album.getReleaseDate().toString()
                 ));
@@ -68,7 +69,7 @@ public class AlbumApiController {
         return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
     }
 
-    @DeleteMapping("/album/{id}")
+    @DeleteMapping("/album/{id}/delete")
     public ResponseEntity<String> deleteAlbum(
             @PathVariable("id") Long albumId
     ) {
@@ -79,6 +80,5 @@ public class AlbumApiController {
         }
         return new ResponseEntity<>("Album not found", HttpStatus.NOT_FOUND);
     }
-
 
 }

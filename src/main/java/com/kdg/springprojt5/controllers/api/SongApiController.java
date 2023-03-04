@@ -1,14 +1,16 @@
 package com.kdg.springprojt5.controllers.api;
 
 import com.kdg.springprojt5.controllers.api.dto.SongDto;
+import com.kdg.springprojt5.controllers.mvc.viewmodel.SongViewModel;
+import com.kdg.springprojt5.domain.Song;
 import com.kdg.springprojt5.service.AlbumService;
 import com.kdg.springprojt5.service.SongService;
+import jakarta.servlet.http.HttpSession;
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api")
@@ -36,6 +38,36 @@ public class SongApiController {
         return new ResponseEntity<>(
                 songs.stream().map(song -> new SongDto(song.getSongTitle(), song.getDurationMS(), song.getUrl())).toList()
                 , HttpStatus.OK);
+    }
+
+    @PostMapping("/album/{id}/add/song")
+    public ResponseEntity<SongDto> addSongToAlbum(@Valid @ModelAttribute SongViewModel viewModel, BindingResult errors, HttpSession session, @PathVariable long albumId) {
+//        if (errors.hasErrors()) {
+//            errors.getAllErrors().forEach(error -> logger.error(error.toString()));
+//        }
+        Song song = new Song(
+                albumId,
+                viewModel.getUrl(),
+                viewModel.getSongTitle(),
+                viewModel.getTrackNumber(),
+                viewModel.getDurationMS(),
+                viewModel.isExplicit()
+        );
+//        logger.debug(viewModel.toString());
+        songService.saveSong(song);
+        return new ResponseEntity<>(
+                new SongDto(
+                        song.getSongTitle(),
+                        song.getDurationMS(),
+                        song.getUrl()
+                )
+                , HttpStatus.OK);
+    }
+
+    @DeleteMapping("/song/{id}/delete")
+    public ResponseEntity<Void> deleteSong(@PathVariable long id) {
+        songService.deleteSong(id);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
 }

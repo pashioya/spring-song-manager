@@ -4,10 +4,7 @@ import com.kdg.springprojt5.controllers.api.dto.ArtistDto;
 import com.kdg.springprojt5.service.ArtistService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api")
@@ -25,6 +22,12 @@ public class ArtistApiController {
         return new ResponseEntity<>(
                 new ArtistDto(artist.getArtistName(), artist.getArtistFollowers())
                 , HttpStatus.OK);
+    }
+
+    @DeleteMapping("/artist/{id}/delete")
+    public ResponseEntity<Void> deleteArtist(@PathVariable long id) {
+        artistService.deleteArtist(id);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
 }

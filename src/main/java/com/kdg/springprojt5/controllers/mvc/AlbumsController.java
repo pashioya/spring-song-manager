@@ -85,10 +85,9 @@ public class AlbumsController {
 
 
     @GetMapping("/nextPage")
-    public String nextPage(HttpSession session){
+    public void nextPage(HttpSession session){
         int alPageNumbers = (int) session.getAttribute("alPageNumbers");
         session.setAttribute("alPageNumbers", alPageNumbers + 1);
-        return "redirect:/allAlbums";
     }
 
     @GetMapping("/previousPage")
@@ -152,9 +151,9 @@ public class AlbumsController {
         setHistory(session, "Add Album");
 
         model.addAttribute("title", "Add Album");
-        model.addAttribute("headerList", new ArrayList<>(List.of(
-                new DataItem("backButton", "/allAlbums"))
-        ));
+//        model.addAttribute("headerList", new ArrayList<>(List.of(
+//                new DataItem("backButton", "/allAlbums"))
+//        ));
         AlbumViewModel albumViewModel = new AlbumViewModel();
         model.addAttribute("album", albumViewModel);
         return "addAlbum";

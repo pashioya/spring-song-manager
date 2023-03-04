@@ -116,7 +116,6 @@ public class ArtistsController {
                 new DataItem("allSongs"),
                 new DataItem("allAlbums"),
                 new DataItem("allArtists", "active")
-
         )));
 
         mav.addObject(("footerList"), new ArrayList<>(Arrays.asList(

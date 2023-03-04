@@ -7,20 +7,36 @@
     <div class="table-caption">
         <h1>All Artists</h1>
     </div>
-    <table class='table table-bordered table-condensed table-striped table-hover'>
-        <thead class="table-header">
+    <div class="tables-container">
+        <div class="preview-block ">
+            <div class="preview-block__title">
+                Artist Preview
+            </div>
+            <div class="preview-block__table">
+                <table class="table table-bordered table-condensed table-striped table-hover">
+                    <thead class="table-header">
+                    <th>Album Names</th>
+                    </thead>
+                    <tbody  id = "preview-album-names">
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <table class='table table-bordered table-condensed table-striped table-hover' id="all-artists-table">
+            <thead class="table-header">
             <th >artistName</th>
             <th >artistFollowers</th>
-<!--            <th >favoriteGenre</th>-->
-        </thead>
-        <tbody>
+            <!--            <th >favoriteGenre</th>-->
+            </thead>
+            <tbody>
             <tr class="table-row" th:each="artist: ${artists}" th:data-href="${'/allArtists/fullArtist/' + artist.getId()}">
                 <td th:text="${artist.getArtistName()}"></td>
                 <td th:text="${artist.getArtistFollowers()}"></td>
-<!--                <td th:text="${artist.getFavoriteGenre()}"></td>-->
+                <!--                <td th:text="${artist.getFavoriteGenre()}"></td>-->
             </tr>
-        </tbody>
-    </table>
+            </tbody>
+        </table>
+    </div>
         <div class="pagination">
 
             <div class="page-viewer__button" th:if="${arPageNumbers > 1}">
@@ -43,5 +59,6 @@
         </div>
 </section>
 <footer th:replace="~{fragments/footer :: footer (${footerList})}"></footer>
+<script src="/js/artist.js"></script>
 </body>
 </html>
