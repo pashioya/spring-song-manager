@@ -30,11 +30,9 @@
   - the application.properties file is setup in blocks to ensure smooth transition between profiles.
 - Database being used
   - I only use postgres for my database. however each repository implementation has its own set of data.
-# Getting Started
-    - To get started with the application, you need to have the following installed on your machine
-        - Java 17
-        - Gradle
-        - Postgres
-    - Create a database named proj3
-    - Once you have the above installed, you can clone the repository from github
 
+- Known Bugs
+  - jdbc profile has all the data however entity creation not working as expected.
+  - jpa profile Does not have any data however works perfectly 
+  - springSata profile is not functioning as expected
+    - will be repaired in due time 

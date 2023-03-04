@@ -18,6 +18,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 
 import java.rmi.ServerError;
 import java.time.LocalDateTime;
@@ -41,18 +42,16 @@ public class AlbumsController {
     }
 
     @GetMapping()
-    public String albums(Model model, HttpSession session){
-        model.addAttribute("title", "Albums");
-
-        model.addAttribute("title", "Albums");
-        model.addAttribute("headerList", new ArrayList<>(Arrays.asList(
-                new DataItem("homeButton"),
+    public ModelAndView albums(HttpSession session){
+        ModelAndView mav = new ModelAndView("allAlbums");
+        mav.addObject("title", "Albums");
+        mav.addObject("headerList", new ArrayList<>(Arrays.asList(
                 new DataItem("allSongs"),
                 new DataItem("allAlbums", "active"),
                 new DataItem("allArtists")
         )));
 
-        model.addAttribute(("footerList"), new ArrayList<>(Arrays.asList(
+        mav.addObject(("footerList"), new ArrayList<>(Arrays.asList(
                 new DataItem("gitLab"),
                 new DataItem("pageHistory")
         )));
@@ -60,11 +59,11 @@ public class AlbumsController {
             session.setAttribute("alPageNumbers", 1);
         }
         int alPageNumbers = (int) session.getAttribute("alPageNumbers");
-        model.addAttribute("totalPages", albumService.getAllAlbums().size() / 20 + 1);
-        model.addAttribute("alPageNumbers", alPageNumbers);
-        model.addAttribute("albums", getAlbums(alPageNumbers, 20));
+        mav.addObject("totalPages", albumService.getAllAlbums().size() / 20 + 1);
+        mav.addObject("alPageNumbers", alPageNumbers);
+        mav.addObject("albums", getAlbums(alPageNumbers, 20));
         setHistory(session, "All Albums");
-        return "allAlbums";
+        return mav;
     }
 
     public List<AlbumViewModel> getAlbums(int page, int pageSize) {
@@ -78,7 +77,9 @@ public class AlbumsController {
                 a.getOfficialTrackCount(),
                 a.getAlbumStatus().toString(),
                 a.getGenre(),
-                a.getReleaseDate()
+                a.getReleaseDate(),
+                a.getArtists(),
+                a.getSongs()
         )).toList();
     }
 
@@ -113,36 +114,37 @@ public class AlbumsController {
 
 
     @GetMapping("/fullAlbum/{id}")
-    public String fullAlbum(Model model, @PathVariable long id, HttpSession session) {
+    public ModelAndView fullAlbum(Model model, @PathVariable long id, HttpSession session) {
         setHistory(session, "FullAlbum: " + id);
-
+        ModelAndView mav = new ModelAndView("fullAlbum");
         var album = albumService.getAlbumById(id);
         try {
-            model.addAttribute("album", new AlbumViewModel(
+            mav.addObject("album", new AlbumViewModel(
                     album.getId(),
                     album.getAlbumName(),
                     album.getOfficialTrackCount(),
                     album.getAlbumStatus().toString(),
                     album.getGenre(),
-                    album.getReleaseDate()
+                    album.getReleaseDate(),
+                    album.getArtists(),
+                    album.getSongs()
             ));
         } catch (Exception e) {
             throw new EntityNotFoundException("Album not found",e);
         }
-        model.addAttribute("title", "fullAlbum");
-        model.addAttribute("headerList", new ArrayList<>(Arrays.asList(
-                new DataItem("homeButton"),
+        mav.addObject("title", "fullAlbum");
+        mav.addObject("headerList", new ArrayList<>(Arrays.asList(
                 new DataItem("allSongs"),
                 new DataItem("allAlbums"),
                 new DataItem("allArtists")
 
         )));
-        model.addAttribute("footerList", new ArrayList<>(Arrays.asList(
+        mav.addObject("footerList", new ArrayList<>(Arrays.asList(
                 new DataItem("deleteAlbum"),
                 new DataItem("createSong", String.valueOf(id)),
                 new DataItem("printAlbum")
         )));
-        return "fullAlbum";
+        return mav;
     }
 
     @GetMapping("/artist/{artistId}/addAlbum")

@@ -1,4 +1,3 @@
 
 ###
-GET http://localhost:8080/api/album/1
-
+GET http://localhost:8080/api/album/1/songs

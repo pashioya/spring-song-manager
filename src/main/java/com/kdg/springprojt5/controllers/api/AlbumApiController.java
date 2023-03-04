@@ -1,12 +1,15 @@
 package com.kdg.springprojt5.controllers.api;
 
 import com.kdg.springprojt5.controllers.api.dto.AlbumDto;
+import com.kdg.springprojt5.domain.Album;
 import com.kdg.springprojt5.service.AlbumService;
+import com.kdg.springprojt5.service.ArtistService;
 import com.kdg.springprojt5.service.SongService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 //returns information rather than a full page
@@ -15,10 +18,12 @@ import java.util.List;
 public class AlbumApiController {
 
     private final AlbumService albumService;
+    private final ArtistService artistService;
     private final SongService songService;
 
-    public AlbumApiController(AlbumService albumService, SongService songService) {
+    public AlbumApiController(AlbumService albumService, ArtistService artistService, SongService songService) {
         this.albumService = albumService;
+        this.artistService = artistService;
         this.songService = songService;
     }
 
@@ -42,17 +47,23 @@ public class AlbumApiController {
         return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
     }
 
-    @GetMapping("/albums")
-    public ResponseEntity<List<AlbumDto>> getAlbums() {
-        var albums = albumService.getAllAlbums();
+//    function for getting all albums for an artist
+    @GetMapping("/artist/{id}/albums")
+    public ResponseEntity<Iterable<AlbumDto>> getAlbumsForArtist(
+            @PathVariable("id") Long artistId
+    ) {
+        var albums = artistService.getArtistById(artistId).getAlbums();
         if (albums != null) {
-            return new ResponseEntity<>(
-                    albums.stream().map(album -> new AlbumDto(
-                            album.getAlbumName(),
-                            album.getArtists().get(0).getArtistName(),
-                            album.getGenre(),
-                            album.getReleaseDate().toString()
-                    )).toList(), HttpStatus.OK);
+            List<AlbumDto> albumDtos = new ArrayList<>();
+            for (Album album: albums) {
+                albumDtos.add(new AlbumDto(
+                        album.getAlbumName(),
+                        album.getArtists().get(0).getArtistName(),
+                        album.getGenre(),
+                        album.getReleaseDate().toString()
+                ));
+            }
+            return new ResponseEntity<>(albumDtos, HttpStatus.OK);
         }
         return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
     }

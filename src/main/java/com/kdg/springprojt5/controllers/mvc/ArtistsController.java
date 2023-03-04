@@ -14,6 +14,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -34,16 +35,16 @@ public class ArtistsController {
     }
 
     @GetMapping()
-    public String artists(Model model, HttpSession session) {
+    public ModelAndView artists(Model model, HttpSession session) {
         setHistory(session, "All Artists");
-        model.addAttribute("title", "Artists");
-        model.addAttribute("headerList", new ArrayList<>(Arrays.asList(
-                new DataItem("homeButton"),
+        ModelAndView mav = new ModelAndView("allArtists");
+        mav.addObject("title", "Artists");
+        mav.addObject("headerList", new ArrayList<>(Arrays.asList(
                 new DataItem("allSongs"),
                 new DataItem("allAlbums"),
                 new DataItem("allArtists", "active")
         )));
-        model.addAttribute(("footerList"), new ArrayList<>(Arrays.asList(
+        mav.addObject(("footerList"), new ArrayList<>(Arrays.asList(
                 new DataItem("gitLab"),
                 new DataItem("createArtist"),
                 new DataItem("pageHistory")
@@ -55,10 +56,10 @@ public class ArtistsController {
         }
         int arPageNumbers = (int) session.getAttribute("arPageNumbers");
 
-        model.addAttribute("artists", getArtists(arPageNumbers, 20));
-        model.addAttribute("totalPages", artistService.getAllArtists().size() / 20 + 1);
-        model.addAttribute("arPageNumbers", arPageNumbers);
-        return "allArtists";
+        mav.addObject("artists", getArtists(arPageNumbers, 20));
+        mav.addObject("totalPages", artistService.getAllArtists().size() / 20 + 1);
+        mav.addObject("arPageNumbers", arPageNumbers);
+        return mav;
     }
 
     @GetMapping("/nextPage")
@@ -101,31 +102,31 @@ public class ArtistsController {
     }
 
     @GetMapping("fullArtist/{id}")
-    public String fullArtist(Model model, @PathVariable long id, HttpSession session) {
+    public ModelAndView fullArtist(Model model, @PathVariable long id, HttpSession session) {
         setHistory(session, "Full Artist: " + id);
+        ModelAndView mav = new ModelAndView("fullArtist");
         try{
-            model.addAttribute("artist", artistService.getArtistById(id));
+            mav.addObject("artist", artistService.getArtistById(id));
         }
         catch (Exception e){
             throw new EntityNotFoundException("Artist with id " + id + " not found",e);
         }
-        model.addAttribute("title", "Artists");
-        model.addAttribute("headerList", new ArrayList<>(Arrays.asList(
-                new DataItem("homeButton"),
+        mav.addObject("title", "Artists");
+        mav.addObject("headerList", new ArrayList<>(Arrays.asList(
                 new DataItem("allSongs"),
                 new DataItem("allAlbums"),
                 new DataItem("allArtists", "active")
 
         )));
 
-        model.addAttribute(("footerList"), new ArrayList<>(Arrays.asList(
+        mav.addObject(("footerList"), new ArrayList<>(Arrays.asList(
                 new DataItem("deleteArtist"),
                 new DataItem("createAlbum", String.valueOf(id)),
                 new DataItem("printArtist")
         )));
-        model.addAttribute("artist", artistService.getArtistById(id));
-        model.addAttribute("albums", artistService.getArtistById(id).getAlbums());
-        return "fullArtist";
+        mav.addObject("artist", artistService.getArtistById(id));
+        mav.addObject("albums", artistService.getArtistById(id).getAlbums());
+        return mav;
     }
 
 

@@ -1,16 +1,16 @@
 
 <header th:fragment="header (list)">
-  <div class="m-4">
-    <nav class="navbar navbar-default">
-      <div class="container-fluid">
-        <div class="navbar-header">
-          <a class="navbar-brand" href="/">Song Manager</a>
+    <nav class="navbar navbar-dark bg-dark navbar-expand-lg">
+      <div class="container">
+        <a class="navbar-brand" href="/">Song Manager</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav me-auto" th:each="item : ${list}">
+            <li class="navbar-nav" th:replace="~{fragments/fragment_parts/header-parts :: ${item.type}(${item.content})}"></li>
+          </ul>
         </div>
-        <ul th:each="item : ${list}"  class="nav navbar-nav" id="navbarCollapse">
-          <li class="navbar-nav" th:replace="~{fragments/fragment_parts/header-parts :: ${item.type}(${item.content})}"></li>
-        </ul>
       </div>
-
     </nav>
-  </div>
 </header>

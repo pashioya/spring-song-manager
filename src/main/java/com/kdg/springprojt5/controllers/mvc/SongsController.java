@@ -16,6 +16,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -38,17 +39,17 @@ public class SongsController {
         this.albumService = albumService;
     }
     @GetMapping
-    public String songs(Model model, HttpSession session) {
+    public ModelAndView songs(Model model, HttpSession session) {
         setHistory(session, "All Songs");
-        model.addAttribute("title", "Songs");
-        model.addAttribute("headerList", new ArrayList<>(Arrays.asList(
-                new DataItem("homeButton"),
+        ModelAndView mav = new ModelAndView("allSongs");
+        mav.addObject("title", "Songs");
+        mav.addObject("headerList", new ArrayList<>(Arrays.asList(
                 new DataItem("allSongs", "active"),
                 new DataItem("allAlbums"),
                 new DataItem("allArtists")
 
         )));
-        model.addAttribute("footerList", new ArrayList<>(Arrays.asList(
+        mav.addObject("footerList", new ArrayList<>(Arrays.asList(
                 new DataItem("gitLab"),
                 new DataItem("pageHistory")
 
@@ -58,12 +59,12 @@ public class SongsController {
             session.setAttribute("sPageNumbers", 1);
         }
         int sPageNumbers = (int) session.getAttribute("sPageNumbers");
-        model.addAttribute("songs", getSongs(sPageNumbers, 20));
-        model.addAttribute("totalPages", artistService.getAllArtists().size() / 20 + 1);
-        model.addAttribute("sPageNumbers", sPageNumbers);
+        mav.addObject("songs", getSongs(sPageNumbers, 20));
+        mav.addObject("totalPages", artistService.getAllArtists().size() / 20 + 1);
+        mav.addObject("sPageNumbers", sPageNumbers);
 
 
-        return "allSongs";
+        return mav;
     }
 
     public List<Song> getSongs(int page, int pageSize) {
@@ -101,30 +102,30 @@ public class SongsController {
     }
 
     @GetMapping("/fullSong/{id}")
-    public String fullSong(Model model, @PathVariable long id, HttpSession session) {
+    public ModelAndView fullSong(Model model, @PathVariable long id, HttpSession session) {
         setHistory(session, "Full Song: " + id);
+        ModelAndView mav = new ModelAndView("fullSong");
         try {
-            model.addAttribute("song", songService.getSongById(id));
-            model.addAttribute("artists", albumService.getAlbumById(songService.getSongById(id).getAlbumId()).getArtists());
+            mav.addObject("song", songService.getSongById(id));
+            mav.addObject("artists", albumService.getAlbumById(songService.getSongById(id).getAlbumId()).getArtists());
         }
         catch (Exception e){
             throw new EntityNotFoundException("Song with id " + id + " not found");
         }
 
-        model.addAttribute("title", "Songs");
-        model.addAttribute("headerList", new ArrayList<>(Arrays.asList(
-                new DataItem("homeButton"),
+        mav.addObject("title", "Songs");
+        mav.addObject("headerList", new ArrayList<>(Arrays.asList(
                 new DataItem("allSongs", "active"),
                 new DataItem("allAlbums"),
                 new DataItem("allArtists")
 
         )));
-        model.addAttribute("footerList", new ArrayList<>(Arrays.asList(
+        mav.addObject("footerList", new ArrayList<>(Arrays.asList(
                 new DataItem("deleteSong"),
                 new DataItem("printSong")
         )));
 
-        return "fullSong";
+        return mav;
     }
 
     @GetMapping("/album/{albumId}/addSong")

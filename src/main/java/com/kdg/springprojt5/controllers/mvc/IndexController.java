@@ -8,6 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.ModelAndView;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -24,18 +25,20 @@ public class IndexController {
     }
 
     @GetMapping
-    public String index(Model model,HttpSession session) {
+    public ModelAndView index(Model model,HttpSession session) {
         setHistory(session, "Index");
-        model.addAttribute("title", "Song Manager");
-        return "index";
+        ModelAndView mav = new ModelAndView("index");
+        mav.addObject("title", "Song Manager");
+        return mav;
     }
 
     @GetMapping("/pageHistory")
-    public String pageHistory(Model model, HttpSession session) {
+    public ModelAndView pageHistory(Model model, HttpSession session) {
         setHistory(session, "Page History");
-        model.addAttribute("title", "Page History");
-        model.addAttribute("pageHistory", session.getAttribute("history"));
-        return "pageHistory";
+        ModelAndView mav = new ModelAndView("pageHistory");
+        mav.addObject("title", "Page History");
+        mav.addObject("pageHistory", session.getAttribute("history"));
+        return mav;
     }
 
     private void setHistory(HttpSession session,String message){

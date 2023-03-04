@@ -65,6 +65,7 @@ public class ImplAlbumService implements AlbumService {
     @Override
     public void deleteAlbum(long id) {
         songRepository.getSongsByAlbumId(id).forEach(song -> songRepository.deleteById(song.getId()));
+        albumRepository.deleteAlbumArtist(new AlbumArtist(artistRepository.getArtistById(artistRepository.getAlbumsArtists(id).get(0).getId()), albumRepository.getAlbumById(id)));
         albumRepository.deleteById(id);
     }
 

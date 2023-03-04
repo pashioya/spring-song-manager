@@ -43,7 +43,6 @@ public class AlbumSongApiController {
         ), HttpStatus.OK);
     }
 
-//    function for deleting a song from an album
     @DeleteMapping("/albumsSong/delete/{id}")
     public ResponseEntity<Void> deleteSongFromAlbum(
             @PathVariable long id) {

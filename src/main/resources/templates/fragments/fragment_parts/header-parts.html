@@ -1,13 +1,11 @@
 
-  <a th:fragment="homeButton (content)" class="${content}" href="/"><button> Home </button> </a>
+  <a th:fragment="allSongs (content)" class="nav-link" href="/allSongs"> All Songs</a>
 
-  <a th:fragment="allSongs (content)" class="${content}" href="/allSongs"><button> All Songs</button> </a>
+  <a th:fragment="allAlbums (content)" class="nav-link" href="/allAlbums">All Albums</a>
 
-  <a th:fragment="allAlbums (content)" class="${content}" href="/allAlbums"><button> All Albums</button> </a>
+  <a th:fragment="allArtists (content)" class="nav-link" href="/allArtists">All Artists</a>
 
-  <a th:fragment="allArtists (content)" class="${content}" href="/allArtists"><button> All Artists</button> </a>
-
-  <a th:fragment="backButton (content)" th:href="${content}"><button> Back </button> </a>
+  <a th:fragment="backButton (content)" class="nav-link" th:href="${content}">Back</a>
 
 
 

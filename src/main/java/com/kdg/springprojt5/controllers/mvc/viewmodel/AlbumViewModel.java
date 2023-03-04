@@ -1,8 +1,11 @@
 package com.kdg.springprojt5.controllers.mvc.viewmodel;
 
+import com.kdg.springprojt5.domain.Artist;
+import com.kdg.springprojt5.domain.Song;
 import jakarta.validation.constraints.NotBlank;
 
 import java.time.LocalDate;
+import java.util.List;
 
 public class AlbumViewModel {
 
@@ -14,20 +17,23 @@ public class AlbumViewModel {
     @NotBlank(message = "Genre is mandatory")
     private String genre;
     private LocalDate releaseDate;
+    private List<Artist> artists;
+    private List<Song> songs;
 
 
     public AlbumViewModel() {
     }
 
-    public AlbumViewModel(long id, String albumName, int officialTrackCount, String albumStatus, String genre, LocalDate releaseDate) {
+    public AlbumViewModel(long id, String albumName, int officialTrackCount, String albumStatus, String genre, LocalDate releaseDate, List<Artist> artists, List<Song> songs) {
         this.id = id;
         this.albumName = albumName;
         this.officialTrackCount = officialTrackCount;
         this.albumStatus = albumStatus;
         this.genre = genre;
         this.releaseDate = releaseDate;
+        this.artists = artists;
+        this.songs = songs;
     }
-
     public long getId() {
         return id;
     }
@@ -74,6 +80,22 @@ public class AlbumViewModel {
 
     public void setOfficialTrackCount(int officialTrackCount) {
         this.officialTrackCount = officialTrackCount;
+    }
+
+    public List<Artist> getArtists() {
+        return artists;
+    }
+
+    public void setArtists(List<Artist> artists) {
+        this.artists = artists;
+    }
+
+    public List<Song> getSongs() {
+        return songs;
+    }
+
+    public void setSongs(List<Song> songs) {
+        this.songs = songs;
     }
 
     @Override

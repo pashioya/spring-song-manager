@@ -7,19 +7,34 @@
     <div class="table-caption">
         <h1>All Albums</h1>
     </div>
-    <table class='table table-bordered table-condensed table-striped table-hover'>
-        <thead class="table-header">
-<!--            <th >artistName</th>-->
+    <div class="tables-container">
+        <div class="preview-block">
+            <div class="preview-block__title">
+                <h2>Albums Songs</h2>
+            </div>
+            <div class="preview-block__table">
+                <table class="table table-bordered table-condensed table-striped table-hover">
+                    <thead class="table-header">
+                    <th>song Name</th>
+                    </thead>
+                    <tbody  id = "preview-song-names">
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <table class='table table-bordered table-condensed table-striped table-hover' id="all-albums-table">
+            <thead class="table-header">
+            <!--            <th >artistName</th>-->
             <th >albumName</th>
-<!--            <div class="row-item">tracksInAlbum</div>-->
+            <!--            <div class="row-item">tracksInAlbum</div>-->
             <th >officialTrackCount</th>
             <th >albumStatus</th>
             <th >genre</th>
             <th >releaseDate</th>
-        </thead>
-        <tbody>
+            </thead>
+            <tbody>
             <tr class="table-row" th:each="album: ${albums}" th:data-href="${'/allAlbums/fullAlbum/' + album.getId()}">
-<!--                <td th:text="${album.getArtists()}"></td>-->
+                <!--                <td th:text="${album.getArtists()}"></td>-->
                 <td th:text="${album.getAlbumName()}"></td>
                 <!--            <div class="row-item" th:text="${album.getTracksInAlbum()}"></div>-->
                 <td th:text="${album.getOfficialTrackCount()}"></td>
@@ -27,8 +42,10 @@
                 <td th:text="${album.getGenre()}"></td>
                 <td th:text="${album.getReleaseDate()}"></td>
             </tr>
-        </tbody>
-    </table>
+            </tbody>
+        </table>
+    </div>
+
     <div class="pagination">
 
         <div class="page-viewer__button" th:if="${alPageNumbers > 1}">
@@ -51,5 +68,6 @@
     </div>
 </section>
 <footer th:replace="~{fragments/footer :: footer (${footerList})}"></footer>
+<script src="/js/album.js"></script>
 </body>
 </html>
