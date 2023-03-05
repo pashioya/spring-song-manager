@@ -22,6 +22,28 @@
                 </table>
             </div>
         </div>
+<!--        <table class='table table-bordered table-condensed table-striped table-hover full-table' id="all-albums-table">-->
+<!--            <thead class="table-header">-->
+<!--            &lt;!&ndash;            <th >artistName</th>&ndash;&gt;-->
+<!--            <th >albumName</th>-->
+<!--            &lt;!&ndash;            <div class="row-item">tracksInAlbum</div>&ndash;&gt;-->
+<!--            <th >officialTrackCount</th>-->
+<!--            <th >albumStatus</th>-->
+<!--            <th >genre</th>-->
+<!--            <th >releaseDate</th>-->
+<!--            </thead>-->
+<!--            <tbody>-->
+<!--            <tr class="table-row" th:each="album: ${albums}" th:data-href="${'/allAlbums/fullAlbum/' + album.getId()}">-->
+<!--                &lt;!&ndash;                <td th:text="${album.getArtists()}"></td>&ndash;&gt;-->
+<!--                <td th:text="${album.getAlbumName()}"></td>-->
+<!--                &lt;!&ndash;            <div class="row-item" th:text="${album.getTracksInAlbum()}"></div>&ndash;&gt;-->
+<!--                <td th:text="${album.getOfficialTrackCount()}"></td>-->
+<!--                <td th:text="${album.getAlbumStatus()}"></td>-->
+<!--                <td th:text="${album.getGenre()}"></td>-->
+<!--                <td th:text="${album.getReleaseDate()}"></td>-->
+<!--            </tr>-->
+<!--            </tbody>-->
+<!--        </table>-->
         <table class='table table-bordered table-condensed table-striped table-hover full-table' id="all-albums-table">
             <thead class="table-header">
             <!--            <th >artistName</th>-->
@@ -32,38 +54,29 @@
             <th >genre</th>
             <th >releaseDate</th>
             </thead>
-            <tbody>
-            <tr class="table-row" th:each="album: ${albums}" th:data-href="${'/allAlbums/fullAlbum/' + album.getId()}">
-                <!--                <td th:text="${album.getArtists()}"></td>-->
-                <td th:text="${album.getAlbumName()}"></td>
-                <!--            <div class="row-item" th:text="${album.getTracksInAlbum()}"></div>-->
-                <td th:text="${album.getOfficialTrackCount()}"></td>
-                <td th:text="${album.getAlbumStatus()}"></td>
-                <td th:text="${album.getGenre()}"></td>
-                <td th:text="${album.getReleaseDate()}"></td>
-            </tr>
+            <tbody id="all-albums-table-body">
             </tbody>
         </table>
     </div>
 
     <div class="pagination">
 
-        <div class="page-viewer__button" th:if="${alPageNumbers > 1}">
-            <a th:href="${'/allAlbums/firstPage'}" class="page-viewer__button__link">First</a>
+        <div class="page-viewer__button button"  id="first-page-button">
+            <a class="page-viewer__button__link">First</a>
         </div>
-        <div class="page-viewer__button" th:if="${alPageNumbers > 1}">
-            <a th:href="${'/allAlbums/previousPage'}" class="page-viewer__button__link">Previous</a>
+        <div class="page-viewer__button button"  id="previous-page-button">
+            <a class="page-viewer__button__link">Previous</a>
         </div>
         <!--            current page viewer div-->
-        <div class="page-viewer__button">
-            <span class="page-viewer__button__link" th:text="${alPageNumbers}"></span>
+        <div class="page-viewer__button button">
+            <span class="page-viewer__button__link"  id="current-page-view"></span>
         </div>
-        <div class="page-viewer__button" th:if="${alPageNumbers < totalPages}">
-            <a th:href="${'/allAlbums/nextPage'}" class="page-viewer__button__link">Next</a>
+        <div class="page-viewer__button button" id="next-page-button">
+            <a class="page-viewer__button__link">Next</a>
         </div>
 
-        <div class="page-viewer__button" th:if="${alPageNumbers < totalPages }">
-            <a th:href="${'/allAlbums/lastPage'}" class="page-viewer__button__link">Last</a>
+        <div class="page-viewer__button button" id="last-page-button">
+            <a class="page-viewer__button__link">Last</a>
         </div>
     </div>
 </section>

@@ -1,5 +1,5 @@
 const songPreviewColumn = document.getElementById("preview-song-names");
-const allRows = document.querySelectorAll("#all-albums-table tbody tr");
+const allRows = document.querySelectorAll("#all-albums-table-body tr");
     allRows.forEach(row => {
         row.addEventListener("mouseover", () => {
             songPreviewColumn.innerHTML = "";
@@ -43,4 +43,110 @@ const allRows = document.querySelectorAll("#all-albums-table tbody tr");
         )
     }
 
+
+    class pageController {
+        constructor() {
+            this.albums = [];
+            this.albumsInView = [];
+            this.albumsTable = document.getElementById("all-albums-table");
+            this.albumsTableBody = document.getElementById("all-albums-table-body");
+            this.albumsTableBody.innerHTML = "";
+            this.pageNumber = 0;
+            this.totalPages = 0;
+        }
+
+        fetchAlbums() {
+            fetch("/api/albums",
+                {
+                    headers: {
+                        Accept: "application/json"
+                    }
+                })
+                .then(resp => {
+                        if (resp.status !== 200) {
+                            console.log("Error: " + resp.status);
+                        } else {
+                            return resp.json();
+                        }
+                    }
+                )
+                .then(data => {
+                    console.log(data);
+                    this.albums = data;
+                    this.albumsTableBody.innerHTML = "";
+                    this.totalPages = this.albums.length / 10 + 1;
+                    this.renderAlbums();
+                }
+            )
+        }
+
+        renderAlbums() {
+            pageNumberView.innerHTML = page.pageNumber;
+            this.albumsInView = this.albums.slice(this.pageNumber * 20, (this.pageNumber * 20) + 20);
+            this.albumsInView.forEach(album => {
+                let albumItem = document.createElement("tr");
+                albumItem.setAttribute("data-href", `/allAlbums/fullAlbum/${album.id}`);
+                albumItem.setAttribute("class", "table-row");
+                albumItem.innerHTML = `
+                    <td>${album.albumName}</td>
+                    <td>${album.officialTrackCount}</td>
+                    <td>${album.albumStatus}</td>
+                    <td>${album.genre}</td>
+                    <td>${album.releaseDate}</td>
+                `;
+                this.albumsTableBody.appendChild(albumItem);
+            });
+        }
+
+        init() {
+            this.fetchAlbums();
+            pageNumberView.innerHTML = page.pageNumber;
+        }
+
+        firstPage() {
+            this.pageNumber = 0;
+            this.fetchAlbums();
+        }
+
+        lastPage() {
+            this.pageNumber = this.totalPages;
+            this.fetchAlbums();
+        }
+        nextPage() {
+            this.pageNumber++;
+            this.fetchAlbums();
+        }
+
+
+        previousPage() {
+            this.pageNumber--;
+            this.fetchAlbums();
+        }
+    }
+
+
+
+    let page = new pageController();
+    let pageNumberView = document.getElementById("current-page-view");
+    let firstPageButton = document.getElementById("first-page-button");
+    let lastPageButton = document.getElementById("last-page-button");
+    let nextPageButton = document.getElementById("next-page-button");
+    let previousPageButton = document.getElementById("previous-page-button");
+
+    page.init();
+
+    firstPageButton.addEventListener("click", () => {
+        console.log("first page button clicked");
+        page.firstPage();
+    });
+    lastPageButton.addEventListener("click", () => {
+        console.log("last page button clicked");
+        page.lastPage();
+    });
+    nextPageButton.addEventListener("click", () => {
+        page.nextPage();
+    });
+    previousPageButton.addEventListener("click", () => {
+        page.previousPage();
+    });
 

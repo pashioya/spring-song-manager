@@ -55,63 +55,9 @@ public class AlbumsController {
                 new DataItem("gitLab"),
                 new DataItem("pageHistory")
         )));
-        if(session.getAttribute("alPageNumbers") == null){
-            session.setAttribute("alPageNumbers", 1);
-        }
-        int alPageNumbers = (int) session.getAttribute("alPageNumbers");
-        mav.addObject("totalPages", albumService.getAllAlbums().size() / 20 + 1);
-        mav.addObject("alPageNumbers", alPageNumbers);
-        mav.addObject("albums", getAlbums(alPageNumbers, 20));
         setHistory(session, "All Albums");
         return mav;
     }
-
-    public List<AlbumViewModel> getAlbums(int page, int pageSize) {
-        List<Album> artists = albumService.getAllAlbums();
-        int start = (page - 1) * pageSize;
-        int end = Math.min(start + pageSize, artists.size());
-
-        return artists.subList(start, end).stream().map(a -> new AlbumViewModel(
-                a.getId(),
-                a.getAlbumName(),
-                a.getOfficialTrackCount(),
-                a.getAlbumStatus().toString(),
-                a.getGenre(),
-                a.getReleaseDate(),
-                a.getArtists(),
-                a.getSongs()
-        )).toList();
-    }
-
-
-    @GetMapping("/nextPage")
-    public void nextPage(HttpSession session){
-        int alPageNumbers = (int) session.getAttribute("alPageNumbers");
-        session.setAttribute("alPageNumbers", alPageNumbers + 1);
-    }
-
-    @GetMapping("/previousPage")
-    public String previousPage(HttpSession session){
-        int alPageNumbers = (int) session.getAttribute("alPageNumbers");
-        if(alPageNumbers > 1){
-            session.setAttribute("alPageNumbers", alPageNumbers - 1);
-        }
-        return "redirect:/allAlbums";
-    }
-
-    @GetMapping("/firstPage")
-    public String firstPage(HttpSession session){
-        session.setAttribute("alPageNumbers", 1);
-        return "redirect:/allAlbums";
-    }
-
-    @GetMapping("/lastPage")
-    public String lastPage(HttpSession session){
-        session.setAttribute("alPageNumbers", albumService.getAllAlbums().size() / 20 + 1);
-        return "redirect:/allAlbums";
-    }
-
-
     @GetMapping("/fullAlbum/{id}")
     public ModelAndView fullAlbum(Model model, @PathVariable long id, HttpSession session) {
         setHistory(session, "FullAlbum: " + id);

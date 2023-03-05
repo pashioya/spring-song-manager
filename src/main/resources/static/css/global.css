@@ -220,3 +220,7 @@ a {
     opacity: 0.5;
     pointer-events: none;
 }
+
+.button{
+    cursor: pointer;
+}

@@ -35,7 +35,7 @@ function fetchAlbumsSongs(artistID){
                 console.log(data);
                 data.forEach(album => {
                     let albumItem = document.createElement("tr");
-                    albumItem.innerHTML = album.title;
+                    albumItem.innerHTML = album.albumName;
                     albumPreviewColumn.appendChild(albumItem);
                 });
             }

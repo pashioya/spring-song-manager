@@ -40,7 +40,7 @@ public class SongApiController {
                 , HttpStatus.OK);
     }
 
-    @PostMapping("/album/{id}/add/song")
+    @PostMapping("/album/{albumId}/add/song")
     public ResponseEntity<SongDto> addSongToAlbum(@Valid @ModelAttribute SongViewModel viewModel, BindingResult errors, HttpSession session, @PathVariable long albumId) {
 //        if (errors.hasErrors()) {
 //            errors.getAllErrors().forEach(error -> logger.error(error.toString()));
