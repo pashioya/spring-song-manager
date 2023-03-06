@@ -22,28 +22,6 @@
                 </table>
             </div>
         </div>
-<!--        <table class='table table-bordered table-condensed table-striped table-hover full-table' id="all-albums-table">-->
-<!--            <thead class="table-header">-->
-<!--            &lt;!&ndash;            <th >artistName</th>&ndash;&gt;-->
-<!--            <th >albumName</th>-->
-<!--            &lt;!&ndash;            <div class="row-item">tracksInAlbum</div>&ndash;&gt;-->
-<!--            <th >officialTrackCount</th>-->
-<!--            <th >albumStatus</th>-->
-<!--            <th >genre</th>-->
-<!--            <th >releaseDate</th>-->
-<!--            </thead>-->
-<!--            <tbody>-->
-<!--            <tr class="table-row" th:each="album: ${albums}" th:data-href="${'/allAlbums/fullAlbum/' + album.getId()}">-->
-<!--                &lt;!&ndash;                <td th:text="${album.getArtists()}"></td>&ndash;&gt;-->
-<!--                <td th:text="${album.getAlbumName()}"></td>-->
-<!--                &lt;!&ndash;            <div class="row-item" th:text="${album.getTracksInAlbum()}"></div>&ndash;&gt;-->
-<!--                <td th:text="${album.getOfficialTrackCount()}"></td>-->
-<!--                <td th:text="${album.getAlbumStatus()}"></td>-->
-<!--                <td th:text="${album.getGenre()}"></td>-->
-<!--                <td th:text="${album.getReleaseDate()}"></td>-->
-<!--            </tr>-->
-<!--            </tbody>-->
-<!--        </table>-->
         <table class='table table-bordered table-condensed table-striped table-hover full-table' id="all-albums-table">
             <thead class="table-header">
             <!--            <th >artistName</th>-->
@@ -82,5 +60,6 @@
 </section>
 <footer th:replace="~{fragments/footer :: footer (${footerList})}"></footer>
 <script src="/js/album.js"></script>
+<script src="/js/app.js" defer></script>
 </body>
 </html>
