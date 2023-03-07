@@ -3,6 +3,25 @@
 $(document).ready(function($) {
     $(".table-row").click(function() {
         window.document.location = $(this).data("href");
+
+    });
+});
+
+$(document).ready(function($) {
+    $("#all-artists-table-body").on("click", ".table-row", function() {
+        window.document.location = $(this).data("href");
+    });
+});
+
+$(document).ready(function($) {
+    $("#all-albums-table-body").on("click", ".table-row", function() {
+        window.document.location = $(this).data("href");
+    });
+});
+
+$(document).ready(function($) {
+    $("#all-songs-table-body").on("click", ".table-row", function() {
+        window.document.location = $(this).data("href");
     });
 });
 

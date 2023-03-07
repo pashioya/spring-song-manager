@@ -1,21 +1,20 @@
-const albumPreviewColumn = document.getElementById("preview-album-names");
-const allRows = document.querySelectorAll("#all-artists-table tbody tr");
-allRows.forEach(row => {
-        row.addEventListener("mouseover", () => {
-            albumPreviewColumn.innerHTML = "";
+let pageNumberView = document.getElementById("current-page-view");
+let firstPageButton = document.getElementById("first-page-button");
+let lastPageButton = document.getElementById("last-page-button");
+let nextPageButton = document.getElementById("next-page-button");
+let previousPageButton = document.getElementById("previous-page-button");
 
-            let id = row.getAttribute("data-href").split("/")[3];
-            console.log("hovering over row: " + id);
-            fetchAlbumsSongs(id);
-        });
-    }
-);
+
+const albumPreviewColumn = document.getElementById("preview-album-names");
+const allRows = document.querySelectorAll(".table-row");
+
+console.log(allRows)
 
 
 /**
  * @param artistID
  */
-function fetchAlbumsSongs(artistID){
+function fetchArtistsAlbums(artistID){
 
     fetch(`/api/artist/${artistID}/albums`,
         {
@@ -42,4 +41,110 @@ function fetchAlbumsSongs(artistID){
         )
 }
 
+class pageController {
+    constructor() {
+        this.artists = [];
+        this.artistsInView = [];
+        this.artistsTable = document.getElementById("all-artists-table");
+        this.artistsTableBody = document.getElementById("all-artists-table-body");
+        this.artistsTableBody.innerHTML = "";
+        this.pageNumber = 0;
+        this.totalPages = 0;
+    }
+
+    fetchArtists() {
+        fetch("/api/artists",
+            {
+                headers: {
+                    Accept: "application/json"
+                }
+            })
+            .then(resp => {
+                    if (resp.status !== 200) {
+                        console.log("Error: " + resp.status);
+                    } else {
+                        return resp.json();
+                    }
+                }
+            )
+            .then(data => {
+                    this.artists = data;
+                    this.totalPages = Math.round(Math.floor(this.artists.length / 10));
+                    this.renderArtists();
+                }
+            )
+    }
+
+    renderArtists() {
+        this.artistsTableBody.innerHTML = "";
+        this.artistsInView = this.artists.slice(this.pageNumber * 10, (this.pageNumber * 10) + 10);
+        this.artistsInView.forEach(artist => {
+            let artistRow = document.createElement("tr");
+            artistRow.setAttribute("data-href", `/allArtists/fullArtist/${artist.id}`);
+            artistRow.classList.add("table-row");
+            artistRow.innerHTML = `
+                <td>${artist.artistName}</td>
+                <td>${artist.artistFollowers}</td>
+            `;
+            this.artistsTableBody.appendChild(artistRow);
+        });
+        pageNumberView.innerHTML = page.pageNumber;
+    }
+
+    init() {
+        this.fetchArtists();
+        console.log("page controller initialized");
+    }
+
+    firstPage() {
+        this.pageNumber = 0;
+        this.fetchArtists();
+    }
+
+    lastPage() {
+        this.pageNumber = this.totalPages;
+        this.fetchArtists();
+    }
+    nextPage() {
+        this.pageNumber++;
+        this.fetchArtists();
+    }
+
+
+    previousPage() {
+        this.pageNumber--;
+        this.fetchArtists();
+    }
+}
+
+let page = new pageController();
+page.init();
+
+firstPageButton.addEventListener("click", () => {
+    page.firstPage();
+});
+
+lastPageButton.addEventListener("click", () => {
+    page.lastPage();
+});
+
+nextPageButton.addEventListener("click", () => {
+    page.nextPage();
+});
+
+previousPageButton.addEventListener("click", () => {
+    page.previousPage();
+});
+console.log(allRows);
+
+allRows.forEach(row => {
+        row.addEventListener("mouseover", () => {
+            albumPreviewColumn.innerHTML = "";
+
+            let id = row.getAttribute("data-href").split("/")[3];
+            console.log("hovering over row: " + id);
+            fetchArtistsAlbums(id);
+        });
+    }
+);
 

@@ -6,7 +6,7 @@ let nextPageButton = document.getElementById("next-page-button");
 let previousPageButton = document.getElementById("previous-page-button");
 
 let songPreviewColumn = document.getElementById("preview-song-names");
-let allRows = document.querySelectorAll("#all-albums-table-body tr");
+let allRows = document.querySelectorAll(".table-row");
 
     /**
      * @param albumID
@@ -69,7 +69,7 @@ let allRows = document.querySelectorAll("#all-albums-table-body tr");
                     console.log(data);
                     this.albums = data;
                     this.albumsTableBody.innerHTML = "";
-                    this.totalPages = this.albums.length / 10 + 1;
+                    this.totalPages = Math.round(Math.floor(this.albums.length / 10));
                     this.renderAlbums();
                 }
             )
@@ -77,10 +77,11 @@ let allRows = document.querySelectorAll("#all-albums-table-body tr");
 
         renderAlbums() {
             pageNumberView.innerHTML = page.pageNumber;
-            this.albumsInView = this.albums.slice(this.pageNumber * 20, (this.pageNumber * 20) + 20);
+            this.albumsInView = this.albums.slice(this.pageNumber * 10, (this.pageNumber * 10) + 10);
             this.albumsInView.forEach(album => {
                 let albumRow = document.createElement("tr");
                 albumRow.classList.add("table-row");
+                albumRow.classList.add("entity");
                 albumRow.setAttribute("data-href", `/allAlbums/fullAlbum/${album.id}`);
                 albumRow.innerHTML = `
                     <td>${album.albumName}</td>

@@ -33,6 +33,14 @@ public class ArtistApiController {
                 modelMapper.map(artist, ArtistDto.class), HttpStatus.OK);
     }
 
+//    get all artists
+    @GetMapping("/artists")
+    public ResponseEntity<Iterable<ArtistDto>> getAllArtists() {
+        var artists = artistService.getAllArtists();
+        return new ResponseEntity<>(
+                modelMapper.map(artists, Iterable.class), HttpStatus.OK);
+    }
+
     @DeleteMapping("/artist/{id}/delete")
     public ResponseEntity<Void> deleteArtist(@PathVariable long id) {
         artistService.deleteArtist(id);

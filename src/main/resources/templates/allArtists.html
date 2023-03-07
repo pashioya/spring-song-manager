@@ -28,35 +28,30 @@
             <th >artistFollowers</th>
             <!--            <th >favoriteGenre</th>-->
             </thead>
-            <tbody>
-            <tr class="table-row" th:each="artist: ${artists}" th:data-href="${'/allArtists/fullArtist/' + artist.getId()}">
-                <td th:text="${artist.getArtistName()}"></td>
-                <td th:text="${artist.getArtistFollowers()}"></td>
-                <!--                <td th:text="${artist.getFavoriteGenre()}"></td>-->
-            </tr>
+            <tbody id="all-artists-table-body">
             </tbody>
         </table>
     </div>
-        <div class="pagination">
+    <div class="pagination">
 
-            <div class="page-viewer__button" th:if="${arPageNumbers > 1}">
-                <a th:href="${'/allArtists/firstPage'}" class="page-viewer__button__link">First</a>
-            </div>
-            <div class="page-viewer__button" th:if="${arPageNumbers > 1}">
-                <a th:href="${'/allArtists/previousPage'}" class="page-viewer__button__link">Previous</a>
-            </div>
-<!--            current page viewer div-->
-            <div class="page-viewer__button">
-                <spam class="page-viewer__button__link" th:text="${arPageNumbers}"></spam>
-            </div>
-            <div class="page-viewer__button" th:if="${arPageNumbers < totalPages - 1}">
-                <a th:href="${'/allArtists/nextPage'}" class="page-viewer__button__link">Next</a>
-            </div>
-
-            <div class="page-viewer__button" th:if="${arPageNumbers < totalPages - 1}">
-                <a th:href="${'/allArtists/lastPage'}" class="page-viewer__button__link">Last</a>
-            </div>
+        <div class="page-viewer__button button"  id="first-page-button">
+            <a class="page-viewer__button__link">First</a>
         </div>
+        <div class="page-viewer__button button"  id="previous-page-button">
+            <a class="page-viewer__button__link">Previous</a>
+        </div>
+        <!--            current page viewer div-->
+        <div class="page-viewer__button button">
+            <span class="page-viewer__button__link"  id="current-page-view"></span>
+        </div>
+        <div class="page-viewer__button button" id="next-page-button">
+            <a class="page-viewer__button__link">Next</a>
+        </div>
+
+        <div class="page-viewer__button button" id="last-page-button">
+            <a class="page-viewer__button__link">Last</a>
+        </div>
+    </div>
 </section>
 <footer th:replace="~{fragments/footer :: footer (${footerList})}"></footer>
 <script src="/js/artist.js"></script>

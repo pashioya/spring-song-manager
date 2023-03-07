@@ -7,6 +7,8 @@ import com.kdg.springprojt5.service.AlbumService;
 import com.kdg.springprojt5.service.SongService;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
+import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
@@ -17,6 +19,8 @@ import org.springframework.web.bind.annotation.*;
 public class SongApiController {
     private final SongService songService;
     private final AlbumService albumService;
+    @Autowired
+    private ModelMapper modelMapper;
 
     public SongApiController(SongService songService, AlbumService albumService) {
         this.songService = songService;
@@ -29,6 +33,14 @@ public class SongApiController {
         return new ResponseEntity<>(
                 new SongDto(song.getSongTitle(), song.getDurationMS(), song.getUrl())
                 , HttpStatus.OK);
+    }
+
+    @GetMapping("/songs")
+    public ResponseEntity<Iterable<SongDto>> getSongs() {
+        var songs = songService.getAllSongs();
+        return new ResponseEntity<>(
+                modelMapper.map(songs, Iterable.class), HttpStatus.OK);
+
     }
 
 //    get albums songs
