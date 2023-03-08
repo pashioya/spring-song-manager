@@ -49,56 +49,7 @@ public class ArtistsController {
                 new DataItem("createArtist"),
                 new DataItem("pageHistory")
         )));
-
-
-        if(session.getAttribute("arPageNumbers") == null){
-            session.setAttribute("arPageNumbers", 1);
-        }
-        int arPageNumbers = (int) session.getAttribute("arPageNumbers");
-
-        mav.addObject("artists", getArtists(arPageNumbers, 20));
-        mav.addObject("totalPages", artistService.getAllArtists().size() / 20 + 1);
-        mav.addObject("arPageNumbers", arPageNumbers);
         return mav;
-    }
-
-    @GetMapping("/nextPage")
-    public String nextPage(HttpSession session){
-        int arPageNumbers = (int) session.getAttribute("arPageNumbers");
-        session.setAttribute("arPageNumbers", arPageNumbers + 1);
-        return "redirect:/allArtists";
-    }
-
-    @GetMapping("/previousPage")
-    public String previousPage(HttpSession session){
-        int arPageNumbers = (int) session.getAttribute("arPageNumbers");
-        if(arPageNumbers > 1){
-            session.setAttribute("arPageNumbers", arPageNumbers - 1);
-        }
-        return "redirect:/allArtists";
-    }
-
-    @GetMapping("/firstPage")
-    public String firstPage(HttpSession session){
-        session.setAttribute("arPageNumbers", 1);
-        return "redirect:/allArtists";
-    }
-
-    @GetMapping("/lastPage")
-    public String lastPage(HttpSession session){
-        session.setAttribute("arPageNumbers", artistService.getAllArtists().size() / 20 + 1);
-        return "redirect:/allArtists";
-    }
-
-
-
-//    two parameters to your method to represent the current page and the number of artists per page:
-//    calculate which artists to return based on the page and pageSize parameters
-    public List<Artist> getArtists(int page, int pageSize) {
-        List<Artist> artists = artistService.getAllArtists();
-        int start = (page - 1) * pageSize;
-        int end = Math.min(start + pageSize, artists.size());
-        return artists.subList(start, end);
     }
 
     @GetMapping("fullArtist/{id}")

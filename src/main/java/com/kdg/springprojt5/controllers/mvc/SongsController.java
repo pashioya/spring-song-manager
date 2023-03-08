@@ -52,55 +52,9 @@ public class SongsController {
         mav.addObject("footerList", new ArrayList<>(Arrays.asList(
                 new DataItem("gitLab"),
                 new DataItem("pageHistory")
-
         )));
-
-        if(session.getAttribute("sPageNumbers") == null){
-            session.setAttribute("sPageNumbers", 1);
-        }
-        int sPageNumbers = (int) session.getAttribute("sPageNumbers");
-        mav.addObject("songs", getSongs(sPageNumbers, 20));
-        mav.addObject("totalPages", artistService.getAllArtists().size() / 20 + 1);
-        mav.addObject("sPageNumbers", sPageNumbers);
-
-
         return mav;
     }
-
-    public List<Song> getSongs(int page, int pageSize) {
-        List<Song> artists = songService.getAllSongs();
-        int start = (page - 1) * pageSize;
-        int end = Math.min(start + pageSize, artists.size());
-        return artists.subList(start, end);
-    }
-    @GetMapping("/nextPage")
-    public String nextPage(HttpSession session){
-        int sPageNumbers = (int) session.getAttribute("sPageNumbers");
-        session.setAttribute("sPageNumbers", sPageNumbers + 1);
-        return "redirect:/allSongs";
-    }
-
-    @GetMapping("/previousPage")
-    public String previousPage(HttpSession session){
-        int sPageNumbers = (int) session.getAttribute("sPageNumbers");
-        if(sPageNumbers > 1){
-            session.setAttribute("sPageNumbers", sPageNumbers - 1);
-        }
-        return "redirect:/allSongs";
-    }
-
-    @GetMapping("/firstPage")
-    public String firstPage(HttpSession session){
-        session.setAttribute("sPageNumbers", 1);
-        return "redirect:/allSongs";
-    }
-
-    @GetMapping("/lastPage")
-    public String lastPage(HttpSession session){
-        session.setAttribute("sPageNumbers", artistService.getAllArtists().size() / 20 + 1);
-        return "redirect:/allSongs";
-    }
-
     @GetMapping("/fullSong/{id}")
     public ModelAndView fullSong(Model model, @PathVariable long id, HttpSession session) {
         setHistory(session, "Full Song: " + id);
@@ -118,13 +72,11 @@ public class SongsController {
                 new DataItem("allSongs", "active"),
                 new DataItem("allAlbums"),
                 new DataItem("allArtists")
-
         )));
         mav.addObject("footerList", new ArrayList<>(Arrays.asList(
                 new DataItem("deleteSong"),
                 new DataItem("printSong")
         )));
-
         return mav;
     }
 
