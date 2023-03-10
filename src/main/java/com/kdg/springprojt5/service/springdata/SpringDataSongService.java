@@ -27,7 +27,7 @@ public class SpringDataSongService implements SongService {
 
     @Override
     public Song getSongById(long id) {
-        return songRepository.getSongById(id);
+        return songRepository.getReferenceById(id);
     }
 
     @Override
@@ -61,6 +61,6 @@ public class SpringDataSongService implements SongService {
 
     @Override
     public void printSong(long id) {
-        logger.info(jsonHandler.saveToJson(songRepository.getSongById(id),songRepository.getSongById(id).getSongTitle()));
+        logger.info(jsonHandler.saveToJson(songRepository.getReferenceById(id),songRepository.getReferenceById(id).getSongTitle()));
     }
 }

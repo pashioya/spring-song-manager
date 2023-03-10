@@ -36,6 +36,7 @@
   - jpa profile Does not have any data however works perfectly
   - spring data profile does not have any data however works perfectly
   - Album and artist previews are temporarily disabled due to transition to ajax
+  - album preview is misbehaving 
 
   - Week 1
     - Retrieve Single Artsits Albums

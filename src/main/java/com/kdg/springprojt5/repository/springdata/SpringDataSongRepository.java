@@ -14,18 +14,18 @@ import java.util.List;
 
 @Repository
 @Profile("springData")
-public interface SpringDataSongRepository extends JpaRepository<Song, Long>, SongRepository {
+public interface SpringDataSongRepository extends JpaRepository<Song, Long> {
 
-    @NotNull
-    Song save(@NotNull Song song);
-    Song getSongById(long id);
-    @NonNull
-    List<Song> findAll();
-
-    @Query("SELECT a FROM Song a")
-    List<Song> getAllSongs();
+//    @NotNull
+//    Song save(@NotNull Song song);
+//    Song getSongById(long id);
+//    @NonNull
+//    List<Song> findAll();
+//
+//    @Query("SELECT a FROM Song a")
+//    List<Song> getAllSongs();
     List<Song> getSongsByAlbumId(long id);
-    void deleteById(long id);
+//    void deleteById(long id);
 
 }
 

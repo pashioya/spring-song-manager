@@ -50,6 +50,7 @@ let albumPreviewColumn = document.getElementById("preview-song-names");
         }
 
         setOnHover() {
+            songPreviewColumn.innerHTML = "";
             let allRows = document.getElementsByClassName("entity");
             for (let row of allRows) {
                 row.addEventListener("mouseover", () => {
