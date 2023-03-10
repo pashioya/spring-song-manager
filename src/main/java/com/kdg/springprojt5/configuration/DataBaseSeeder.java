@@ -1,11 +1,7 @@
 package com.kdg.springprojt5.configuration;
 
 import com.kdg.springprojt5.domain.*;
-import com.kdg.springprojt5.repository.UserRepository;
-import com.kdg.springprojt5.repository.springdata.SpringDataAlbumArtistRepository;
-import com.kdg.springprojt5.repository.springdata.SpringDataAlbumRepository;
-import com.kdg.springprojt5.repository.springdata.SpringDataArtistRepository;
-import com.kdg.springprojt5.repository.springdata.SpringDataSongRepository;
+import com.kdg.springprojt5.repository.springdata.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Profile;
@@ -22,11 +18,11 @@ public class DataBaseSeeder implements CommandLineRunner {
     private final SpringDataArtistRepository artistRepository;
 
     private final SpringDataAlbumArtistRepository albumArtistRepository;
-    private final UserRepository userRepository;
+    private final SpringDataUserRepository userRepository;
 
 
     @Autowired
-    public DataBaseSeeder(SpringDataAlbumRepository albumRepository, SpringDataSongRepository songRepository, SpringDataArtistRepository artistRepository, SpringDataAlbumArtistRepository albumArtistRepository, UserRepository userRepository) {
+    public DataBaseSeeder(SpringDataAlbumRepository albumRepository, SpringDataSongRepository songRepository, SpringDataArtistRepository artistRepository, SpringDataAlbumArtistRepository albumArtistRepository, SpringDataUserRepository userRepository) {
         this.albumRepository = albumRepository;
         this.songRepository = songRepository;
         this.artistRepository = artistRepository;
@@ -81,7 +77,8 @@ public class DataBaseSeeder implements CommandLineRunner {
     }
 
     public void loadUsers() {
-
+        User user = new User("2", "$2a$10$4c5D0EnSaqHN7tjIGg4dgu8zO1h5wnj5yd8UYb2pEvlYnxvf9B4uK", UserRole.ADMIN);
+        userRepository.save(user);
     }
 
     public void configureAlbumArtist() {

@@ -8,6 +8,8 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 @Profile("springData")
-public interface SpringDataUserRepository extends JpaRepository<User, Long>, UserRepository{
+public interface SpringDataUserRepository extends JpaRepository<User, Long>, UserRepository {
+
+    User findByUsername(String username);
 
 }

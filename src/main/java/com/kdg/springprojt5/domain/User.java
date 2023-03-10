@@ -14,13 +14,18 @@ public class User {
     @Column(nullable = false)
     private String password;
 
+    @Column(name = "user_role", nullable = false)
+    private UserRole role;
+
     public User() {
     }
 
-    public User(String username, String password) {
+public User(String username, String password, UserRole role) {
         this.username = username;
         this.password = password;
+        this.role = role;
     }
+
 
     public long getId() {
         return id;
@@ -45,4 +50,14 @@ public class User {
     public void setPassword(String password) {
         this.password = password;
     }
+
+    public UserRole getRole() {
+        return role;
+    }
+
+    public void setRole(UserRole role) {
+        this.role = role;
+    }
+
+
 }
