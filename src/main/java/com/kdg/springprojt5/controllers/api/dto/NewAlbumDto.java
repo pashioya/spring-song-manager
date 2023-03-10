@@ -1,29 +1,30 @@
-package com.kdg.springprojt5.controllers.mvc.viewmodel;
+package com.kdg.springprojt5.controllers.api.dto;
 
 import com.kdg.springprojt5.domain.Artist;
 import com.kdg.springprojt5.domain.Song;
+import jakarta.validation.constraints.NotBlank;
+import org.hibernate.validator.constraints.Length;
 
 import java.time.LocalDate;
 import java.util.List;
 
-public class AlbumViewModel {
-
-    private long id;
+public class NewAlbumDto {
+    @NotBlank(message = "Album Name is mandatory")
     private String albumName;
+    @NotBlank(message = "Track count is mandatory")
+    @Length(min = 1, max = 3)
     private int officialTrackCount;
+    @NotBlank(message = "Album Name is mandatory")
     private String albumStatus;
-
+    @NotBlank(message = "Genre is mandatory")
     private String genre;
+    @NotBlank(message = "Album Name is mandatory")
     private LocalDate releaseDate;
     private List<Artist> artists;
     private List<Song> songs;
 
 
-    public AlbumViewModel() {
-    }
-
-    public AlbumViewModel(long id, String albumName, int officialTrackCount, String albumStatus, String genre, LocalDate releaseDate, List<Artist> artists, List<Song> songs) {
-        this.id = id;
+    public NewAlbumDto(String albumName, int officialTrackCount, String albumStatus, String genre, LocalDate releaseDate, List<Artist> artists, List<Song> songs) {
         this.albumName = albumName;
         this.officialTrackCount = officialTrackCount;
         this.albumStatus = albumStatus;
@@ -31,13 +32,6 @@ public class AlbumViewModel {
         this.releaseDate = releaseDate;
         this.artists = artists;
         this.songs = songs;
-    }
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
     }
 
     public String getAlbumName() {
@@ -94,16 +88,5 @@ public class AlbumViewModel {
 
     public void setSongs(List<Song> songs) {
         this.songs = songs;
-    }
-
-    @Override
-    public String toString() {
-        return "AlbumViewModel{" +
-                "albumName='" + albumName + '\'' +
-                ", officialTrackCount=" + officialTrackCount +
-                ", albumStatus='" + albumStatus + '\'' +
-                ", genre='" + genre + '\'' +
-                ", releaseDate=" + releaseDate +
-                '}';
     }
 }

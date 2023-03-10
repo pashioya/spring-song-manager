@@ -4,7 +4,7 @@
 <body>
 <header th:replace="~{fragments/header :: header (${headerList})}"></header>
 <section>
-    <form method="post" class="row g-3 needs-validation" th:object="${artist}"  id="addArtistForm" novalidate>
+    <form action="/api/artist/create" method="post" class="row g-3 needs-validation" th:object="${artist}"  id="addArtistForm" novalidate>
         <div class="col-md-4">
             <label for="artistName" class="form-label">artistName</label>
             <input type="text" name="artistName" id="artistName" class="form-control" required>
@@ -26,6 +26,5 @@
     </form>
 </section>
 <footer th:replace="~{fragments/footer :: footer (${footerList})}"></footer>
-<script src="/js/app.js" defer></script>
 </body>
 </html>

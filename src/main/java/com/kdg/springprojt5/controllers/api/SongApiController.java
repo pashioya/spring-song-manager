@@ -1,13 +1,15 @@
 package com.kdg.springprojt5.controllers.api;
 
+import com.kdg.springprojt5.controllers.api.dto.NewSongDto;
 import com.kdg.springprojt5.controllers.api.dto.SongDto;
-import com.kdg.springprojt5.controllers.mvc.viewmodel.SongViewModel;
 import com.kdg.springprojt5.domain.Song;
 import com.kdg.springprojt5.service.AlbumService;
 import com.kdg.springprojt5.service.SongService;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import org.modelmapper.ModelMapper;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,12 +21,16 @@ import org.springframework.web.bind.annotation.*;
 public class SongApiController {
     private final SongService songService;
     private final AlbumService albumService;
+    private final Logger logger;
+
     @Autowired
     private ModelMapper modelMapper;
 
     public SongApiController(SongService songService, AlbumService albumService) {
         this.songService = songService;
         this.albumService = albumService;
+        this.logger = LoggerFactory.getLogger(this.getClass().getName());
+
     }
 
     @GetMapping("/song/{id}")
@@ -53,17 +59,17 @@ public class SongApiController {
     }
 
     @PostMapping("/album/{albumId}/add/song")
-    public ResponseEntity<SongDto> addSongToAlbum(@Valid @ModelAttribute SongViewModel viewModel, BindingResult errors, HttpSession session, @PathVariable long albumId) {
-//        if (errors.hasErrors()) {
-//            errors.getAllErrors().forEach(error -> logger.error(error.toString()));
-//        }
+    public ResponseEntity<SongDto> addSongToAlbum(@Valid @ModelAttribute NewSongDto songDto, BindingResult errors, HttpSession session, @PathVariable long albumId) {
+        if (errors.hasErrors()) {
+            errors.getAllErrors().forEach(error -> logger.error(error.toString()));
+        }
         Song song = new Song(
                 albumId,
-                viewModel.getUrl(),
-                viewModel.getSongTitle(),
-                viewModel.getTrackNumber(),
-                viewModel.getDurationMS(),
-                viewModel.isExplicit()
+                songDto.getUrl(),
+                songDto.getSongTitle(),
+                songDto.getTrackNumber(),
+                songDto.getDurationMS(),
+                songDto.isExplicit()
         );
 //        logger.debug(viewModel.toString());
         songService.saveSong(song);

@@ -9,5 +9,4 @@ import org.springframework.stereotype.Repository;
 @Profile("springData")
 public interface SpringDataAlbumArtistRepository extends JpaRepository<AlbumArtist, Long> {
 
-    AlbumArtist save(AlbumArtist albumArtist);
 }

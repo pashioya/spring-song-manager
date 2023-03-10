@@ -11,14 +11,20 @@ import java.util.List;
 public class Album {
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
+    @Column
     private Long id;
+    @Column(nullable = false)
     private String albumName;
-
+    @Column(nullable = false)
     private int officialTrackCount;
+    @Column(nullable = false)
     @Enumerated(EnumType.STRING)
     private StatusEnum albumStatus;
+    @Column(nullable = false)
     private String genre;
+    @Column(nullable = false)
     private LocalDate releaseDate;
+
 
     @ManyToMany
     @JoinTable(name = "album_artist",

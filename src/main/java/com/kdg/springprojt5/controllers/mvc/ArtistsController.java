@@ -121,7 +121,7 @@ public class ArtistsController {
     }
 
     @PostMapping("/addArtist")
-    public String addArtist(@Valid @ModelAttribute ArtistViewModel viewModel, Model model, BindingResult errors) {
+    public String addArtist(@Valid @ModelAttribute ArtistViewModel viewModel, BindingResult errors) {
         if (errors.hasErrors()) {
             errors.getAllErrors().forEach(error -> logger.error(error.toString()));
             return "addSong";

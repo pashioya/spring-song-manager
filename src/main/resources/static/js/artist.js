@@ -6,40 +6,12 @@ let previousPageButton = document.getElementById("previous-page-button");
 
 
 const albumPreviewColumn = document.getElementById("preview-album-names");
-const allRows = document.querySelectorAll(".table-row");
-
-console.log(allRows)
-
+let allRows = document.getElementsByClassName("entity");
 
 /**
  * @param artistID
  */
-function fetchArtistsAlbums(artistID){
 
-    fetch(`/api/artist/${artistID}/albums`,
-        {
-            headers: {
-                Accept: "application/json"
-            }
-        })
-        .then(resp => {
-                if (resp.status !== 200) {
-                    console.log("Error: " + resp.status);
-                } else {
-                    return resp.json();
-                }
-            }
-        )
-        .then(data => {
-                console.log(data);
-                data.forEach(album => {
-                    let albumItem = document.createElement("tr");
-                    albumItem.innerHTML = album.albumName;
-                    albumPreviewColumn.appendChild(albumItem);
-                });
-            }
-        )
-}
 
 class pageController {
     constructor() {
@@ -68,11 +40,25 @@ class pageController {
                 }
             )
             .then(data => {
+
                     this.artists = data;
                     this.totalPages = Math.round(Math.floor(this.artists.length / 10));
                     this.renderArtists();
                 }
             )
+    }
+
+    setOnHover() {
+        let allRows = document.getElementsByClassName("entity");
+        for (let row of allRows) {
+            row.addEventListener("mouseover", () => {
+                albumPreviewColumn.innerHTML = "";
+                let id = row.getAttribute("data-href").split("/")[3];
+                console.log("hovering over row: " + id);
+                fetchArtistsAlbums(id);
+            });
+        }
+
     }
 
     renderArtists() {
@@ -82,13 +68,16 @@ class pageController {
             let artistRow = document.createElement("tr");
             artistRow.setAttribute("data-href", `/allArtists/fullArtist/${artist.id}`);
             artistRow.classList.add("table-row");
+            artistRow.classList.add("entity");
             artistRow.innerHTML = `
-                <td>${artist.artistName}</td>
+                <td>${artist.name}</td>
                 <td>${artist.artistFollowers}</td>
             `;
             this.artistsTableBody.appendChild(artistRow);
         });
         pageNumberView.innerHTML = page.pageNumber;
+        this.setOnHover();
+        console.log(allRows);
     }
 
     init() {
@@ -135,16 +124,34 @@ nextPageButton.addEventListener("click", () => {
 previousPageButton.addEventListener("click", () => {
     page.previousPage();
 });
-console.log(allRows);
 
-allRows.forEach(row => {
-        row.addEventListener("mouseover", () => {
-            albumPreviewColumn.innerHTML = "";
 
-            let id = row.getAttribute("data-href").split("/")[3];
-            console.log("hovering over row: " + id);
-            fetchArtistsAlbums(id);
-        });
-    }
-);
+function fetchArtistsAlbums(artistID){
+
+    fetch(`/api/artist/${artistID}/albums`,
+        {
+            headers: {
+                Accept: "application/json"
+            }
+        })
+        .then(resp => {
+                if (resp.status !== 200) {
+                    console.log("Error: " + resp.status);
+                } else {
+                    return resp.json();
+                }
+            }
+        )
+        .then(data => {
+                console.log(data);
+                data.forEach(album => {
+                    let albumItem = document.createElement("tr");
+                    albumItem.innerHTML = album.albumName;
+                    albumPreviewColumn.appendChild(albumItem);
+                });
+            }
+        )
+}
+
+
 

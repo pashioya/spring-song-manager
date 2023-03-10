@@ -1,19 +1,21 @@
 package com.kdg.springprojt5.controllers.api;
 
 import com.kdg.springprojt5.controllers.api.dto.AlbumDto;
-import com.kdg.springprojt5.controllers.mvc.viewmodel.AlbumViewModel;
+import com.kdg.springprojt5.controllers.api.dto.NewAlbumDto;
 import com.kdg.springprojt5.domain.Album;
 import com.kdg.springprojt5.domain.StatusEnum;
 import com.kdg.springprojt5.service.AlbumService;
 import com.kdg.springprojt5.service.ArtistService;
 import com.kdg.springprojt5.service.SongService;
 import org.modelmapper.ModelMapper;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.view.RedirectView;
 
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,6 +27,8 @@ public class AlbumApiController {
     private final AlbumService albumService;
     private final ArtistService artistService;
     private final SongService songService;
+    private final Logger logger;
+
     @Autowired
     private ModelMapper modelMapper;
 
@@ -32,6 +36,7 @@ public class AlbumApiController {
         this.albumService = albumService;
         this.artistService = artistService;
         this.songService = songService;
+        this.logger = LoggerFactory.getLogger(this.getClass().getName());
     }
 
 
@@ -97,20 +102,21 @@ public class AlbumApiController {
 
 
     @PostMapping("/artist/{artistId}/album/create")
-    public ResponseEntity<String> createAlbum(
+    public ResponseEntity<RedirectView> createAlbum(
             @PathVariable("artistId") Long artistId,
-            @RequestBody AlbumViewModel viewModel
+            @RequestBody NewAlbumDto albumDto
     ) {
 
         var album = new Album(
-                viewModel.getAlbumName(),
-                viewModel.getOfficialTrackCount(),
-                StatusEnum.valueOf(viewModel.getAlbumStatus().toUpperCase()),
-                viewModel.getGenre(),
-                viewModel.getReleaseDate()
+                albumDto.getAlbumName(),
+                albumDto.getOfficialTrackCount(),
+                StatusEnum.valueOf(albumDto.getAlbumStatus().toUpperCase()),
+                albumDto.getGenre(),
+                albumDto.getReleaseDate()
         );
-        albumService.saveAlbum(album, artistId);
-        return new ResponseEntity<>("Album created", HttpStatus.OK);
+        long id = albumService.saveAlbum(album, artistId).getId();
+        return new ResponseEntity<>(new RedirectView("/album/" + id), HttpStatus.CREATED);
+//        redirect to album page
     }
 
 }

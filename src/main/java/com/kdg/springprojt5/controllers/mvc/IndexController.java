@@ -41,6 +41,16 @@ public class IndexController {
         return mav;
     }
 
+    @GetMapping("/login")
+    public ModelAndView login(Model model, HttpSession session) {
+        setHistory(session, "Login");
+        ModelAndView mav = new ModelAndView("login");
+        mav.addObject("title", "Login");
+        mav.addObject("headerList", new ArrayList<>(List.of()));
+        mav.addObject("footerList", new ArrayList<>(List.of()));
+        return mav;
+    }
+
     private void setHistory(HttpSession session,String message){
         List<HistoryItem> history = (List<HistoryItem>) session.getAttribute("history");
         if (session.getAttribute("history") == null) {

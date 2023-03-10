@@ -3,10 +3,16 @@
 #... trigger a 200
 #... trigger a 404
 #Don't forget your HTTP headers!
-
+GET http://localhost:8080/api/artist/1/albums
 ###
 #Album REST API Starts
 ###
+#          Retrieve All Albums
+###
+#To trigger a 200 (OK) response status code:
+GET http://localhost:8080/api/albums
+Accept: application/json
+
 #          Retrieve Single Artsits Albums
 #To trigger a 200 (OK) response status code:
 GET http://localhost:8080/api/artist/1/albums

@@ -60,5 +60,8 @@ SELECT albums.id AS album_id, artists.id AS artist_id
 FROM artists
          JOIN albums ON artists.artistname = albums.artistname;
 
+SELECT ROW_NUMBER() OVER (ORDER BY artists.id) AS id, albums.id AS album_id, artists.id AS artist_id
+FROM artists
+         JOIN albums ON artists.artistname = albums.artistname;
 
 

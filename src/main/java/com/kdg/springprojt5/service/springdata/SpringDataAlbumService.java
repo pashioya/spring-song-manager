@@ -42,12 +42,12 @@ public class SpringDataAlbumService implements AlbumService {
         List<Album> albums = albumRepository.findAll();
         albums.forEach(album -> album.setSongs(songRepository.getSongsByAlbumId(album.getId())));
         albums.forEach(album -> album.setArtists(artistRepository.getAlbumsArtists(album.getId())));
-        return albumRepository.getAllAlbums();
+        return albums;
     }
 
     @Override
     public Album getAlbumById(long id) {
-        Album album = albumRepository.getAlbumById(id);
+        Album album = albumRepository.getReferenceById(id);
         album.setSongs(songRepository.getSongsByAlbumId(id));
         album.setArtists(artistRepository.getAlbumsArtists(id));
         return album;
@@ -62,7 +62,7 @@ public class SpringDataAlbumService implements AlbumService {
         }
         albumRepository.save(album);
 
-        AlbumArtist albumArtist = new AlbumArtist(artistRepository.getArtistById(artistId),albumRepository.getAlbumById(album.getId()));
+        AlbumArtist albumArtist = new AlbumArtist(artistRepository.getArtistById(artistId),albumRepository.getReferenceById(album.getId()));
         albumArtistRepository.save(albumArtist);
         return album;
     }
@@ -71,14 +71,13 @@ public class SpringDataAlbumService implements AlbumService {
     @Override
     public void deleteAlbum(long id) {
         songRepository.getSongsByAlbumId(id).forEach(song -> songRepository.deleteById(song.getId()));
+        albumArtistRepository.delete(new AlbumArtist(artistRepository.getArtistById(artistRepository.getAlbumsArtists(id).get(0).getId()), albumRepository.getReferenceById(id)));
         albumRepository.deleteById(id);
     }
 
     @Override
     public void printAlbum(long id) {
-
-        Album album = albumRepository.getAlbumById((id));
-        assert album != null;
+        Album album = albumRepository.getReferenceById((id));
         String filename = album.getAlbumName();
         String json = jsonHandler.saveToJson(album, filename);
         logger.info("Album saved to JSON file: " + filename);

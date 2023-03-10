@@ -1,28 +1,35 @@
 package com.kdg.springprojt5.controllers.api;
 
 import com.kdg.springprojt5.controllers.api.dto.ArtistDto;
-import com.kdg.springprojt5.controllers.mvc.viewmodel.ArtistViewModel;
+import com.kdg.springprojt5.controllers.api.dto.NewArtistDto;
 import com.kdg.springprojt5.domain.Artist;
 import com.kdg.springprojt5.service.ArtistService;
 import jakarta.validation.Valid;
 import org.modelmapper.ModelMapper;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.view.RedirectView;
 
+import java.util.ArrayList;
+import java.util.List;
 @RestController
 @RequestMapping("/api")
 public class ArtistApiController {
 
+    private final Logger logger;
     private final ArtistService artistService;
 
     @Autowired
     private ModelMapper modelMapper;
 
     public ArtistApiController(ArtistService artistService) {
+        this.logger = LoggerFactory.getLogger(this.getClass().getName());
         this.artistService = artistService;
     }
 
@@ -37,8 +44,16 @@ public class ArtistApiController {
     @GetMapping("/artists")
     public ResponseEntity<Iterable<ArtistDto>> getAllArtists() {
         var artists = artistService.getAllArtists();
-        return new ResponseEntity<>(
-                modelMapper.map(artists, Iterable.class), HttpStatus.OK);
+        if (artists == null) {
+            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+        }
+        List<ArtistDto> artistDtos = new ArrayList<>();
+        for (Artist artist : artists) {
+            ArtistDto artistDto = modelMapper.map(artist, ArtistDto.class);
+            artistDto.setId(artist.getId());
+            artistDtos.add(artistDto);
+        }
+        return new ResponseEntity<>(artistDtos, HttpStatus.OK);
     }
 
     @DeleteMapping("/artist/{id}/delete")
@@ -48,19 +63,36 @@ public class ArtistApiController {
     }
 
     @PostMapping("/artist/create")
-    public ResponseEntity<Void> createArtist(
-            @Valid @ModelAttribute ArtistViewModel viewModel, Model model, BindingResult errors, @PathVariable long albumId
+    public ResponseEntity<RedirectView> createArtist(
+            @Valid @ModelAttribute NewArtistDto artistDto, Model model, BindingResult errors
     ) {
-//        if (errors.hasErrors()) {
-//            errors.getAllErrors().forEach(error -> logger.error(error.toString()));
-//            return "addSong";
-//        }
+        if (errors.hasErrors()) {
+            errors.getAllErrors().forEach(error -> logger.error(error.toString()));
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new RedirectView("/allArtists"));
+        }
         Artist artist = new Artist(
-                viewModel.getArtistName(),
-                viewModel.getArtistFollowers()
+                artistDto.getArtistName(),
+                artistDto.getArtistFollowers()
+        );
+        artistService.saveArtist(artist);
+        return ResponseEntity.ok().body(new RedirectView("/allArtists"));
+    }
+
+
+    @PostMapping("/album/{albumId}/addArtist")
+    public ResponseEntity<RedirectView>  addAlbumToArtist(
+            @Valid @ModelAttribute NewArtistDto artistDto, Model model, BindingResult errors, @PathVariable long albumId
+    ) {
+        if (errors.hasErrors()) {
+            errors.getAllErrors().forEach(error -> logger.error(error.toString()));
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new RedirectView("/album/" + albumId));
+        }
+        Artist artist = new Artist(
+                artistDto.getArtistName(),
+                artistDto.getArtistFollowers()
         );
         artistService.saveArtist(artist);
         artistService.addArtistToAlbum(artist, albumId);
-        return new ResponseEntity<>(HttpStatus.OK);
+        return ResponseEntity.ok().body(new RedirectView("/album/" + albumId));
     }
 }

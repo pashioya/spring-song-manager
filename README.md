@@ -26,16 +26,16 @@
     - lists (collections)
     - Jdbc  (This is the main profile utilizing a massive database)
     - jpa
-  - The profiles are switched from the application.properties files by commenting out the appropriate blocks.
+  - The profiles are switched from the application.properties file by changing the active profile
   - the application.properties file is setup in blocks to ensure smooth transition between profiles.
 - Database being used
   - I only use postgres for my database. however each repository implementation has its own set of data.
 
 - Known Bugs
   - jdbc profile has all the data however entity creation not working as expected.
-  - jpa profile Does not have any data however works perfectly 
-  - springSata profile is not functioning as expected
-    - will be repaired in due time 
+  - jpa profile Does not have any data however works perfectly
+  - spring data profile does not have any data however works perfectly
+  - Album and artist previews are temporarily disabled due to transition to ajax
 
   - Week 1
     - Retrieve Single Artsits Albums

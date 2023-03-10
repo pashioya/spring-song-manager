@@ -1,6 +1,7 @@
 package com.kdg.springprojt5.controllers.api.dto;
 
 public class SongDto {
+    private long id;
     private String songTitle;
     private double durationMs;
     private String url;
@@ -11,6 +12,17 @@ public class SongDto {
         this.songTitle = songTitle;
         this.durationMs = durationMs;
         this.url = url;
+    }
+
+    public SongDto() {
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
     }
 
     public String getSongTitle() {
