@@ -3,18 +3,15 @@ package com.kdg.springprojt5.controllers.mvc;
 import com.kdg.springprojt5.controllers.mvc.helper.DataItem;
 import com.kdg.springprojt5.controllers.mvc.helper.HistoryItem;
 import com.kdg.springprojt5.controllers.mvc.viewmodel.SongViewModel;
-import com.kdg.springprojt5.domain.Song;
 import com.kdg.springprojt5.service.AlbumService;
 import com.kdg.springprojt5.service.ArtistService;
 import com.kdg.springprojt5.service.SongService;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.servlet.http.HttpSession;
-import jakarta.validation.Valid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -28,18 +25,15 @@ import java.util.List;
 public class SongsController {
     private final Logger logger;
     private final SongService songService;
-    private final ArtistService artistService;
-
     private final AlbumService albumService;
 
-    public SongsController(SongService songService, ArtistService artistService, AlbumService albumService) {
-        this.artistService = artistService;
+    public SongsController(SongService songService, AlbumService albumService) {
         this.logger = LoggerFactory.getLogger(this.getClass());
         this.songService = songService;
         this.albumService = albumService;
     }
     @GetMapping
-    public ModelAndView songs(Model model, HttpSession session) {
+    public ModelAndView songs(HttpSession session) {
         setHistory(session, "All Songs");
         ModelAndView mav = new ModelAndView("allSongs");
         mav.addObject("title", "Songs");
@@ -56,7 +50,7 @@ public class SongsController {
         return mav;
     }
     @GetMapping("/fullSong/{id}")
-    public ModelAndView fullSong(Model model, @PathVariable long id, HttpSession session) {
+    public ModelAndView fullSong(@PathVariable long id, HttpSession session) {
         setHistory(session, "Full Song: " + id);
         ModelAndView mav = new ModelAndView("fullSong");
         try {
@@ -66,6 +60,7 @@ public class SongsController {
         catch (Exception e){
             throw new EntityNotFoundException("Song with id " + id + " not found");
         }
+        logger.info("Song with id " + id + " found");
 
         mav.addObject("title", "Songs");
         mav.addObject("headerList", new ArrayList<>(Arrays.asList(
@@ -88,30 +83,31 @@ public class SongsController {
         model.addAttribute("headerList", new ArrayList<>(List.of(
                 new DataItem("backButton", "/allSongs"))
         ));
+        logger.info("Add Song page loading");
 
         SongViewModel songViewModel = new SongViewModel();
         model.addAttribute("song", songViewModel);
         return "addSong";
     }
 
-    @PostMapping("/album/{albumId}/addSong")
-    public String addSong(@Valid @ModelAttribute SongViewModel viewModel, BindingResult errors, HttpSession session, @PathVariable long albumId) {
-        if (errors.hasErrors()) {
-            errors.getAllErrors().forEach(error -> logger.error(error.toString()));
-            return "addSong";
-        }
-        Song song = new Song(
-                albumId,
-                viewModel.getUrl(),
-                viewModel.getSongTitle(),
-                viewModel.getTrackNumber(),
-                viewModel.getDurationMS(),
-                viewModel.isExplicit()
-        );
-        logger.debug(viewModel.toString());
-        songService.saveSong(song);
-        return "redirect:/allAlbums/fullAlbum/" + albumId;
-    }
+//    @PostMapping("/album/{albumId}/addSong")
+//    public String addSong(@Valid @ModelAttribute SongViewModel viewModel, BindingResult errors, HttpSession session, @PathVariable long albumId) {
+//        if (errors.hasErrors()) {
+//            errors.getAllErrors().forEach(error -> logger.error(error.toString()));
+//            return "addSong";
+//        }
+//        Song song = new Song(
+//                albumId,
+//                viewModel.getUrl(),
+//                viewModel.getSongTitle(),
+//                viewModel.getTrackNumber(),
+//                viewModel.getDurationMS(),
+//                viewModel.isExplicit()
+//        );
+//        logger.debug(viewModel.toString());
+//        songService.saveSong(song);
+//        return "redirect:/allAlbums/fullAlbum/" + albumId;
+//    }
 
 
     @GetMapping("/fullSong/deleteSong/{id}")

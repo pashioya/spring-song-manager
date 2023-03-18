@@ -4,23 +4,18 @@ package com.kdg.springprojt5.controllers.mvc;
 import com.kdg.springprojt5.controllers.mvc.helper.DataItem;
 import com.kdg.springprojt5.controllers.mvc.helper.HistoryItem;
 import com.kdg.springprojt5.controllers.mvc.viewmodel.AlbumViewModel;
-import com.kdg.springprojt5.domain.Album;
-import com.kdg.springprojt5.domain.StatusEnum;
 import com.kdg.springprojt5.service.AlbumService;
 import com.kdg.springprojt5.service.ArtistService;
 import com.kdg.springprojt5.service.SongService;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.servlet.http.HttpSession;
-import jakarta.validation.Valid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
-import java.rmi.ServerError;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -59,7 +54,7 @@ public class AlbumsController {
         return mav;
     }
     @GetMapping("/fullAlbum/{id}")
-    public ModelAndView fullAlbum(Model model, @PathVariable long id, HttpSession session) {
+    public ModelAndView fullAlbum(@PathVariable long id, HttpSession session) {
         setHistory(session, "FullAlbum: " + id);
         ModelAndView mav = new ModelAndView("fullAlbum");
         var album = albumService.getAlbumById(id);
@@ -97,36 +92,33 @@ public class AlbumsController {
         setHistory(session, "Add Album");
 
         model.addAttribute("title", "Add Album");
-//        model.addAttribute("headerList", new ArrayList<>(List.of(
-//                new DataItem("backButton", "/allAlbums"))
-//        ));
         AlbumViewModel albumViewModel = new AlbumViewModel();
         model.addAttribute("album", albumViewModel);
         return "addAlbum";
     }
 
-    @PostMapping("/artist/{artistId}/addAlbum")
-    public String addAlbum(@Valid @ModelAttribute AlbumViewModel viewModel,BindingResult errors, HttpSession session, @PathVariable long artistId) {
-        Album album = new Album(
-                viewModel.getAlbumName(),
-                viewModel.getOfficialTrackCount(),
-                StatusEnum.valueOf(viewModel.getAlbumStatus().toUpperCase()),
-                viewModel.getGenre(),
-                viewModel.getReleaseDate()
-        );
-        logger.info(albumService.saveAlbum(album, artistId).toString());
-
-        return "redirect:/allAlbums";
-    }
+//    @PostMapping("/artist/{artistId}/addAlbum")
+//    public String addAlbum(@Valid @ModelAttribute AlbumViewModel viewModel,BindingResult errors, HttpSession session, @PathVariable long artistId) {
+//        Album album = new Album(
+//                viewModel.getAlbumName(),
+//                viewModel.getOfficialTrackCount(),
+//                StatusEnum.valueOf(viewModel.getAlbumStatus().toUpperCase()),
+//                viewModel.getGenre(),
+//                viewModel.getReleaseDate()
+//        );
+//        logger.info(albumService.saveAlbum(album, artistId).toString());
+//
+//        return "redirect:/allAlbums";
+//    }
 
     @GetMapping("/fullAlbum/deleteAlbum/{id}")
-    public String deleteAlbum(@PathVariable long id) throws ServerError {
+    public String deleteAlbum(@PathVariable long id) {
         albumService.deleteAlbum(id);
         return "redirect:/allAlbums";
     }
 
     @GetMapping("/fullAlbum/printAlbum/{id}")
-    public String printAlbum(@PathVariable long id) throws ServerError {
+    public String printAlbum(@PathVariable long id) {
         albumService.printAlbum(id);
         return "redirect:/allAlbums";
     }

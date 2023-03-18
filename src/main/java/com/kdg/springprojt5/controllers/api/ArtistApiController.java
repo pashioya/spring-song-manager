@@ -11,7 +11,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.view.RedirectView;
@@ -63,25 +62,25 @@ public class ArtistApiController {
     }
 
     @PostMapping("/artist/create")
-    public ResponseEntity<RedirectView> createArtist(
-            @Valid @ModelAttribute NewArtistDto artistDto, Model model, BindingResult errors
+    public String createArtist(
+            @Valid @ModelAttribute NewArtistDto artistDto, BindingResult errors
     ) {
         if (errors.hasErrors()) {
             errors.getAllErrors().forEach(error -> logger.error(error.toString()));
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new RedirectView("/allArtists"));
+            return "addArtist";
         }
         Artist artist = new Artist(
                 artistDto.getArtistName(),
                 artistDto.getArtistFollowers()
         );
         artistService.saveArtist(artist);
-        return ResponseEntity.ok().body(new RedirectView("/allArtists"));
+        return "redirect:/allArtists";
     }
 
 
     @PostMapping("/album/{albumId}/addArtist")
     public ResponseEntity<RedirectView>  addAlbumToArtist(
-            @Valid @ModelAttribute NewArtistDto artistDto, Model model, BindingResult errors, @PathVariable long albumId
+            @Valid @ModelAttribute NewArtistDto artistDto, BindingResult errors, @PathVariable long albumId
     ) {
         if (errors.hasErrors()) {
             errors.getAllErrors().forEach(error -> logger.error(error.toString()));

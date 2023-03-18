@@ -1,7 +1,7 @@
 package com.kdg.springprojt5.domain;
 
 import jakarta.persistence.*;
-@Entity(name = "users")
+@Entity(name = "app_users")
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

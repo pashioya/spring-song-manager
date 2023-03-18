@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head th:replace="~{fragments/head :: head (${title})}"></head>
 <body>
 <header th:replace="~{fragments/header :: header (${headerList})}"></header>
@@ -12,14 +12,6 @@
         <span>Song Name: </span>
         <span th:text="${song.getSongTitle()}"></span>
     </div>
-<!--    <div class="song-item">-->
-<!--        <span>Artist: </span>-->
-<!--        <span th:text="${song.getArtistName()}"></span>-->
-<!--    </div>-->
-<!--    <div class="song-item">-->
-<!--        <span>Album: </span>-->
-<!--        <span th:text="${song.getAlbumName()}"></span>-->
-<!--    </div>-->
     <div class="song-item">
         <span>Track Number: </span>
         <span th:text="${song.getTrackNumber()}"></span>

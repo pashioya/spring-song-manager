@@ -35,7 +35,7 @@ public class ArtistsController {
     }
 
     @GetMapping()
-    public ModelAndView artists(Model model, HttpSession session) {
+    public ModelAndView artists(HttpSession session) {
         setHistory(session, "All Artists");
         ModelAndView mav = new ModelAndView("allArtists");
         mav.addObject("title", "Artists");
@@ -53,7 +53,7 @@ public class ArtistsController {
     }
 
     @GetMapping("fullArtist/{id}")
-    public ModelAndView fullArtist(Model model, @PathVariable long id, HttpSession session) {
+    public ModelAndView fullArtist(@PathVariable long id, HttpSession session) {
         setHistory(session, "Full Artist: " + id);
         ModelAndView mav = new ModelAndView("fullArtist");
         try{
@@ -106,7 +106,7 @@ public class ArtistsController {
         return "addArtist";
     }
     @PostMapping("fullAlbum/{albumId}/addArtist")
-    public String addArtistWithAlbum(@Valid @ModelAttribute ArtistViewModel viewModel, Model model, BindingResult errors, @PathVariable long albumId) {
+    public String addArtistWithAlbum(@Valid @ModelAttribute ArtistViewModel viewModel, BindingResult errors, @PathVariable long albumId) {
         if (errors.hasErrors()) {
             errors.getAllErrors().forEach(error -> logger.error(error.toString()));
             return "addSong";
@@ -120,20 +120,20 @@ public class ArtistsController {
         return "redirect:/allAlbums/fullAlbum/" + albumId;
     }
 
-    @PostMapping("/addArtist")
-    public String addArtist(@Valid @ModelAttribute ArtistViewModel viewModel, BindingResult errors) {
-        if (errors.hasErrors()) {
-            errors.getAllErrors().forEach(error -> logger.error(error.toString()));
-            return "addSong";
-        }
-        Artist artist = new Artist(
-                viewModel.getArtistName(),
-                viewModel.getArtistFollowers()
-        );
-
-        artistService.saveArtist(artist);
-        return "redirect:/allArtists";
-    }
+//    @PostMapping("/addArtist")
+//    public String addArtist(@Valid @ModelAttribute ArtistViewModel viewModel, BindingResult errors) {
+//        if (errors.hasErrors()) {
+//            errors.getAllErrors().forEach(error -> logger.error(error.toString()));
+//            return "addSong";
+//        }
+//        Artist artist = new Artist(
+//                viewModel.getArtistName(),
+//                viewModel.getArtistFollowers()
+//        );
+//
+//        artistService.saveArtist(artist);
+//        return "redirect:/allArtists";
+//    }
 
     @GetMapping("/fullArtist/deleteArtist/{id}")
     public String deleteArtist(@PathVariable long id) {

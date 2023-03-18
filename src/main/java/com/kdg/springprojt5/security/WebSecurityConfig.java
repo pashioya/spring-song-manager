@@ -12,32 +12,43 @@ import org.springframework.security.web.SecurityFilterChain;
 @Configuration
 @EnableWebSecurity
 public class WebSecurityConfig {
+
+
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        http.authorizeHttpRequests(authorizeRequests -> authorizeRequests
+        http.httpBasic()
+                .and()
+                .authorizeHttpRequests(authorizeRequests -> authorizeRequests
                         .requestMatchers(HttpMethod.GET, "/js/**", "/css/**", "/webjars/**", "/favicon.ico").permitAll()
+                        .requestMatchers(HttpMethod.GET,"/api/**").permitAll()
+
+//                TODO: remove later for testing purpose only
+                        .requestMatchers("/**").permitAll()
                         .requestMatchers("/api/**").permitAll()
 
+                        .requestMatchers(HttpMethod.POST, "/api/**").permitAll()
+                        .requestMatchers(HttpMethod.PATCH).permitAll()
+                        .requestMatchers(HttpMethod.PATCH, "/api/**").permitAll()
+                        .requestMatchers(HttpMethod.DELETE).permitAll()
+                        .requestMatchers(HttpMethod.DELETE, "/api/**").permitAll()
 
-                        .requestMatchers("/resources/**").permitAll()
+
                         .requestMatchers("/", "/register").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/register").permitAll()
                         .anyRequest().authenticated())
                 .formLogin()
-//                .loginPage("/login")
-                .and()
-                .logout()
+                .loginPage("/login")
                 .permitAll()
                 .and()
-                .csrf().disable();// disable CSRF protection
+                .logout()
+                .permitAll();
+
         return http.build();
     }
+
+
     @Bean
     public BCryptPasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
-
-//    @Bean
-//    public WebSecurityCustomizer webSecurityCustomizer() {
-//        return (web) -> web.ignoring().requestMatchers("/js/**", "/css/**", "/webjars/**");
-//    }
 }

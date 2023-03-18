@@ -43,23 +43,23 @@ DELETE http://localhost:8080/api/album/1000/delete
 #         Create Single Album
 ###
 #To trigger a 201 (Created) response status code:
-POST http://localhost:8080/api/album/create
+POST http://localhost:8080/api/artist/1/album/create
 Accept: application/json
 Content-Type: application/json
+
 {
-    "title": "The Dark Side of the Moon",
-    "releaseDate": "1973-03-01",
-    "recordLabel": "Harvest",
+    "albumName": "The Dark Side of the Moon",
+    "officialTrackCount": 1,
+    "albumStatus": "SINGLE",
     "genre": "Progressive Rock",
-    "artist": {
-        "id": 1
-    }
+    "releaseDate": "1973-03-01"
 }
 ###
 #To trigger a 400 (Bad Request) response status code:
 POST http://localhost:8080/api/album/create
 Accept: application/json
 Content-Type: application/xml
+
 <album>
     <title>The Dark Side of the Moon</title>
     <releaseDate>1973-03-01</releaseDate>
@@ -69,27 +69,27 @@ Content-Type: application/xml
         <id>1</id>
     </artist>
 </album>
-
+###
 #         Update Single Album
 ###
 #To trigger a 200 (OK) response status code:
 PUT http://localhost:8080/api/album/1/update
 Accept: application/json
 Content-Type: application/json
+
 {
-    "title": "The Dark Side of the Moon",
-    "releaseDate": "1973-03-01",
-    "recordLabel": "Harvest",
-    "genre": "Progressive Rock",
-    "artist": {
-        "id": 1
-    }
+  "albumName": "The Dark Side of the Moon",
+  "officialTrackCount": 1,
+  "albumStatus": "SINGLE",
+  "genre": "Progressive Rock",
+  "releaseDate": "1973-03-01"
 }
 ###
 #To trigger a 400 (Bad Request) response status code:
 PUT http://localhost:8080/api/album/1/update
 Accept: application/json
 Content-Type: application/xml
+
 <album>
     <title>The Dark Side of the Moon</title>
     <releaseDate>1973-03-01</releaseDate>
@@ -104,6 +104,7 @@ Content-Type: application/xml
 PUT http://localhost:8080/api/album/1000/update
 Accept: application/json
 Content-Type: application/json
+
 {
     "title": "The Dark Side of the Moon",
     "releaseDate": "1973-03-01",
@@ -145,6 +146,7 @@ DELETE http://localhost:8080/api/artist/1000/delete
 POST http://localhost:8080/api/artist/create
 Accept: application/json
 Content-Type: application/json
+
 {
     "name": "Pink Floyd",
     "genre": "Progressive Rock",
@@ -155,18 +157,21 @@ Content-Type: application/json
 POST http://localhost:8080/api/artist/create
 Accept: application/json
 Content-Type: application/xml
+
 <artist>
     <name>Pink Floyd</name>
     <genre>Progressive Rock</genre>
     <country>United Kingdom</country>
 </artist>
 
+###
 #         Update Single Artist
 ###
 #To trigger a 200 (OK) response status code:
 PUT http://localhost:8080/api/artist/1/update
 Accept: application/json
 Content-Type: application/json
+
 {
     "name": "Pink Floyd",
     "genre": "Progressive Rock",
@@ -177,6 +182,7 @@ Content-Type: application/json
 PUT http://localhost:8080/api/artist/1/update
 Accept: application/json
 Content-Type: application/xml
+
 <artist>
     <name>Pink Floyd</name>
     <genre>Progressive Rock</genre>
@@ -187,6 +193,7 @@ Content-Type: application/xml
 PUT http://localhost:8080/api/artist/1000/update
 Accept: application/json
 Content-Type: application/json
+
 {
     "name": "Pink Floyd",
     "genre": "Progressive Rock",
@@ -224,6 +231,7 @@ DELETE http://localhost:8080/api/song/1000/delete
 POST http://localhost:8080/api/song/create
 Accept: application/json
 Content-Type: application/json
+
 {
     "title": "Money",
     "duration": "00:06:47",
@@ -236,6 +244,7 @@ Content-Type: application/json
 POST http://localhost:8080/api/song/create
 Accept: application/json
 Content-Type: application/xml
+
 <song>
     <title>Money</title>
     <duration>00:06:47</duration>
@@ -243,13 +252,14 @@ Content-Type: application/xml
         <id>1</id>
     </album>
 </song>
-
+###
 #         Update Single Song
 ###
 #To trigger a 200 (OK) response status code:
 PUT http://localhost:8080/api/song/1/update
 Accept: application/json
 Content-Type: application/json
+
 {
     "title": "Money",
     "duration": "00:06:47",
@@ -262,6 +272,7 @@ Content-Type: application/json
 PUT http://localhost:8080/api/song/1/update
 Accept: application/json
 Content-Type: application/xml
+
 <song>
     <title>Money</title>
     <duration>00:06:47</duration>
@@ -274,6 +285,7 @@ Content-Type: application/xml
 PUT http://localhost:8080/api/song/1000/update
 Accept: application/json
 Content-Type: application/json
+
 {
     "title": "Money",
     "duration": "00:06:47",

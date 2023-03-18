@@ -1,15 +1,18 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head th:replace="~{fragments/head :: head (${title})}"></head>
 <body>
 <header th:replace="~{fragments/header :: header (${headerList})}"></header>
 <section>
-    <form method="post" class="row g-3 needs-validation" th:object="${album}" novalidate>
+    <form method="post" class="row g-3 needs-validation" id="add-album-form" novalidate>
         <div class="col-md-4">
             <label for="albumName" class="form-label"> albumName</label>
             <input type="text" name="albumName" id="albumName" class="form-control" required>
             <div class="valid-feedback">
                 Looks good!
+            </div>
+            <div class="invalid-feedback">
+                Please submit a valid album name.
             </div>
         </div>
         <div class="col-md-4">
@@ -32,12 +35,18 @@
             <div class="valid-feedback">
                 Looks good!
             </div>
+            <div class="invalid-feedback">
+                Please enter a valid number.
+            </div>
         </div>
         <div class="col-md-4">
             <label for="genre" class="form-label" >genre</label>
             <input type="text" name="genre" id="genre" class="form-control" required>
             <div class="valid-feedback">
                 Looks good!
+            </div>
+            <div class="invalid-feedback">
+                Please enter a valid genre.
             </div>
         </div>
         <div class="col-md-4">
@@ -46,13 +55,17 @@
             <div class="valid-feedback">
                 Looks good!
             </div>
+            <div class="invalid-feedback">
+                Please enter a valid date.
+            </div>
         </div>
-        <div th:if="${#fields.hasAnyErrors()}" class="alert alert-danger">
-            <p>The form contained errors!</p>
-        </div>
+<!--        <div th:if="${#fields.hasAnyErrors()}" class="alert alert-danger">-->
+<!--            <p>The form contained errors!</p>-->
+<!--        </div>-->
         <button type="submit" value="submit" class="btn btn-primary">Submit</button>
     </form>
 </section>
 <footer th:replace="~{fragments/footer :: footer (${footerList})}"></footer>
 </body>
+<script src="/js/forms/addAlbum.js"></script>
 </html>

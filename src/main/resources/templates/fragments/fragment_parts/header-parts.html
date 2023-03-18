@@ -1,11 +1,35 @@
+  <html lang="en"
+        xmlns:th="http://www.thymeleaf.org"
+        xmlns:sec="http://www.thymeleaf.org/extras/spring-security">>
+  <head>
+    <title>
+      header-parts
+    </title>
+  </head>
+  <body>
+      <a th:fragment="allSongs (content)" class="nav-link" href="/allSongs"> All Songs</a>
 
-  <a th:fragment="allSongs (content)" class="nav-link" href="/allSongs"> All Songs</a>
+      <a th:fragment="allAlbums (content)" class="nav-link" href="/allAlbums">All Albums</a>
 
-  <a th:fragment="allAlbums (content)" class="nav-link" href="/allAlbums">All Albums</a>
+      <a th:fragment="allArtists (content)" class="nav-link" href="/allArtists">All Artists</a>
 
-  <a th:fragment="allArtists (content)" class="nav-link" href="/allArtists">All Artists</a>
+      <a th:fragment="backButton (content)" class="nav-link" th:href="${content}">Back</a>
 
-<!--  <a th:fragment="backButton (content)" class="nav-link" th:href="${content}">Back</a>-->
+      <ul th:fragment="loginRegister (content)" class="navbar-nav ms-auto">
+        <!--    <li class="nav-item me-2 pt-2" sec:authorize="isAuthenticated()">-->
+        <!--      <span class="navbar-text">Welcome, <span sec:authentication="isAuthenticated()"></span>!</span>-->
+        <!--    </li>-->
+        <li sec:authorize="isAuthenticated()">
+          <form class="d-flex" th:action="@{/logout}" th:method="POST">
+            <button type="submit" class="btn btn-secondary">Sign out</button>
+          </form>
+        </li>
+        <li class="nav-item" sec:authorize="!isAuthenticated()">
+          <a class="nav-link" th:href="@{/login}" th:classappend="${page == 'login'} ? 'active' : ''">Sign in</a>
+        </li>
+      </ul>
+  </body>
+  </html>
 
 
 
