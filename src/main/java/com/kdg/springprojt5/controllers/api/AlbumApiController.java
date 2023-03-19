@@ -6,11 +6,9 @@ import com.kdg.springprojt5.domain.Album;
 import com.kdg.springprojt5.domain.StatusEnum;
 import com.kdg.springprojt5.service.AlbumService;
 import com.kdg.springprojt5.service.ArtistService;
-import com.kdg.springprojt5.service.SongService;
 import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -27,12 +25,12 @@ public class AlbumApiController {
     private final ArtistService artistService;
     private final Logger logger;
 
-    @Autowired
-    private ModelMapper modelMapper;
+    private final ModelMapper modelMapper;
 
-    public AlbumApiController(AlbumService albumService, ArtistService artistService) {
+    public AlbumApiController(AlbumService albumService, ArtistService artistService, ModelMapper modelMapper) {
         this.albumService = albumService;
         this.artistService = artistService;
+        this.modelMapper = modelMapper;
         this.logger = LoggerFactory.getLogger(this.getClass().getName());
     }
 

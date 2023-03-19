@@ -55,21 +55,6 @@ Content-Type: application/json
     "releaseDate": "1973-03-01"
 }
 ###
-#To trigger a 400 (Bad Request) response status code:
-POST http://localhost:8080/api/album/create
-Accept: application/json
-Content-Type: application/xml
-
-<album>
-    <title>The Dark Side of the Moon</title>
-    <releaseDate>1973-03-01</releaseDate>
-    <recordLabel>Harvest</recordLabel>
-    <genre>Progressive Rock</genre>
-    <artist>
-        <id>1</id>
-    </artist>
-</album>
-###
 #         Update Single Album
 ###
 #To trigger a 200 (OK) response status code:
@@ -239,6 +224,7 @@ Content-Type: application/json
         "id": 1
     }
 }
+
 ###
 #To trigger a 400 (Bad Request) response status code:
 POST http://localhost:8080/api/song/create

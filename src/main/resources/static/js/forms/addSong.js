@@ -4,10 +4,11 @@
 
 const form = document.getElementById("add-song-form");
 
-const songName = document.getElementById("songName");
-const songDuration = document.getElementById("songDuration");
-const songTrackNumber = document.getElementById("songTrackNumber");
-let explicit = Boolean(document.getElementById("songExplicit"))
+const url = document.getElementById("songUrl");
+const songTitle = document.getElementById("songTitle");
+const songDuration = document.getElementById("durationMS");
+const songTrackNumber = document.getElementById("officialTrackNumber");
+let explicit = Boolean(document.getElementById("explicit"))
 
 
 
@@ -45,7 +46,8 @@ fetch('/api/album/'+albumId+'/song/create', {
             },
             body: JSON.stringify(
                 {
-                "songName": songName.value,
+                    "url": url.value,
+                "songTitle": songTitle.value,
                 "songDuration": songDuration.value,
                 "songTrackNumber": parseInt(songTrackNumber.value),
                 "explicit": explicit

@@ -1,6 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org"
-      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head th:replace="~{fragments/head :: head (${title})}"></head>
 <body>
 <header th:replace="~{fragments/header :: header (${headerList})}"></header>
@@ -65,5 +64,6 @@
     </form>
 </section>
 <footer th:replace="~{fragments/footer :: footer (${footerList})}"></footer>
+<script th:src="@{/js/forms/addSong.js}"></script>
 </body>
 </html>

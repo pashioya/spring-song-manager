@@ -5,12 +5,10 @@ import com.kdg.springprojt5.controllers.api.dto.SongDto;
 import com.kdg.springprojt5.domain.Song;
 import com.kdg.springprojt5.service.AlbumService;
 import com.kdg.springprojt5.service.SongService;
-import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
@@ -22,15 +20,13 @@ public class SongApiController {
     private final SongService songService;
     private final AlbumService albumService;
     private final Logger logger;
+    private final ModelMapper modelMapper;
 
-    @Autowired
-    private ModelMapper modelMapper;
-
-    public SongApiController(SongService songService, AlbumService albumService) {
+    public SongApiController(SongService songService, AlbumService albumService, ModelMapper modelMapper) {
         this.songService = songService;
         this.albumService = albumService;
         this.logger = LoggerFactory.getLogger(this.getClass().getName());
-
+        this.modelMapper = modelMapper;
     }
 
     @GetMapping("/song/{id}")
@@ -59,7 +55,7 @@ public class SongApiController {
     }
 
     @PostMapping("/album/{albumId}/add/song")
-    public ResponseEntity<SongDto> addSongToAlbum(@Valid @ModelAttribute NewSongDto songDto, BindingResult errors, HttpSession session, @PathVariable long albumId) {
+    public ResponseEntity<SongDto> addSongToAlbum(@Valid @ModelAttribute NewSongDto songDto, BindingResult errors, @PathVariable long albumId) {
         if (errors.hasErrors()) {
             errors.getAllErrors().forEach(error -> logger.error(error.toString()));
         }

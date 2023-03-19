@@ -52,7 +52,7 @@ public class ArtistsController {
         return mav;
     }
 
-    @GetMapping("fullArtist/{id}")
+    @GetMapping("/fullArtist/{id}")
     public ModelAndView fullArtist(@PathVariable long id, HttpSession session) {
         setHistory(session, "Full Artist: " + id);
         ModelAndView mav = new ModelAndView("fullArtist");
@@ -93,7 +93,7 @@ public class ArtistsController {
         return "addArtist";
     }
 
-    @GetMapping("fullAlbum/{albumId}/addArtist")
+    @GetMapping("/fullAlbum/{albumId}/addArtist")
     public String addArtistToAlbum(Model model,HttpSession session, @PathVariable long albumId) {
         setHistory(session, "Add Artist");
         model.addAttribute("title", "Add Artist");
@@ -119,21 +119,6 @@ public class ArtistsController {
         artistService.addArtistToAlbum(artist, albumId);
         return "redirect:/allAlbums/fullAlbum/" + albumId;
     }
-
-//    @PostMapping("/addArtist")
-//    public String addArtist(@Valid @ModelAttribute ArtistViewModel viewModel, BindingResult errors) {
-//        if (errors.hasErrors()) {
-//            errors.getAllErrors().forEach(error -> logger.error(error.toString()));
-//            return "addSong";
-//        }
-//        Artist artist = new Artist(
-//                viewModel.getArtistName(),
-//                viewModel.getArtistFollowers()
-//        );
-//
-//        artistService.saveArtist(artist);
-//        return "redirect:/allArtists";
-//    }
 
     @GetMapping("/fullArtist/deleteArtist/{id}")
     public String deleteArtist(@PathVariable long id) {

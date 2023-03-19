@@ -5,7 +5,6 @@ import jakarta.servlet.http.HttpSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
@@ -25,19 +24,21 @@ public class IndexController {
     }
 
     @GetMapping
-    public ModelAndView index(Model model,HttpSession session) {
+    public ModelAndView index(HttpSession session) {
         setHistory(session, "Index");
         ModelAndView mav = new ModelAndView("index");
         mav.addObject("title", "Song Manager");
+        logger.info("Index page loading");
         return mav;
     }
 
     @GetMapping("/pageHistory")
-    public ModelAndView pageHistory(Model model, HttpSession session) {
+    public ModelAndView pageHistory(HttpSession session) {
         setHistory(session, "Page History");
         ModelAndView mav = new ModelAndView("pageHistory");
         mav.addObject("title", "Page History");
         mav.addObject("pageHistory", session.getAttribute("history"));
+        logger.info("Page History page loading");
         return mav;
     }
 

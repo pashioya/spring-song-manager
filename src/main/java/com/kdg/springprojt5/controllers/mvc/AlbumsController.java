@@ -97,20 +97,6 @@ public class AlbumsController {
         return "addAlbum";
     }
 
-//    @PostMapping("/artist/{artistId}/addAlbum")
-//    public String addAlbum(@Valid @ModelAttribute AlbumViewModel viewModel,BindingResult errors, HttpSession session, @PathVariable long artistId) {
-//        Album album = new Album(
-//                viewModel.getAlbumName(),
-//                viewModel.getOfficialTrackCount(),
-//                StatusEnum.valueOf(viewModel.getAlbumStatus().toUpperCase()),
-//                viewModel.getGenre(),
-//                viewModel.getReleaseDate()
-//        );
-//        logger.info(albumService.saveAlbum(album, artistId).toString());
-//
-//        return "redirect:/allAlbums";
-//    }
-
     @GetMapping("/fullAlbum/deleteAlbum/{id}")
     public String deleteAlbum(@PathVariable long id) {
         albumService.deleteAlbum(id);

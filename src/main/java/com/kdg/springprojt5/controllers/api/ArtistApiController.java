@@ -8,7 +8,6 @@ import jakarta.validation.Valid;
 import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
@@ -24,10 +23,10 @@ public class ArtistApiController {
     private final Logger logger;
     private final ArtistService artistService;
 
-    @Autowired
-    private ModelMapper modelMapper;
+    private final ModelMapper modelMapper;
 
-    public ArtistApiController(ArtistService artistService) {
+    public ArtistApiController(ArtistService artistService, ModelMapper modelMapper) {
+        this.modelMapper = modelMapper;
         this.logger = LoggerFactory.getLogger(this.getClass().getName());
         this.artistService = artistService;
     }

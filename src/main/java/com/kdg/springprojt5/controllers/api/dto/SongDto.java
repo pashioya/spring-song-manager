@@ -3,7 +3,10 @@ package com.kdg.springprojt5.controllers.api.dto;
 public class SongDto {
     private long id;
     private String songTitle;
+
+    private int trackNumber;
     private double durationMs;
+
     private String url;
 
 
