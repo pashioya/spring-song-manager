@@ -68,4 +68,9 @@ public class ImplArtistService implements ArtistService {
         artistRepository.save(artist);
         artistRepository.updateAlbumArtist(new AlbumArtist(artist, albumRepository.getAlbumById(albumId)));
     }
+
+    @Override
+    public List<Artist> getAllArtistsForAlbum(Long albumId) {
+        return artistRepository.getAllArtistsForAlbum(albumId);
+    }
 }

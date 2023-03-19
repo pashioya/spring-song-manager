@@ -46,6 +46,8 @@ DELETE http://localhost:8080/api/album/1000/delete
 POST http://localhost:8080/api/artist/1/album/create
 Accept: application/json
 Content-Type: application/json
+Cookie: JSESSIONID=B28A5E443DD0B68289605567BC7C8C24
+X-CSRF-TOKEN: 5ae0496f-7136-4673-8c9e-c1c09f5f3ddb
 
 {
     "albumName": "The Dark Side of the Moon",
@@ -116,6 +118,13 @@ Accept: application/json
 #To trigger a 404 (Not Found) response status code:
 GET http://localhost:8080/api/artist/1000
 Accept: application/json
+
+###
+#         Retrieve Artist For Album
+GET http://localhost:8080/api/album/1/artists
+Accept: application/json
+###
+
 
 #         Delete Single Artist
 ###

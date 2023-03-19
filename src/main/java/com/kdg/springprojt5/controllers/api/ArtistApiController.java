@@ -54,6 +54,22 @@ public class ArtistApiController {
         return new ResponseEntity<>(artistDtos, HttpStatus.OK);
     }
 
+//    get all artists for a specific album
+    @GetMapping("/album/{albumId}/artists")
+    public ResponseEntity<Iterable<ArtistDto>> getAllArtistsForAlbum(@PathVariable("albumId") Long albumId) {
+        var artists = artistService.getAllArtistsForAlbum(albumId);
+        if (artists == null) {
+            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+        }
+        List<ArtistDto> artistDtos = new ArrayList<>();
+        for (Artist artist : artists) {
+            ArtistDto artistDto = modelMapper.map(artist, ArtistDto.class);
+            artistDto.setId(artist.getId());
+            artistDtos.add(artistDto);
+        }
+        return new ResponseEntity<>(artistDtos, HttpStatus.OK);
+    }
+
     @DeleteMapping("/artist/{id}/delete")
     public ResponseEntity<Void> deleteArtist(@PathVariable long id) {
         artistService.deleteArtist(id);

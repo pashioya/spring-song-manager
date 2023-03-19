@@ -65,5 +65,12 @@ public class JpaArtistRepository implements ArtistRepository {
         em.remove(getArtistById(id));
     }
 
+    @Override
+    public List<Artist> getAllArtistsForAlbum(Long albumId) {
+        TypedQuery<Artist> query = em.createQuery("SELECT aa.artist FROM AlbumArtist aa WHERE aa.album.id = :id", Artist.class);
+        query.setParameter("id", albumId);
+        return query.getResultList();
+    }
+
 
 }

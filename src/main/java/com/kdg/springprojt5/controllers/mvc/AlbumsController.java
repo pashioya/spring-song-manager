@@ -97,13 +97,13 @@ public class AlbumsController {
         return "addAlbum";
     }
 
-    @GetMapping("/fullAlbum/deleteAlbum/{id}")
+    @GetMapping("/fullAlbum/{id}/deleteAlbum")
     public String deleteAlbum(@PathVariable long id) {
         albumService.deleteAlbum(id);
         return "redirect:/allAlbums";
     }
 
-    @GetMapping("/fullAlbum/printAlbum/{id}")
+    @GetMapping("/fullAlbum/{id}/printAlbum")
     public String printAlbum(@PathVariable long id) {
         albumService.printAlbum(id);
         return "redirect:/allAlbums";

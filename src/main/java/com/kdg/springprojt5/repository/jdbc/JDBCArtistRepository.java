@@ -86,5 +86,11 @@ public class JDBCArtistRepository implements ArtistRepository {
         jdbcTemplate.update(sql, id);
     }
 
+    @Override
+    public List<Artist> getAllArtistsForAlbum(Long albumId) {
+        String sql = "SELECT * FROM artists WHERE id IN (SELECT artist_id FROM album_artist WHERE album_id = ?)";
+        return jdbcTemplate.query(sql, this::mapArtistRow, albumId);
+    }
+
 }
 

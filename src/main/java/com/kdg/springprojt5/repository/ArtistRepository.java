@@ -13,4 +13,6 @@ public interface ArtistRepository {
     void updateAlbumArtist(AlbumArtist albumArtist);
     void deleteAlbumArtist(AlbumArtist albumArtist);
     void deleteById(long id);
+
+    List<Artist> getAllArtistsForAlbum(Long albumId);
 }

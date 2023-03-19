@@ -54,6 +54,11 @@ class pageController {
                 <td>${song.durationMS}</td>
                 <td>${song.explicit}</td>
             `;
+            // set the row to be clickable
+            row.addEventListener("click", () => {
+                //     on click, redirect to the album page
+                window.location.href = row.getAttribute("data-href");
+            });
             this.songsTableBody.appendChild(row);
         });
         pageNumberView.innerHTML = this.pageNumber + 1;
@@ -80,6 +85,10 @@ class pageController {
 
 
     previousPage() {
+        if (this.pageNumber === 0) {
+            this.fetchSongs();
+            return;
+        }
         this.pageNumber--;
         this.fetchSongs();
     }

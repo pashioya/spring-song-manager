@@ -49,9 +49,11 @@ public class SongApiController {
     @GetMapping("/album/{id}/songs")
     public ResponseEntity<Iterable<SongDto>> getAlbumSongs(@PathVariable("id") Long albumId) {
         var songs = albumService.getAlbumById(albumId).getSongs();
-        return new ResponseEntity<>(
-                songs.stream().map(song -> new SongDto(song.getSongTitle(), song.getDurationMS(), song.getUrl())).toList()
-                , HttpStatus.OK);
+        if (songs != null) {
+            return new ResponseEntity<>(
+                    modelMapper.map(songs, Iterable.class), HttpStatus.OK);
+        }
+        return new ResponseEntity<>(null, HttpStatus.NO_CONTENT);
     }
 
     @PostMapping("/album/{albumId}/add/song")

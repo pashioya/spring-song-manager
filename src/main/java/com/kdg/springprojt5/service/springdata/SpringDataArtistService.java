@@ -70,4 +70,11 @@ public class SpringDataArtistService implements ArtistService {
         artistRepository.save(artist);
         artistRepository.updateAlbumArtist(new AlbumArtist(artist, albumRepository.getReferenceById(albumId)));
     }
+
+    @Override
+    public List<Artist> getAllArtistsForAlbum(Long albumId) {
+        artistRepository.getAlbumsArtists(albumId).forEach(artist -> artist.setAlbums(albumRepository.getAlbumsByArtistId(artist.getId())));
+
+        return null;
+    }
 }

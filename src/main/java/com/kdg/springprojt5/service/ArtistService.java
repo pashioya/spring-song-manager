@@ -12,4 +12,6 @@ public interface ArtistService {
     void deleteArtist(long id);
     void printArtist(long id);
     void addArtistToAlbum(Artist artist, long albumId);
+
+    List<Artist> getAllArtistsForAlbum(Long albumId);
 }

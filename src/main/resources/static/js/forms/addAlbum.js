@@ -1,25 +1,22 @@
-/**
- * @type {HTMLFormElement}
- */
-const form = document.getElementById("add-album-form");
-const albumName = document.getElementById("albumName");
-const albumStatus = document.getElementById("albumStatus");
-const albumTrackCount = document.getElementById("officialTrackCount");
-const albumGenre = document.getElementById("genre");
-const albumReleaseDate = document.getElementById("releaseDate");
-const submitButton = document.querySelector("#add-album-form > button");
+let form = document.getElementById("add-album-form");
+let albumName = document.getElementById("albumName");
+let albumStatus = document.getElementById("albumStatus");
+let albumTrackCount = document.getElementById("officialTrackCount");
+let albumGenre = document.getElementById("genre");
+let albumReleaseDate = document.getElementById("releaseDate");
+let submitButton = document.querySelector("#add-album-form > button");
 
 submitButton.addEventListener("click", trySubmitForm);
 
 
-const pathname = window.location.pathname;
-const parts = pathname.split('/');
+let pathname = window.location.pathname;
+let parts = pathname.split('/');
 
 // Find the index of the "artist" string in the path
-const artistIndex = parts.indexOf('artist');
+let artistIndex = parts.indexOf('artist');
 
 // The artist ID is the next part of the path
-const artistId = parts[artistIndex + 1];
+let artistId = parts[artistIndex + 1];
 
 console.log('/api/artist/'+artistId+'/album/create')
 
@@ -27,8 +24,16 @@ function trySubmitForm(event) {
     event.preventDefault();
     const formIsValid = form.checkValidity();
 
-    // const header = document.querySelector('meta[name="_csrf_header"]').content;
-    // const token = document.querySelector('meta[name="_csrf"]').content;
+    console.log("albumName: " + albumName.value);
+    console.log("albumStatus: " + albumStatus.value);
+    console.log("albumTrackCount: " + albumTrackCount.value);
+    console.log("albumGenre: " + albumGenre.value);
+    console.log("albumReleaseDate: " + albumReleaseDate.value);
+
+
+    const header = document.querySelector('meta[name="_csrf_header"]').content;
+    const token = document.querySelector('meta[name="_csrf"]').content;
+
     form.classList.add('was-validated');
 
     if (formIsValid) {
@@ -37,7 +42,7 @@ function trySubmitForm(event) {
             headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json'
-                // ,[header]: token
+                ,[header]: token
             },
             body: JSON.stringify(
                 {
@@ -49,7 +54,6 @@ function trySubmitForm(event) {
             })
         }).then(response => {
             if (response.status === 201) {
-
                 form.reset();
                 form.classList.remove('was-validated');
             }

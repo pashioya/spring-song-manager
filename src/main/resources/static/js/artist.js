@@ -12,6 +12,32 @@ let allRows = document.getElementsByClassName("entity");
  * @param artistID
  */
 
+function fetchArtistsAlbums(artistID){
+
+    fetch(`/api/artist/${artistID}/albums`,
+        {
+            headers: {
+                Accept: "application/json"
+            }
+        })
+        .then(resp => {
+                if (resp.status !== 200) {
+                    console.log("Error: " + resp.status);
+                } else {
+                    return resp.json();
+                }
+            }
+        )
+        .then(data => {
+                console.log(data);
+                data.forEach(album => {
+                    let albumItem = document.createElement("tr");
+                    albumItem.innerHTML = album.albumName;
+                    albumPreviewColumn.appendChild(albumItem);
+                });
+            }
+        )
+}
 
 class pageController {
     constructor() {
@@ -73,6 +99,11 @@ class pageController {
                 <td>${artist.name}</td>
                 <td>${artist.artistFollowers}</td>
             `;
+            // set the row to be clickable
+            artistRow.addEventListener("click", () => {
+                //     on click, redirect to the album page
+                window.location.href = artistRow.getAttribute("data-href");
+            });
             this.artistsTableBody.appendChild(artistRow);
         });
         pageNumberView.innerHTML = page.pageNumber;
@@ -101,6 +132,10 @@ class pageController {
 
 
     previousPage() {
+        if (this.pageNumber === 0) {
+            this.fetchArtists();
+            return;
+        }
         this.pageNumber--;
         this.fetchArtists();
     }
@@ -126,32 +161,7 @@ previousPageButton.addEventListener("click", () => {
 });
 
 
-function fetchArtistsAlbums(artistID){
 
-    fetch(`/api/artist/${artistID}/albums`,
-        {
-            headers: {
-                Accept: "application/json"
-            }
-        })
-        .then(resp => {
-                if (resp.status !== 200) {
-                    console.log("Error: " + resp.status);
-                } else {
-                    return resp.json();
-                }
-            }
-        )
-        .then(data => {
-                console.log(data);
-                data.forEach(album => {
-                    let albumItem = document.createElement("tr");
-                    albumItem.innerHTML = album.albumName;
-                    albumPreviewColumn.appendChild(albumItem);
-                });
-            }
-        )
-}
 
 
 

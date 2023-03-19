@@ -78,6 +78,11 @@ let albumPreviewColumn = document.getElementById("preview-song-names");
                     <td>${album.genre}</td>
                     <td>${album.releaseDate}</td>
                 `;
+                // set the row to be clickable
+                albumRow.addEventListener("click", () => {
+                //     on click, redirect to the album page
+                    window.location.href = albumRow.getAttribute("data-href");
+                });
                 this.albumsTableBody.appendChild(albumRow);
                 this.setOnHover();
             });
@@ -104,6 +109,10 @@ let albumPreviewColumn = document.getElementById("preview-song-names");
 
 
         previousPage() {
+            if (this.pageNumber === 0) {
+                this.fetchAlbums();
+                return;
+            }
             this.pageNumber--;
             this.fetchAlbums();
         }

@@ -56,17 +56,18 @@ public class AlbumApiController {
     public ResponseEntity<Iterable<AlbumDto>> getAllAlbums() {
         var albums = albumService.getAllAlbums();
         if (albums != null) {
+
             List<AlbumDto> albumDtos = new ArrayList<>();
             for (Album album: albums) {
                 AlbumDto albumDto = modelMapper.map(album, AlbumDto.class);
-                albumDto.setId(album.getId());
+                albumDto.setArtistName(album.getArtists().get(0).getArtistName());
                 albumDtos.add(albumDto);
             }
             logger.info("Albums found");
             return new ResponseEntity<>(albumDtos, HttpStatus.OK);
         }
-        logger.info("Albums found");
-        return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+        logger.info("Albums Not found");
+        return new ResponseEntity<>(null, HttpStatus.NO_CONTENT);
     }
 
     @GetMapping("/artist/{id}/albums")
@@ -82,10 +83,9 @@ public class AlbumApiController {
                 albumDto.setArtistName(artist.getArtistName());
                 albumDtos.add(albumDto);
             }
-            logger.info("Artists Albums found");
             return new ResponseEntity<>(albumDtos, HttpStatus.OK);
         }
-        return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>(null, HttpStatus.NO_CONTENT);
     }
 
     @DeleteMapping("/album/{id}/delete")
@@ -99,9 +99,6 @@ public class AlbumApiController {
         }
         return new ResponseEntity<>("Album not found", HttpStatus.NOT_FOUND);
     }
-
-
-
 
     @PostMapping("/artist/{artistId}/album/create")
     public String createAlbum(
@@ -119,23 +116,4 @@ public class AlbumApiController {
         long id = albumService.saveAlbum(album, artistId).getId();
         return "redirect:/album/" + id;
     }
-
-    @PutMapping("/album/{id}/update")
-    public String updateAlbum(
-            @PathVariable("id") Long albumId,
-            @RequestBody NewAlbumDto albumDto
-    ) {
-        var album = albumService.getAlbumById(albumId);
-        if (album != null) {
-            album.setAlbumName(albumDto.getAlbumName());
-            album.setOfficialTrackCount(albumDto.getOfficialTrackCount());
-            album.setAlbumStatus(StatusEnum.valueOf(albumDto.getAlbumStatus().toUpperCase()));
-            album.setGenre(albumDto.getGenre());
-            album.setReleaseDate(albumDto.getReleaseDate());
-            albumService.saveAlbum(album, album.getArtists().get(0).getId());
-            return "redirect:/album/" + albumId + "?success=Album updated";
-        }
-        return "redirect:/album/" + albumId + "?error=Album not found";
-    }
-
 }

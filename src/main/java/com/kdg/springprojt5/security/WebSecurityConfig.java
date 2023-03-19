@@ -24,14 +24,10 @@ public class WebSecurityConfig {
 
 //                TODO: remove later for testing purpose only
                         .requestMatchers("/**").permitAll()
-                        .requestMatchers("/api/**").permitAll()
 
                         .requestMatchers(HttpMethod.POST, "/api/**").permitAll()
-                        .requestMatchers(HttpMethod.PATCH).permitAll()
                         .requestMatchers(HttpMethod.PATCH, "/api/**").permitAll()
-                        .requestMatchers(HttpMethod.DELETE).permitAll()
                         .requestMatchers(HttpMethod.DELETE, "/api/**").permitAll()
-
 
                         .requestMatchers("/", "/register").permitAll()
                         .requestMatchers(HttpMethod.POST, "/register").permitAll()
