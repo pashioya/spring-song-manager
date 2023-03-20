@@ -22,13 +22,6 @@ public class WebSecurityConfig {
                         .requestMatchers(HttpMethod.GET, "/js/**", "/css/**", "/webjars/**", "/favicon.ico").permitAll()
                         .requestMatchers(HttpMethod.GET,"/api/**").permitAll()
 
-//                TODO: remove later for testing purpose only
-                        .requestMatchers("/**").permitAll()
-
-                        .requestMatchers(HttpMethod.POST, "/api/**").permitAll()
-                        .requestMatchers(HttpMethod.PATCH, "/api/**").permitAll()
-                        .requestMatchers(HttpMethod.DELETE, "/api/**").permitAll()
-
                         .requestMatchers("/", "/register").permitAll()
                         .requestMatchers(HttpMethod.POST, "/register").permitAll()
                         .anyRequest().authenticated())
