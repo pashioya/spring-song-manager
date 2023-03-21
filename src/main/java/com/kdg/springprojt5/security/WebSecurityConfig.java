@@ -21,7 +21,14 @@ public class WebSecurityConfig {
                 .authorizeHttpRequests(authorizeRequests -> authorizeRequests
                         .requestMatchers(HttpMethod.GET, "/js/**", "/css/**", "/webjars/**", "/favicon.ico").permitAll()
                         .requestMatchers(HttpMethod.GET,"/api/**").permitAll()
-
+                        .requestMatchers(HttpMethod.POST, "/api/**") // syntax by which you can specify nested paths generically, like regexes
+                        .authenticated()
+                        .requestMatchers(HttpMethod.PATCH, "/api/**") // syntax by which you can specify nested paths generically, like regexes
+                        .authenticated()
+                        .requestMatchers(HttpMethod.PATCH, "/api/**") // syntax by which you can specify nested paths generically, like regexes
+                        .authenticated()
+                        .requestMatchers(HttpMethod.DELETE, "/api/**") // syntax by which you can specify nested paths generically, like regexes
+                        .authenticated()
                         .requestMatchers("/", "/register").permitAll()
                         .requestMatchers(HttpMethod.POST, "/register").permitAll()
                         .anyRequest().authenticated())

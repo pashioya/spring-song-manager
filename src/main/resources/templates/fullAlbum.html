@@ -21,10 +21,6 @@
         <span>Album Name: </span>
         <span th:text="${album.getAlbumName()}"></span>
     </div>
-<!--    <div class="album-item">-->
-<!--        <span>Artist: </span>-->
-<!--        <span th:text="${album.getArtistName()}"></span>-->
-<!--    </div>-->
     <div class="album-item">
         <span>Release Date</span>
         <span th:text="${album.getReleaseDate()}"></span>
@@ -35,10 +31,6 @@
     </div>
     <div class="album-item">
         <span>Track Count: </span>
-        <span th:text="${album.getOfficialTrackCount()}"></span>
-    </div>
-    <div class="album-item">
-        <span>Official Track Count: </span>
         <span th:text="${album.getOfficialTrackCount()}"></span>
     </div>
     <div class="album-item">
@@ -61,7 +53,6 @@
             <tr class="table-row" th:each="song : ${album.getSongs()}" th:data-href="${'/allSongs/fullSong/' + song.getId()}">
                 <td class="row-item" th:text="${song.getUrl()}"></td>
                 <td class="row-item" th:text="${song.getSongTitle()}"></td>
-<!--                <td class="row-item" th:text="${song.getArtistName()}"></td>-->
                 <td class="row-item" th:text="${song.getTrackNumber()}"></td>
                 <td class="row-item" th:text="${song.getDurationMS()}"></td>
                 <td class="row-item" th:text="${song.isExplicit()}"></td>
