@@ -7,17 +7,20 @@ public class NewSongDto {
     private String url;
     @NotBlank(message = "SongTitle is mandatory")
     private String songTitle;
-    @NotBlank(message = "Artist is mandatory")
-    private String artistName;
-    @NotBlank(message = "Album is mandatory")
-    private String albumName;
-    @NotBlank(message = "tracknumber is mandatory")
+    @NotBlank(message = "trackNumber is mandatory")
     private int trackNumber;
     @NotBlank(message = "duration is mandatory")
     private int durationMS;
     @NotBlank(message = "explicit ? is mandatory")
     private boolean explicit;
 
+    public NewSongDto(String url, String songTitle, int trackNumber, int durationMS, boolean explicit) {
+        this.url = url;
+        this.songTitle = songTitle;
+        this.trackNumber = trackNumber;
+        this.durationMS = durationMS;
+        this.explicit = explicit;
+    }
 
     public String getUrl() {
         return url;
@@ -35,22 +38,6 @@ public class NewSongDto {
         this.songTitle = songTitle;
     }
 
-    public String getArtistName() {
-        return artistName;
-    }
-
-    public void setArtistName(String artistName) {
-        this.artistName = artistName;
-    }
-
-    public String getAlbumName() {
-        return albumName;
-    }
-
-    public void setAlbumName(String albumName) {
-        this.albumName = albumName;
-    }
-
     public int getTrackNumber() {
         return trackNumber;
     }
@@ -58,7 +45,6 @@ public class NewSongDto {
     public void setTrackNumber(int trackNumber) {
         this.trackNumber = trackNumber;
     }
-
     public int getDurationMS() {
         return durationMS;
     }
@@ -66,7 +52,6 @@ public class NewSongDto {
     public void setDurationMS(int durationMS) {
         this.durationMS = durationMS;
     }
-
     public boolean isExplicit() {
         return explicit;
     }
@@ -80,8 +65,6 @@ public class NewSongDto {
         return "SongViewModel{" +
                 "url='" + url + '\'' +
                 ", songTitle='" + songTitle + '\'' +
-                ", artistName='" + artistName + '\'' +
-                ", albumName='" + albumName + '\'' +
                 ", trackNumber=" + trackNumber +
                 ", durationMS=" + durationMS +
                 ", explicit=" + explicit +

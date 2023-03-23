@@ -27,7 +27,7 @@
     </button>
 </a>
 
-<a th:fragment="deleteSong (content)" th:href="${'/allSongs/fullSong/deleteSong/' + song.getId()}" class="btn btn-danger">
+<a th:fragment="deleteSong (content)" class="btn btn-danger delete-button">
     <button type="button" class="btn btn-danger">Delete Song</button>
 </a>
 
@@ -35,8 +35,8 @@
     <button type="button" class="btn btn-primary">Print Song</button>
 </a>
 
-<a th:fragment="deleteAlbum (content)" th:href="${'/allAlbums/fullAlbum/deleteAlbum/' + album.getId()}" class="btn btn-danger">
-    <button type="button" class="btn btn-danger">Delete</button>
+<a th:fragment="deleteAlbum (content)" class="btn btn-danger delete-button">
+    <button type="button" class="btn btn-danger">Delete Album</button>
 </a>
 
 
@@ -44,8 +44,8 @@
     <button type="button" class="btn btn-primary">Print Album</button>
 </a>
 
-<a th:fragment="deleteArtist (content)" th:href="${'/allArtists/fullArtist/deleteArtist/' + artist.getId()}" class="btn btn-danger">
-    <button type="button" class="btn btn-danger">Delete</button>
+<a th:fragment="deleteArtist (content)" class="btn btn-danger delete-button">
+    <button type="button" class="btn btn-danger">Delete Artist</button>
 </a>
 <a th:fragment="printArtist (content)" th:href="${'/allArtists/fullArtist/printArtist/' + artist.getId()}" class="btn btn-primary">
     <button type="button" class="btn btn-primary">

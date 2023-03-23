@@ -3,6 +3,7 @@
 <head th:replace="~{fragments/head :: head (${title})}"></head>
 <body id="full" class="pb-5">
 <header th:replace="~{fragments/header :: header (${headerList})}"></header>
+<script defer th:src="@{/js/fullAlbum.js}"></script>
 <section>
     <table class='table table-bordered table-condensed table-striped table-hover'>
         <thead class="table-header">
@@ -14,9 +15,6 @@
         </tr>
         </tbody>
     </table>
-    <div class="button-container">
-        <a th:href="${'/allArtists/fullAlbum/'+ album.getId() + '/addArtist'}" class="btn btn-primary">Add Artist To Album</a>
-    </div>
     <div class="album-item">
         <span>Album Name: </span>
         <span th:text="${album.getAlbumName()}"></span>

@@ -5,7 +5,6 @@ import com.kdg.springprojt5.controllers.api.dto.SongDto;
 import com.kdg.springprojt5.domain.Song;
 import com.kdg.springprojt5.service.AlbumService;
 import com.kdg.springprojt5.service.SongService;
-import jakarta.validation.Valid;
 import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -56,10 +55,17 @@ public class SongApiController {
         return new ResponseEntity<>(null, HttpStatus.NO_CONTENT);
     }
 
-    @PostMapping("/album/{albumId}/add/song")
-    public ResponseEntity<SongDto> addSongToAlbum(@Valid @ModelAttribute NewSongDto songDto, BindingResult errors, @PathVariable long albumId) {
+    @PostMapping("/album/{albumId}/song/create")
+    public ResponseEntity<SongDto> addSongToAlbum(
+            @PathVariable long albumId,
+            @RequestBody NewSongDto songDto,
+            BindingResult errors
+    ) {
         if (errors.hasErrors()) {
             errors.getAllErrors().forEach(error -> logger.error(error.toString()));
+            return new ResponseEntity<>(
+                    new SongDto(songDto.getSongTitle(), songDto.getDurationMS(), songDto.getUrl())
+                    , HttpStatus.BAD_REQUEST);
         }
         Song song = new Song(
                 albumId,
@@ -69,16 +75,12 @@ public class SongApiController {
                 songDto.getDurationMS(),
                 songDto.isExplicit()
         );
-//        logger.debug(viewModel.toString());
         songService.saveSong(song);
         return new ResponseEntity<>(
-                new SongDto(
-                        song.getSongTitle(),
-                        song.getDurationMS(),
-                        song.getUrl()
-                )
-                , HttpStatus.OK);
+                new SongDto(song.getSongTitle(), song.getDurationMS(), song.getUrl())
+                , HttpStatus.CREATED);
     }
+
 
     @DeleteMapping("/song/{id}/delete")
     public ResponseEntity<Void> deleteSong(@PathVariable long id) {

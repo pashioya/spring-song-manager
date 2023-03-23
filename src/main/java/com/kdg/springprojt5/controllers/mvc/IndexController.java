@@ -1,6 +1,7 @@
 package com.kdg.springprojt5.controllers.mvc;
 
 import com.kdg.springprojt5.controllers.mvc.helper.HistoryItem;
+import com.kdg.springprojt5.security.AdminOnly;
 import jakarta.servlet.http.HttpSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -39,6 +40,16 @@ public class IndexController {
         mav.addObject("title", "Page History");
         mav.addObject("pageHistory", session.getAttribute("history"));
         logger.info("Page History page loading");
+        return mav;
+    }
+
+    @AdminOnly
+    @GetMapping("/adminPage")
+    public ModelAndView adminPage(HttpSession session) {
+        setHistory(session, "Admin Page");
+        ModelAndView mav = new ModelAndView("adminPage");
+        mav.addObject("title", "Admin Page");
+        logger.info("Admin Page loading");
         return mav;
     }
 

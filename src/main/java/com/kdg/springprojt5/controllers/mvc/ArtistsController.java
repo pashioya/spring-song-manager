@@ -3,17 +3,16 @@ package com.kdg.springprojt5.controllers.mvc;
 import com.kdg.springprojt5.controllers.mvc.helper.DataItem;
 import com.kdg.springprojt5.controllers.mvc.helper.HistoryItem;
 import com.kdg.springprojt5.controllers.mvc.viewmodel.ArtistViewModel;
-import com.kdg.springprojt5.domain.Artist;
 import com.kdg.springprojt5.service.ArtistService;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.servlet.http.HttpSession;
-import jakarta.validation.Valid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.time.LocalDateTime;
@@ -49,6 +48,7 @@ public class ArtistsController {
                 new DataItem("createArtist"),
                 new DataItem("pageHistory")
         )));
+        logger.info("artists() called");
         return mav;
     }
 
@@ -76,6 +76,7 @@ public class ArtistsController {
         )));
         mav.addObject("artist", artistService.getArtistById(id));
         mav.addObject("albums", artistService.getArtistById(id).getAlbums());
+        logger.info("full artist called");
         return mav;
     }
 
@@ -90,6 +91,7 @@ public class ArtistsController {
 
         ArtistViewModel artistViewModel = new ArtistViewModel();
         model.addAttribute("artist", artistViewModel);
+        logger.info("addArtist() called");
         return "addArtist";
     }
 
@@ -103,28 +105,11 @@ public class ArtistsController {
 
         ArtistViewModel artistViewModel = new ArtistViewModel();
         model.addAttribute("artist", artistViewModel);
+        logger.info("addArtist() called");
         return "addArtist";
     }
-    @PostMapping("fullAlbum/{albumId}/addArtist")
-    public String addArtistWithAlbum(@Valid @ModelAttribute ArtistViewModel viewModel, BindingResult errors, @PathVariable long albumId) {
-        if (errors.hasErrors()) {
-            errors.getAllErrors().forEach(error -> logger.error(error.toString()));
-            return "addSong";
-        }
-        Artist artist = new Artist(
-                viewModel.getArtistName(),
-                viewModel.getArtistFollowers()
-        );
-        artistService.saveArtist(artist);
-        artistService.addArtistToAlbum(artist, albumId);
-        return "redirect:/allAlbums/fullAlbum/" + albumId;
-    }
 
-    @GetMapping("/fullArtist/deleteArtist/{id}")
-    public String deleteArtist(@PathVariable long id) {
-        artistService.deleteArtist(id);
-        return "redirect:/allArtists";
-    }
+
 
     @GetMapping("/fullArtist/printArtist/{id}")
     public String printArtist(@PathVariable long id) {

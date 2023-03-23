@@ -80,7 +80,6 @@ class pageController {
             row.addEventListener("mouseover", () => {
                 albumPreviewColumn.innerHTML = "";
                 let id = row.getAttribute("data-href").split("/")[3];
-                console.log("hovering over row: " + id);
                 fetchArtistsAlbums(id);
             });
         }
@@ -108,7 +107,6 @@ class pageController {
         });
         pageNumberView.innerHTML = page.pageNumber;
         this.setOnHover();
-        console.log(allRows);
     }
 
     init() {

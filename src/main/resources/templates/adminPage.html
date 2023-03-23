@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/head :: head (${title})}"></head>
+<body>
+<header th:replace="~{fragments/header :: header (${headerList})}"></header>
+<section>
+  <div>
+    <h1>Admin only Page, GET OUT (if not admin)</h1>
+  </div>
+</section>
+<footer th:replace="~{fragments/footer :: footer (${footerList})}"></footer>
+</body>
+</html>

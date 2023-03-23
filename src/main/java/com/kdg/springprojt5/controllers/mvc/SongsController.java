@@ -4,7 +4,6 @@ import com.kdg.springprojt5.controllers.mvc.helper.DataItem;
 import com.kdg.springprojt5.controllers.mvc.helper.HistoryItem;
 import com.kdg.springprojt5.controllers.mvc.viewmodel.SongViewModel;
 import com.kdg.springprojt5.service.AlbumService;
-import com.kdg.springprojt5.service.ArtistService;
 import com.kdg.springprojt5.service.SongService;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.servlet.http.HttpSession;
@@ -12,7 +11,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.time.LocalDateTime;
@@ -88,32 +89,6 @@ public class SongsController {
         SongViewModel songViewModel = new SongViewModel();
         model.addAttribute("song", songViewModel);
         return "addSong";
-    }
-
-//    @PostMapping("/album/{albumId}/addSong")
-//    public String addSong(@Valid @ModelAttribute SongViewModel viewModel, BindingResult errors, HttpSession session, @PathVariable long albumId) {
-//        if (errors.hasErrors()) {
-//            errors.getAllErrors().forEach(error -> logger.error(error.toString()));
-//            return "addSong";
-//        }
-//        Song song = new Song(
-//                albumId,
-//                viewModel.getUrl(),
-//                viewModel.getSongTitle(),
-//                viewModel.getTrackNumber(),
-//                viewModel.getDurationMS(),
-//                viewModel.isExplicit()
-//        );
-//        logger.debug(viewModel.toString());
-//        songService.saveSong(song);
-//        return "redirect:/allAlbums/fullAlbum/" + albumId;
-//    }
-
-
-    @GetMapping("/fullSong/deleteSong/{id}")
-    public String deleteSong(@PathVariable long id) {
-        songService.deleteSong(id);
-        return "redirect:/allSongs";
     }
 
     @GetMapping("/fullSong/printSong/{id}")

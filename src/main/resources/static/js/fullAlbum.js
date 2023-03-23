@@ -2,38 +2,16 @@
 let url = window.location.href;
 let albumId = url.substring(url.lastIndexOf("/") + 1);
 
+if (albumId.indexOf("?") !== -1) {
+albumId = albumId.substring(0, albumId.indexOf("?"));
+}
+console.log(albumId);
+
 const header = document.querySelector('meta[name="_csrf_header"]').content;
 const token = document.querySelector('meta[name="_csrf"]').content;
 
-// fetch the album
-
-function fetchAlbum() {
-fetch(`/api/album/${albumId}`)
-    .then(response => response.json())
-    .then(album => {
-        console.log(album);
-        // set the album name
-        let albumName = document.getElementById("album-name");
-        albumName.content = album.albumName;
-        // set the album release date
-        let albumReleaseDate = document.getElementById("album-release-date");
-        albumReleaseDate.content = album.releaseDate;
-        // set the album followers
-        // set the album genres
-        let albumGenres = document.getElementById("album-genre");
-        albumGenres.content = album.genre;
-        // set the album tracks
-        let albumTracks = document.getElementById("album-official-track-count");
-        albumTracks.content = album.officialTrackCount;
-        // set the album tracks
-        let albumStatus = document.getElementById("album-status");
-        albumStatus.content = albumStatus.officialTrackCount;
-    }
-);
-}
-
 function deleteAlbum() {
-    fetch(`/api/album/${albumId}`, {
+    fetch(`/api/album/${albumId}/delete`, {
         method: "DELETE",
         headers: {
             Accept: "application/json",
@@ -43,20 +21,26 @@ function deleteAlbum() {
         }
     })
         .then(response => {
-            if (response.status !== 200) {
-                console.log("Error: " + response.status);
-            } else {
-                window.location.href = "/allAlbums";
+                if (response.status !== 200) {
+                    console.log("Error: " + response.status);
+                } else {
+                    window.location.href = "/allAlbums";
+                }
             }
-        }
-    )
+        )
 }
 
-fetchAlbum();
 
-let deleteAlbumButton = document.getElementById("delete-album-button");
+let deleteAlbumButton = document.getElementsByClassName("delete-button")[0];
 deleteAlbumButton.addEventListener("click", () => {
     deleteAlbum();
 });
 
 
+
+let allRows = document.querySelectorAll(".table-row");
+allRows.forEach(row => {
+    row.addEventListener("click", () => {
+        window.location.href = row.getAttribute("data-href");
+    })
+});

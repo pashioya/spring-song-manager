@@ -6,6 +6,7 @@ import com.kdg.springprojt5.domain.Album;
 import com.kdg.springprojt5.domain.StatusEnum;
 import com.kdg.springprojt5.service.AlbumService;
 import com.kdg.springprojt5.service.ArtistService;
+import com.kdg.springprojt5.service.SongService;
 import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -23,13 +24,15 @@ public class AlbumApiController {
 
     private final AlbumService albumService;
     private final ArtistService artistService;
+    private final SongService songService;
     private final Logger logger;
 
     private final ModelMapper modelMapper;
 
-    public AlbumApiController(AlbumService albumService, ArtistService artistService, ModelMapper modelMapper) {
+    public AlbumApiController(AlbumService albumService, ArtistService artistService, SongService songService, ModelMapper modelMapper) {
         this.albumService = albumService;
         this.artistService = artistService;
+        this.songService = songService;
         this.modelMapper = modelMapper;
         this.logger = LoggerFactory.getLogger(this.getClass().getName());
     }
@@ -94,6 +97,7 @@ public class AlbumApiController {
     ) {
         var album = albumService.getAlbumById(albumId);
         if (album != null) {
+            songService.getSongsByAlbumId(albumId).forEach(song -> songService.deleteSong(song.getId()));
             albumService.deleteAlbum(albumId);
             return new ResponseEntity<>("Album deleted", HttpStatus.OK);
         }
