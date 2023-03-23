@@ -2,10 +2,10 @@
  * @type {HTMLFormElement}
  */
 
-const form = document.getElementById("add-artist-form");
-const artistName = document.getElementById("artistName");
-const artistFollowers = document.getElementById("artistFollowers");
-const submitButton = document.querySelector("#add-album-form > button");
+let form = document.getElementById("add-artist-form");
+let artistName = document.getElementById("artistName");
+let artistFollowers = document.getElementById("artistFollowers");
+let submitButton =  form.querySelector('button[type="submit"]');
 
 
 
@@ -15,8 +15,8 @@ function trySubmitForm(event) {
     event.preventDefault();
     const formIsValid = form.checkValidity();
 
-    // const header = document.querySelector('meta[name="_csrf_header"]').content;
-    // const token = document.querySelector('meta[name="_csrf"]').content;
+    const header = document.querySelector('meta[name="_csrf_header"]').content;
+    const token = document.querySelector('meta[name="_csrf"]').content;
     form.classList.add('was-validated');
 
     if (formIsValid) {
@@ -25,7 +25,7 @@ function trySubmitForm(event) {
             headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json'
-                // ,[header]: token
+                ,[header]: token
             },
             body: JSON.stringify(
                 {

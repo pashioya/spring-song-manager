@@ -78,7 +78,9 @@ public class ArtistApiController {
 
     @PostMapping("/artist/create")
     public String createArtist(
-            @Valid @ModelAttribute NewArtistDto artistDto, BindingResult errors
+            @Valid
+            @RequestBody NewArtistDto artistDto,
+            BindingResult errors
     ) {
         if (errors.hasErrors()) {
             errors.getAllErrors().forEach(error -> logger.error(error.toString()));
@@ -95,7 +97,9 @@ public class ArtistApiController {
 
     @PostMapping("/album/{albumId}/addArtist")
     public ResponseEntity<RedirectView>  addAlbumToArtist(
-            @Valid @ModelAttribute NewArtistDto artistDto, BindingResult errors, @PathVariable long albumId
+            @RequestBody NewArtistDto artistDto,
+            BindingResult errors,
+            @PathVariable long albumId
     ) {
         if (errors.hasErrors()) {
             errors.getAllErrors().forEach(error -> logger.error(error.toString()));
