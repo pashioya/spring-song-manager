@@ -77,8 +77,8 @@ public class DataBaseSeeder implements CommandLineRunner {
     }
 
     public void loadUsers() {
-        userRepository.save(new User("2", "$2a$10$UN/kLIx/smyHJLtOwUzlRuINsnnqtwinBF.xpP.dHRh7epTpuMyC6", UserRole.USER));
-        userRepository.save(new User("3", "$2a$10$UN/kLIx/smyHJLtOwUzlRuINsnnqtwinBF.xpP.dHRh7epTpuMyC6", UserRole.ADMIN));
+        userRepository.save(new User("2", "2", UserRole.USER));
+        userRepository.save(new User("3", "3", UserRole.ADMIN));
     }
 
     public void configureAlbumArtist() {

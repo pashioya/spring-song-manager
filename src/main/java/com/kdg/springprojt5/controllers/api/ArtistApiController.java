@@ -15,7 +15,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.view.RedirectView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -108,25 +107,5 @@ public class ArtistApiController {
         );
         artistService.saveArtist(artist);
         return "redirect:/allArtists";
-    }
-
-
-    @PostMapping("/album/{albumId}/addArtist")
-    public ResponseEntity<RedirectView>  addAlbumToArtist(
-            @RequestBody NewArtistDto artistDto,
-            BindingResult errors,
-            @PathVariable long albumId
-    ) {
-        if (errors.hasErrors()) {
-            errors.getAllErrors().forEach(error -> logger.error(error.toString()));
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new RedirectView("/album/" + albumId));
-        }
-        Artist artist = new Artist(
-                artistDto.getArtistName(),
-                artistDto.getArtistFollowers()
-        );
-        artistService.saveArtist(artist);
-        artistService.addArtistToAlbum(artist, albumId);
-        return ResponseEntity.ok().body(new RedirectView("/album/" + albumId));
     }
 }

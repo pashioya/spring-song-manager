@@ -48,5 +48,18 @@
   - Album and artist previews are temporarily disabled due to transition to ajax
   - album preview is misbehaving 
 
-  - Week 1
+- Week 1
+  - 
+- Week 2
+  - 
+- Week 3
+  - 
+- Week 4
+  - 
+- Week 5
+  - 
+- Week 6
+  - Added testing profile for testing purposes
+- 
+- Week 7
   - 
