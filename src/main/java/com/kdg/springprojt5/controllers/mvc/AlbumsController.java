@@ -88,19 +88,21 @@ public class AlbumsController {
     }
 
     @GetMapping("/artist/{artistId}/addAlbum")
-    public String addAlbum(Model model, HttpSession session, @PathVariable long artistId) {
+    public ModelAndView addAlbum(Model model, HttpSession session, @PathVariable long artistId) {
         setHistory(session, "Add Album");
-
-        model.addAttribute("title", "Add Album");
+        ModelAndView mav = new ModelAndView("addAlbum");
+        mav.addObject("title", "Add Album");
         AlbumViewModel albumViewModel = new AlbumViewModel();
-        model.addAttribute("album", albumViewModel);
-        return "addAlbum";
+        mav.addObject("album", albumViewModel);
+        return mav;
     }
 
     @GetMapping("/fullAlbum/{id}/deleteAlbum")
-    public String deleteAlbum(@PathVariable long id) {
-        albumService.deleteAlbum(id);
-        return "redirect:/allAlbums";
+    public ModelAndView deleteAlbum(@PathVariable long id) {
+        ModelAndView mav = new ModelAndView("allAlbums");
+        mav.addObject("title", "Delete Album");
+        mav.addObject("album", albumService.getAlbumById(id));
+        return mav;
     }
 
     @GetMapping("/fullAlbum/{id}/printAlbum")
