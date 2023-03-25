@@ -54,6 +54,7 @@ fetch('/api/album/'+albumId+'/song/create', {
 
                 form.reset();
                 form.classList.remove('was-validated');
+                window.location.href = "/fullAlbum/"+albumId;
             }
         });
     }

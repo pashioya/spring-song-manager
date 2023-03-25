@@ -56,6 +56,7 @@ function trySubmitForm(event) {
             if (response.status === 201) {
                 form.reset();
                 form.classList.remove('was-validated');
+                window.location.href = "/fullArtist/"+artistId;
             }
         });
     }

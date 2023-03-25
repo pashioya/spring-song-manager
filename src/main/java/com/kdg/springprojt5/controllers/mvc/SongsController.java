@@ -51,7 +51,7 @@ public class SongsController {
         return mav;
     }
     @GetMapping("/fullSong/{id}")
-    public ModelAndView fullSong(@PathVariable long id, HttpSession session) {
+    public ModelAndView fullSong(@PathVariable Long id, HttpSession session) {
         setHistory(session, "Full Song: " + id);
         ModelAndView mav = new ModelAndView("fullSong");
         try {
@@ -77,7 +77,7 @@ public class SongsController {
     }
 
     @GetMapping("/album/{albumId}/addSong")
-    public String addSong(Model model, HttpSession session, @PathVariable long albumId) {
+    public String addSong(Model model, HttpSession session, @PathVariable Long albumId) {
         setHistory(session, "Add Song");
 
         model.addAttribute("title", "Add Song");
@@ -92,7 +92,7 @@ public class SongsController {
     }
 
     @GetMapping("/fullSong/printSong/{id}")
-    public String printSong(@PathVariable long id) {
+    public String printSong(@PathVariable Long id) {
         songService.printSong(id);
         return "redirect:/allSongs";
     }

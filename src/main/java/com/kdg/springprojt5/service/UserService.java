@@ -7,7 +7,7 @@ public interface UserService {
 
     User saveUser(User user);
 
-    User getUserById(long id);
+    User getUserById(Long id);
 
-    void deleteUser(long id);
+    void deleteUser(Long id);
 }

@@ -15,11 +15,9 @@ import java.util.List;
 public interface SpringDataAlbumRepository extends JpaRepository<Album, Long> {
 
     @Query("SELECT a FROM Album a JOIN a.artists ar WHERE ar.id = :id")
-    List<Album> getAlbumsByArtistId(@Param("id") long id);
+    List<Album> getAlbumsByArtistId(@Param("id") Long id);
 
     @Query("update AlbumArtist aa set aa = :albumArtist ")
     void updateAlbumArtist(AlbumArtist albumArtist);
 //
-    @Query("delete from AlbumArtist aa where aa = :albumArtist")
-    void deleteAlbumArtist(AlbumArtist albumArtist);
 }

@@ -59,7 +59,7 @@ public class JDBCAlbumRepository implements AlbumRepository {
         parameters.put("album_status", album.getAlbumStatus().toString());
         parameters.put("genre", album.getGenre());
         parameters.put("release_date", album.getReleaseDate());
-        long id = inserter.executeAndReturnKey(parameters).longValue();
+        Long id = inserter.executeAndReturnKey(parameters).longValue();
         album.setId(id);
         return album;
     }
@@ -71,13 +71,13 @@ public class JDBCAlbumRepository implements AlbumRepository {
     }
 
     @Override
-    public Album getAlbumById(long id) {
+    public Album getAlbumById(Long id) {
         String sql = "SELECT * FROM albums WHERE id = ?";
         return jdbcTemplate.queryForObject(sql, this::mapAlbumRow, id);
     }
 
     @Override
-    public List<Album> getAlbumsByArtistId(long id) {
+    public List<Album> getAlbumsByArtistId(Long id) {
         String sql = "SELECT * FROM albums WHERE id IN (SELECT album_id FROM album_artist WHERE artist_id = ?)";
         return jdbcTemplate.query(sql, this::mapAlbumRow, id);
     }
@@ -95,7 +95,7 @@ public class JDBCAlbumRepository implements AlbumRepository {
     }
 
     @Override
-    public void deleteById(long id) {
+    public void deleteById(Long id) {
         String sql = "DELETE FROM albums WHERE id = ?";
         jdbcTemplate.update(sql, id);
     }

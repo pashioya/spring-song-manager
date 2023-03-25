@@ -42,7 +42,7 @@ public class ImplArtistService implements ArtistService {
     }
 
     @Override
-    public Artist getArtistById(long id) {
+    public Artist getArtistById(Long id) {
         Artist artist = artistRepository.getArtistById(id);
         if (artist == null) return null;
         artist.setAlbums(albumRepository.getAlbumsByArtistId(id));
@@ -51,20 +51,20 @@ public class ImplArtistService implements ArtistService {
     }
 
     @Override
-    public void deleteArtist(long id) {
+    public void deleteArtist(Long id) {
         albumRepository.getAlbumsByArtistId(id).forEach(album -> albumRepository.deleteAlbumArtist(new AlbumArtist(artistRepository.getArtistById(id),album)));
         albumRepository.getAlbumsByArtistId(id).forEach(album -> albumRepository.deleteById(album.getId()));
         artistRepository.deleteById(id);
     }
 
     @Override
-    public void printArtist(long id) {
+    public void printArtist(Long id) {
         jsonHandler.saveToJson(getArtistById(id),getArtistById(id).getArtistName());
         logger.info("Artist saved to json");
     }
 
     @Override
-    public void addArtistToAlbum(Artist artist, long albumId) {
+    public void addArtistToAlbum(Artist artist, Long albumId) {
         artistRepository.save(artist);
         artistRepository.updateAlbumArtist(new AlbumArtist(artist, albumRepository.getAlbumById(albumId)));
     }

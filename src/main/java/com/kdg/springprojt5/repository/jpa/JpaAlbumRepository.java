@@ -34,12 +34,12 @@ public class JpaAlbumRepository implements AlbumRepository {
     }
 
     @Override
-    public Album getAlbumById(long id) {
+    public Album getAlbumById(Long id) {
         return em.find(Album.class, id);
     }
 
     @Override
-    public List<Album> getAlbumsByArtistId(long artistId) {
+    public List<Album> getAlbumsByArtistId(Long artistId) {
         return em.createQuery("SELECT a FROM Album a JOIN a.artists ar WHERE ar.id = :artistId", Album.class)
                 .setParameter("artistId", artistId)
                 .getResultList();
@@ -59,7 +59,7 @@ public class JpaAlbumRepository implements AlbumRepository {
 
 
     @Override
-    public void deleteById(long id) {
+    public void deleteById(Long id) {
         em.remove(getAlbumById(id));
     }
 

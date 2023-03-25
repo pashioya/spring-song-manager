@@ -8,7 +8,7 @@ import java.util.List;
 
 public class AlbumViewModel {
 
-    private long id;
+    private Long id;
     private String albumName;
     private int officialTrackCount;
     private String albumStatus;
@@ -22,7 +22,7 @@ public class AlbumViewModel {
     public AlbumViewModel() {
     }
 
-    public AlbumViewModel(long id, String albumName, int officialTrackCount, String albumStatus, String genre, LocalDate releaseDate, List<Artist> artists, List<Song> songs) {
+    public AlbumViewModel(Long id, String albumName, int officialTrackCount, String albumStatus, String genre, LocalDate releaseDate, List<Artist> artists, List<Song> songs) {
         this.id = id;
         this.albumName = albumName;
         this.officialTrackCount = officialTrackCount;
@@ -32,11 +32,11 @@ public class AlbumViewModel {
         this.artists = artists;
         this.songs = songs;
     }
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

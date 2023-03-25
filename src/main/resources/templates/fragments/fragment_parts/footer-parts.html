@@ -14,7 +14,7 @@
 </a>
 
 
-<a th:fragment="createArtist (content)" href="/allArtists/addArtist">
+<a th:fragment="createArtist (content)"  sec:authorize="hasRole('ADMIN')" href="/allArtists/addArtist">
     <button  type="button" class="btn btn-primary">
         Create Artist
     </button>

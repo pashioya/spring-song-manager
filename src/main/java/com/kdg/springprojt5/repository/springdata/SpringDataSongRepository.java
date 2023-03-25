@@ -18,14 +18,14 @@ public interface SpringDataSongRepository extends JpaRepository<Song, Long> {
 
 //    @NotNull
 //    Song save(@NotNull Song song);
-//    Song getSongById(long id);
+//    Song getSongById(Long id);
 //    @NonNull
 //    List<Song> findAll();
 //
 //    @Query("SELECT a FROM Song a")
 //    List<Song> getAllSongs();
-    List<Song> getSongsByAlbumId(long id);
-//    void deleteById(long id);
+    List<Song> getSongsByAlbumId(Long id);
+//    void deleteById(Long id);
 
 }
 

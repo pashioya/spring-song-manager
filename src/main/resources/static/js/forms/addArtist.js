@@ -37,6 +37,7 @@ function trySubmitForm(event) {
 
                 form.reset();
                 form.classList.remove('was-validated');
+                window.location.href = "/allArtists";
             }
         });
     }

@@ -14,6 +14,9 @@ public class Artist {
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     private Long id;
 
+    @Column(name="user_id", insertable=false, updatable=false)
+    private Long userId;
+
     @Column(name="artist_name")
     private String artistName;
     private double artistFollowers;
@@ -22,23 +25,28 @@ public class Artist {
     @ManyToMany(mappedBy = "artists")
     private List<Album> albums = new ArrayList<>();
 
+    @ManyToOne
+    @JoinColumn(name="user_id")
+    private User user;
+
     // constructor, getters and setters
 
-
-    public Artist(Long id, String artist_name, double artist_followers) {
-        this.id = id;
+    public Artist(String artist_name, double artist_followers, Long userId) {
         this.artistName = artist_name;
         this.artistFollowers = artist_followers;
         this.favoriteGenre = "";
-    }
-
-    public Artist(String artist_name, double artist_followers) {
-        this.artistName = artist_name;
-        this.artistFollowers = artist_followers;
-        this.favoriteGenre = "";
+        this.userId = userId;
     }
 
     public Artist() {}
+
+    public Artist(Long id, Long userId, String artistName, double artistFollowers) {
+        this.id = id;
+        this.userId = userId;
+        this.artistName = artistName;
+        this.artistFollowers = artistFollowers;
+        this.favoriteGenre = "";
+    }
 
     public void calcFavoriteGenre() {
         Map<String, Integer> genreCounts = new HashMap<>();
@@ -104,5 +112,6 @@ public class Artist {
 
     public void setAlbums(List<Album> albums) {
         this.albums = albums;
+        calcFavoriteGenre();
     }
 }

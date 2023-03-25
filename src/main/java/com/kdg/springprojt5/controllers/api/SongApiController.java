@@ -57,7 +57,7 @@ public class SongApiController {
 
     @PostMapping("/album/{albumId}/song/create")
     public ResponseEntity<SongDto> addSongToAlbum(
-            @PathVariable long albumId,
+            @PathVariable Long albumId,
             @RequestBody NewSongDto songDto,
             BindingResult errors
     ) {
@@ -83,7 +83,7 @@ public class SongApiController {
 
 
     @DeleteMapping("/song/{id}/delete")
-    public ResponseEntity<Void> deleteSong(@PathVariable long id) {
+    public ResponseEntity<Void> deleteSong(@PathVariable Long id) {
         songService.deleteSong(id);
         return new ResponseEntity<>(HttpStatus.OK);
     }

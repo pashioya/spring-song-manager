@@ -42,24 +42,126 @@
 
 
 - Known Bugs
-  - jdbc profile has all the data however entity creation not working as expected.
-  - jpa profile Does not have any data however works perfectly
-  - spring data profile does not have any data however works perfectly
-  - Album and artist previews are temporarily disabled due to transition to ajax
   - album preview is misbehaving 
 
 - Week 1
-  - 
+```HttpRequests
+      ###
+      # @no-cookie-jar
+      GET http://localhost:8080/api/album/1
+      
+      ###
+      # @no-cookie-jar
+      DELETE http://localhost:8080/api/album/1/delete
+```
 - Week 2
-  - 
+```HttpRequests
+      POST http://localhost:8080/api/artist/create
+      //@no-cookie-jar
+      Accept: application/json
+      Content-Type: application/json
+      Cookie: JSESSIONID=75400D8A8763ED4F6B3220A14694DA23
+      
+          {
+          "artistName" : "DongDing",
+          "artistFollowers" : 1
+          }
+      
+      ###
+      GET http://localhost:8080/api/artist/1
+      //@no-cookie-jar
+      Accept: application/json
+      Content-Type: application/json
+      Cookie: JSESSIONID=75400D8A8763ED4F6B3220A14694DA23
+      
+      ###
+      # @no-cookie-jar
+      DELETE http://localhost:8080/api/artist/1/delete
+      
+      ###
+      # @no-cookie-jar
+      GET http://localhost:8080/api/artists
+      
+      ###
+      # @no-cookie-jar
+      GET http://localhost:8080/api/album/1
+      
+      ###
+      # @no-cookie-jar
+      DELETE http://localhost:8080/api/album/1/delete
+      
+      ###
+      # @no-cookie-jar
+      GET http://localhost:8080/api/albums
+      ###
+      # @no-cookie-jar
+      GET http://localhost:8080/api/artist/1/albums
+      ###
+      # @no-cookie-jar
+      GET http://localhost:8080/api/album/1/songs
+      
+      ###
+      # @no-cookie-jar
+      GET http://localhost:8080/api/song/1
+      ###
+      # @no-cookie-jar
+      GET http://localhost:8080/api/songs
+      
+      ###
+      # @no-cookie-jar
+      GET http://localhost:8080/users/2
+      ###
+      # @no-cookie-jar
+      GET http://localhost:8080/api/album/1/artists
+      ###
+      # @no-cookie-jar
+      POST http://localhost:8080/api/artist/1/album/create
+      Accept: application/json
+      Content-Type: application/json
+      Cookie: JSESSIONID=75400D8A8763ED4F6B3220A14694DA23
+      
+      {
+        "albumName": "The Dark Side of the Moon",
+        "trackCount": 1,
+        "albumStatus": "SINGLE",
+        "genre": "Progressive Rock",
+        "releaseDate": "1973-03-01"
+      }
+      ###
+      # @no-cookie-jar
+      POST http://localhost:8080/api/album/1/song/create
+      Accept: application/json
+      Content-Type: application/json
+      Cookie: JSESSIONID=75400D8A8763ED4F6B3220A14694DA23
+      
+      {
+        "url": "https://open.spotify.com/track/2YFtpiy2WoAQVQbM1SIwES",
+        "trackCount": 1,
+        "albumStatus": "SINGLE",
+        "genre": "Progressive Rock",
+        "releaseDate": "1973-03-01"
+      }
+      ###
+      # @no-cookie-jar
+      DELETE http://localhost:8080/api/song/1/delete
+      Accept: application/json
+      Content-Type: application/json
+      Cookie: JSESSIONID=75400D8A8763ED4F6B3220A14694DA23
+```
 - Week 3
   - 
 - Week 4
-  - 
+  -  Users Added in seeding Step
+  - username: john_smith 
+    - password: user 
+    - role : USER
+  - username: admin 
+    - password: admin  
+    - role : ADMIN
+  - admin page is locked out for users url : http://localhost:8080/adminPage
 - Week 5
   - 
 - Week 6
-  - Added testing profile for testing purposes
-- 
+
 - Week 7
   - 

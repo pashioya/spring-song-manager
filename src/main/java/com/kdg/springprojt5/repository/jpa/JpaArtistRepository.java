@@ -37,12 +37,12 @@ public class JpaArtistRepository implements ArtistRepository {
     }
 
     @Override
-    public Artist getArtistById(long id) {
+    public Artist getArtistById(Long id) {
         return em.find(Artist.class, id);
     }
 
     @Override
-    public List<Artist> getAlbumsArtists(long id) {
+    public List<Artist> getAlbumsArtists(Long id) {
         TypedQuery<Artist> query = em.createQuery("SELECT aa.artist FROM AlbumArtist aa WHERE aa.album.id = :id", Artist.class);
         query.setParameter("id", id);
         return query.getResultList();
@@ -54,14 +54,8 @@ public class JpaArtistRepository implements ArtistRepository {
     }
 
     @Override
-    public void deleteAlbumArtist(AlbumArtist albumArtist) {
-        em.remove(albumArtist);
-    }
-
-
-    @Override
     @Transactional
-    public void deleteById(long id) {
+    public void deleteById(Long id) {
         em.remove(getArtistById(id));
     }
 

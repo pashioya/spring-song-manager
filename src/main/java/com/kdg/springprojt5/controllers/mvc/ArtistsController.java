@@ -53,7 +53,7 @@ public class ArtistsController {
     }
 
     @GetMapping("/fullArtist/{id}")
-    public ModelAndView fullArtist(@PathVariable long id, HttpSession session) {
+    public ModelAndView fullArtist(@PathVariable Long id, HttpSession session) {
         setHistory(session, "Full Artist: " + id);
         ModelAndView mav = new ModelAndView("fullArtist");
         try{
@@ -96,7 +96,7 @@ public class ArtistsController {
     }
 
     @GetMapping("/fullAlbum/{albumId}/addArtist")
-    public String addArtistToAlbum(Model model,HttpSession session, @PathVariable long albumId) {
+    public String addArtistToAlbum(Model model,HttpSession session, @PathVariable Long albumId) {
         setHistory(session, "Add Artist");
         model.addAttribute("title", "Add Artist");
         model.addAttribute("headerList", new ArrayList<>(List.of(
@@ -112,7 +112,7 @@ public class ArtistsController {
 
 
     @GetMapping("/fullArtist/printArtist/{id}")
-    public String printArtist(@PathVariable long id) {
+    public String printArtist(@PathVariable Long id) {
         artistService.printArtist(id);
         return "redirect:/allArtists";
     }

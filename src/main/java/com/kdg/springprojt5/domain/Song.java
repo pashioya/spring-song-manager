@@ -10,7 +10,7 @@ public class Song {
     private Long id;
 
     @Column(name="album_id")
-    private long albumId;
+    private Long albumId;
 
     private String url;
     private String songTitle;
@@ -24,7 +24,7 @@ public class Song {
     public Song() {
     }
 
-    public Song(Long id, long albumId, String url, String songTitle, int trackNumber, double durationMS, boolean explicit) {
+    public Song(Long id, Long albumId, String url, String songTitle, int trackNumber, double durationMS, boolean explicit) {
         this.id = id;
         this.albumId = albumId;
         this.url = url;
@@ -34,7 +34,7 @@ public class Song {
         this.explicit = explicit;
     }
 
-    public Song(long albumId, String url, String songTitle, int trackNumber, double durationMS, boolean explicit) {
+    public Song(Long albumId, String url, String songTitle, int trackNumber, double durationMS, boolean explicit) {
         this.albumId = albumId;
         this.url = url;
         this.songTitle = songTitle;
@@ -51,11 +51,11 @@ public class Song {
         this.id = id;
     }
 
-    public long getAlbumId() {
+    public Long getAlbumId() {
         return albumId;
     }
 
-    public void setAlbumId(long albumId) {
+    public void setAlbumId(Long albumId) {
         this.albumId = albumId;
     }
 

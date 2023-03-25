@@ -60,20 +60,20 @@ public class JDBCSongRepository implements SongRepository {
     }
 
     @Override
-    public Song getSongById(long id) {
+    public Song getSongById(Long id) {
         String sql = "SELECT * FROM songs WHERE id = ?";
         return jdbcTemplate.queryForObject(sql, this::mapSongRow, id);
     }
 
     @Override
-    public List<Song> getSongsByAlbumId(long id) {
+    public List<Song> getSongsByAlbumId(Long id) {
         String sql = "SELECT * FROM songs WHERE album_id = ?";
         return jdbcTemplate.query(sql, this::mapSongRow, id);
     }
 
 
     @Override
-    public void deleteById(long id) {
+    public void deleteById(Long id) {
         String sql = "DELETE FROM songs WHERE id = ?";
         jdbcTemplate.update(sql, id);
     }

@@ -34,18 +34,18 @@ public class JpaSongRepository implements SongRepository {
     }
 
     @Override
-    public Song getSongById(long id) {
+    public Song getSongById(Long id) {
         return em.find(Song.class, id);
     }
 
     @Override
-    public List<Song> getSongsByAlbumId(long id) {
+    public List<Song> getSongsByAlbumId(Long id) {
         return em.createQuery("SELECT s FROM Song s WHERE s.albumId = :id", Song.class).setParameter("id", id).getResultList();
     }
 
     @Override
     @Transactional
-    public void deleteById(long id) {
+    public void deleteById(Long id) {
         em.remove(getSongById(id));
     }
 

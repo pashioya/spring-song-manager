@@ -17,15 +17,12 @@ public interface SpringDataArtistRepository extends JpaRepository<Artist, Long> 
     @Query("SELECT a FROM Artist a")
     List<Artist> getAllArtists();
     @Query("select a from Artist a where a.id = ?1")
-    Artist getArtistById(long id);
+    Artist getArtistById(Long id);
 
     @Query("SELECT DISTINCT aa.artist FROM AlbumArtist aa WHERE aa.album.id = :albumId")
-    List<Artist> getAlbumsArtists(@Param("albumId") long id);
+    List<Artist> getAlbumsArtists(@Param("albumId") Long id);
 
     @Query("update AlbumArtist aa set aa = :albumArtist ")
     void updateAlbumArtist(AlbumArtist albumArtist);
-
-    @Query("delete from AlbumArtist aa where aa = :albumArtist")
-    void deleteAlbumArtist(AlbumArtist albumArtist);
 
 }

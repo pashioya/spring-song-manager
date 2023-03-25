@@ -7,7 +7,7 @@ import java.util.List;
 public interface SongRepository {
     Song save(Song song);
     List<Song> getAllSongs();
-    Song getSongById(long id);
-    List<Song> getSongsByAlbumId(long id);
-    void deleteById(long id);
+    Song getSongById(Long id);
+    List<Song> getSongsByAlbumId(Long id);
+    void deleteById(Long id);
 }

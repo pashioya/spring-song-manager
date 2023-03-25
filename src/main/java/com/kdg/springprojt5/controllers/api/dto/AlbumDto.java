@@ -2,7 +2,7 @@ package com.kdg.springprojt5.controllers.api.dto;
 
 public class AlbumDto {
 
-    private long id;
+    private Long id;
     private String albumName;
     private String artistName;
     private String genre;
@@ -13,7 +13,7 @@ public class AlbumDto {
     public AlbumDto() {
     }
 
-    public AlbumDto(long id, String albumName, String artistName, String genre, int officialTrackCount, String albumStatus, String releaseDate) {
+    public AlbumDto(Long id, String albumName, String artistName, String genre, int officialTrackCount, String albumStatus, String releaseDate) {
         this.id = id;
         this.albumName = albumName;
         this.artistName = artistName;
@@ -39,11 +39,11 @@ public class AlbumDto {
         this.albumStatus = albumStatus;
     }
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

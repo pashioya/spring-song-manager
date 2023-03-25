@@ -8,14 +8,14 @@ import java.util.List;
 
 public interface SongService {
 
-    Song getSongById(long id);
+    Song getSongById(Long id);
 
     List<Song> getAllSongs();
-    List<Song> getSongsByAlbumId(long albumId);
+    List<Song> getSongsByAlbumId(Long albumId);
 
     Song saveSong(Song song);
 
-    void deleteSong(long id);
+    void deleteSong(Long id);
 
-    void printSong(long id);
+    void printSong(Long id);
 }

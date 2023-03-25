@@ -31,6 +31,7 @@ public class JDBCArtistRepository implements ArtistRepository {
     throws SQLException {
         return new Artist(
                 rs.getLong("id"),
+                rs.getLong("user_id"),
                 rs.getString("artist_name"),
                 rs.getDouble("artist_followers")
                 );
@@ -53,16 +54,16 @@ public class JDBCArtistRepository implements ArtistRepository {
     }
 
     @Override
-    public Artist getArtistById(long id) {
+    public Artist getArtistById(Long id) {
         String sql = "SELECT * FROM artists WHERE id = ?";
         return jdbcTemplate.queryForObject(sql, this::mapArtistRow, id);
     }
 
     @Override
-    public List<Artist> getAlbumsArtists(long id) {
+    public List<Artist> getAlbumsArtists(Long id) {
         String sql = "SELECT artist_id FROM album_artist WHERE album_id = ?";
         return jdbcTemplate.query(sql, (rs, rowNum) -> {
-            long artistId = rs.getLong("artist_id");
+            Long artistId = rs.getLong("artist_id");
             return getArtistById(artistId);
         }, id);
     }
@@ -73,15 +74,9 @@ public class JDBCArtistRepository implements ArtistRepository {
         jdbcTemplate.update(sql, albumArtist.getAlbum().getId(), albumArtist.getArtist().getId());
     }
 
-    @Override
-    public void deleteAlbumArtist(AlbumArtist albumArtist) {
-        String sql = "DELETE FROM album_artist WHERE album_id = ? AND artist_id = ?";
-        jdbcTemplate.update(sql, albumArtist.getAlbum().getId(), albumArtist.getArtist().getId());
-    }
-
 
     @Override
-    public void deleteById(long id) {
+    public void deleteById(Long id) {
         String sql = "DELETE FROM artists WHERE id = ?";
         jdbcTemplate.update(sql, id);
     }

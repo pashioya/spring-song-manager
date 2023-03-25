@@ -8,10 +8,10 @@ import java.util.List;
 public interface AlbumRepository {
     Album save(Album album);
     List<Album> getAllAlbums();
-    Album getAlbumById(long id);
-    List<Album> getAlbumsByArtistId(long id);
+    Album getAlbumById(Long id);
+    List<Album> getAlbumsByArtistId(Long id);
     void updateAlbumArtist(AlbumArtist albumArtist);
     void deleteAlbumArtist(AlbumArtist albumArtist);
-    void deleteById(long id);
+    void deleteById(Long id);
 
 }

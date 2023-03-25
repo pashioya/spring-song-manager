@@ -1,7 +1,7 @@
 package com.kdg.springprojt5.controllers.api.dto;
 
 public class ArtistDto {
-    private long id;
+    private Long id;
     private String name;
     private double artistFollowers;
 
@@ -13,11 +13,11 @@ public class ArtistDto {
     public ArtistDto() {
     }
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

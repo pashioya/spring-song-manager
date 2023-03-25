@@ -4,6 +4,8 @@ import com.kdg.springprojt5.controllers.api.dto.ArtistDto;
 import com.kdg.springprojt5.controllers.api.dto.NewArtistDto;
 import com.kdg.springprojt5.domain.Album;
 import com.kdg.springprojt5.domain.Artist;
+import com.kdg.springprojt5.security.AdminOnly;
+import com.kdg.springprojt5.security.CustomUserDetails;
 import com.kdg.springprojt5.service.AlbumService;
 import com.kdg.springprojt5.service.ArtistService;
 import com.kdg.springprojt5.service.SongService;
@@ -13,6 +15,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
@@ -44,7 +47,7 @@ public class ArtistApiController {
                 modelMapper.map(artist, ArtistDto.class), HttpStatus.OK);
     }
 
-//    get all artists
+
     @GetMapping("/artists")
     public ResponseEntity<Iterable<ArtistDto>> getAllArtists() {
         var artists = artistService.getAllArtists();
@@ -60,7 +63,7 @@ public class ArtistApiController {
         return new ResponseEntity<>(artistDtos, HttpStatus.OK);
     }
 
-//    get all artists for a specific album
+
     @GetMapping("/album/{albumId}/artists")
     public ResponseEntity<Iterable<ArtistDto>> getAllArtistsForAlbum(@PathVariable("albumId") Long albumId) {
         var artists = artistService.getAllArtistsForAlbum(albumId);
@@ -77,7 +80,7 @@ public class ArtistApiController {
     }
 
     @DeleteMapping("/artist/{id}/delete")
-    public ResponseEntity<Void> deleteArtist(@PathVariable long id) {
+    public ResponseEntity<Void> deleteArtist(@PathVariable Long id) {
         Artist artist = artistService.getArtistById(id);
         List<Album> artistAlbums = artist.getAlbums();
         if (artistAlbums == null) {
@@ -91,21 +94,27 @@ public class ArtistApiController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
+    @AdminOnly
     @PostMapping("/artist/create")
-    public String createArtist(
+    public ResponseEntity<ArtistDto> createArtist(
             @Valid
             @RequestBody NewArtistDto artistDto,
-            BindingResult errors
+            BindingResult errors,
+            Authentication authentication
     ) {
         if (errors.hasErrors()) {
             errors.getAllErrors().forEach(error -> logger.error(error.toString()));
-            return "addArtist";
+            return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
         }
+        CustomUserDetails currentUser = (CustomUserDetails) authentication.getPrincipal();
+        Long userId = currentUser.getUserId();
+
         Artist artist = new Artist(
                 artistDto.getArtistName(),
-                artistDto.getArtistFollowers()
+                artistDto.getArtistFollowers(),
+                userId
         );
         artistService.saveArtist(artist);
-        return "redirect:/allArtists";
+        return new ResponseEntity<>(modelMapper.map(artist, ArtistDto.class), HttpStatus.CREATED);
     }
 }

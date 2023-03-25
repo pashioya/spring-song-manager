@@ -46,7 +46,7 @@ public class SpringDataAlbumService implements AlbumService {
     }
 
     @Override
-    public Album getAlbumById(long id) {
+    public Album getAlbumById(Long id) {
         Album album = albumRepository.getReferenceById(id);
         album.setSongs(songRepository.getSongsByAlbumId(id));
         album.setArtists(artistRepository.getAlbumsArtists(id));
@@ -54,7 +54,7 @@ public class SpringDataAlbumService implements AlbumService {
     }
 
     @Override
-    public Album saveAlbum(Album album, long artistId) {
+    public Album saveAlbum(Album album, Long artistId) {
         for(Album a : albumRepository.findAll()){
             if(a.equals(album)){
                 return a;
@@ -69,14 +69,14 @@ public class SpringDataAlbumService implements AlbumService {
 
 
     @Override
-    public void deleteAlbum(long id) {
+    public void deleteAlbum(Long id) {
         songRepository.getSongsByAlbumId(id).forEach(song -> songRepository.deleteById(song.getId()));
         albumArtistRepository.delete(new AlbumArtist(artistRepository.getArtistById(artistRepository.getAlbumsArtists(id).get(0).getId()), albumRepository.getReferenceById(id)));
         albumRepository.deleteById(id);
     }
 
     @Override
-    public void printAlbum(long id) {
+    public void printAlbum(Long id) {
         Album album = albumRepository.getReferenceById((id));
         String filename = album.getAlbumName();
         String json = jsonHandler.saveToJson(album, filename);

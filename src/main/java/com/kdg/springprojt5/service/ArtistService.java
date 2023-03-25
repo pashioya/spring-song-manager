@@ -8,10 +8,10 @@ import java.util.List;
 public interface ArtistService {
     List<Artist> getAllArtists();
     Artist saveArtist(Artist artist);
-    Artist getArtistById(long id);
-    void deleteArtist(long id);
-    void printArtist(long id);
-    void addArtistToAlbum(Artist artist, long albumId);
+    Artist getArtistById(Long id);
+    void deleteArtist(Long id);
+    void printArtist(Long id);
+    void addArtistToAlbum(Artist artist, Long albumId);
 
     List<Artist> getAllArtistsForAlbum(Long albumId);
 }

@@ -43,7 +43,7 @@ public class ImplAlbumService implements AlbumService {
     }
 
     @Override
-    public Album getAlbumById(long id) {
+    public Album getAlbumById(Long id) {
         Album album = albumRepository.getAlbumById(id);
         album.setSongs(songRepository.getSongsByAlbumId(id));
         album.setArtists(artistRepository.getAlbumsArtists(id));
@@ -51,7 +51,7 @@ public class ImplAlbumService implements AlbumService {
     }
 
     @Override
-    public Album saveAlbum(Album album, long artistId) {
+    public Album saveAlbum(Album album, Long artistId) {
         for(Album a : albumRepository.getAllAlbums()){
             if(a.equals(album)){
                 return a;
@@ -63,14 +63,14 @@ public class ImplAlbumService implements AlbumService {
     }
 
     @Override
-    public void deleteAlbum(long id) {
+    public void deleteAlbum(Long id) {
         songRepository.getSongsByAlbumId(id).forEach(song -> songRepository.deleteById(song.getId()));
         albumRepository.deleteAlbumArtist(new AlbumArtist(artistRepository.getArtistById(artistRepository.getAlbumsArtists(id).get(0).getId()), albumRepository.getAlbumById(id)));
         albumRepository.deleteById(id);
     }
 
     @Override
-    public void printAlbum(long id) {
+    public void printAlbum(Long id) {
 
         Album album = albumRepository.getAlbumById((id));
         assert album != null;

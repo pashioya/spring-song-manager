@@ -54,7 +54,7 @@ public class AlbumsController {
         return mav;
     }
     @GetMapping("/fullAlbum/{id}")
-    public ModelAndView fullAlbum(@PathVariable long id, HttpSession session) {
+    public ModelAndView fullAlbum(@PathVariable Long id, HttpSession session) {
         setHistory(session, "FullAlbum: " + id);
         ModelAndView mav = new ModelAndView("fullAlbum");
         var album = albumService.getAlbumById(id);
@@ -88,7 +88,7 @@ public class AlbumsController {
     }
 
     @GetMapping("/artist/{artistId}/addAlbum")
-    public ModelAndView addAlbum(Model model, HttpSession session, @PathVariable long artistId) {
+    public ModelAndView addAlbum(Model model, HttpSession session, @PathVariable Long artistId) {
         setHistory(session, "Add Album");
         ModelAndView mav = new ModelAndView("addAlbum");
         mav.addObject("title", "Add Album");
@@ -98,7 +98,7 @@ public class AlbumsController {
     }
 
     @GetMapping("/fullAlbum/{id}/deleteAlbum")
-    public ModelAndView deleteAlbum(@PathVariable long id) {
+    public ModelAndView deleteAlbum(@PathVariable Long id) {
         ModelAndView mav = new ModelAndView("allAlbums");
         mav.addObject("title", "Delete Album");
         mav.addObject("album", albumService.getAlbumById(id));
@@ -106,7 +106,7 @@ public class AlbumsController {
     }
 
     @GetMapping("/fullAlbum/{id}/printAlbum")
-    public String printAlbum(@PathVariable long id) {
+    public String printAlbum(@PathVariable Long id) {
         albumService.printAlbum(id);
         return "redirect:/allAlbums";
     }

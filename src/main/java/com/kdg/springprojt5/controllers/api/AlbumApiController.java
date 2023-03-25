@@ -117,7 +117,7 @@ public class AlbumApiController {
                 albumDto.getGenre(),
                 albumDto.getReleaseDate()
         );
-        long id = albumService.saveAlbum(album, artistId).getId();
+        Long id = albumService.saveAlbum(album, artistId).getId();
         return "redirect:/album/" + id;
     }
 }
