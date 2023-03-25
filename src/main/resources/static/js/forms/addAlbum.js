@@ -24,13 +24,6 @@ function trySubmitForm(event) {
     event.preventDefault();
     const formIsValid = form.checkValidity();
 
-    console.log("albumName: " + albumName.value);
-    console.log("albumStatus: " + albumStatus.value);
-    console.log("albumTrackCount: " + albumTrackCount.value);
-    console.log("albumGenre: " + albumGenre.value);
-    console.log("albumReleaseDate: " + albumReleaseDate.value);
-
-
     const header = document.querySelector('meta[name="_csrf_header"]').content;
     const token = document.querySelector('meta[name="_csrf"]').content;
 
@@ -56,7 +49,7 @@ function trySubmitForm(event) {
             if (response.status === 201) {
                 form.reset();
                 form.classList.remove('was-validated');
-                window.location.href = "/fullArtist/"+artistId;
+                window.location.href = "/allArtists/fullArtist/"+artistId;
             }
         });
     }

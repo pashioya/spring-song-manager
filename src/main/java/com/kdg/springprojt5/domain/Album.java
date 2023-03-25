@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Objects;
 
 
 @Entity
@@ -147,5 +148,13 @@ public class Album {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Album album)) return false;
+        return getOfficialTrackCount() == album.getOfficialTrackCount() && getAlbumName().equals(album.getAlbumName()) && getAlbumStatus() == album.getAlbumStatus() && Objects.equals(getGenre(), album.getGenre()) && getReleaseDate().equals(album.getReleaseDate());
     }
 }

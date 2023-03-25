@@ -48,7 +48,7 @@
 
 - Implement at least two different roles with different access rights within your application. These access rights should differ from unauthenticated users.
 - Add users with different roles to your seeding routine. The user should be implemented as a persisted entity with at least one association to another domain entity. 
-- Create meaningful features and functionality in your application so users can be associated with certain dataset records. Ensure that unauthenticated users can create no such associations or records. *******************************************
+- Create meaningful features and functionality in your application so users can be associated with certain dataset records. Ensure that unauthenticated users can create no such associations or records.
 - Visually, your application should hide actions/links/pages which a user cannot access. The backend must also verify if the client can take such actions.
 - The REST API and Ajax features should work as before.
 - At least one action of your web API should require authentication (one that modifies state).
@@ -67,9 +67,9 @@
 - Use test-specific setups to ensure consistency of tests. *******************************************
 - Document any Spring profiles added for this step in the README.md. *******************************************
 - Document how tests should be executed from the command line in the README.md. *******************************************
-- Write at least two tests for the repository layer. *******************************************
-- Write a test on how deletes are handled. *******************************************
-- Write a test on some other Hibernate mapping (uniqueness, nullability, ...). *******************************************
+- Write at least two tests for the repository layer.
+- Write a test on how deletes are handled. 
+- Write a test on some other Hibernate mapping (uniqueness, nullability, ...). 
 - Write a test on eager/lazy loading. *******************************************
 - Write tests for at least two methods of the service layer. *******************************************
 - Implement tests as integration tests. *******************************************

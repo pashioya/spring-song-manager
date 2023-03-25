@@ -2,10 +2,7 @@ package com.kdg.springprojt5.domain;
 
 import jakarta.persistence.*;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Entity
 @Table(name="artists")
@@ -117,4 +114,12 @@ public class Artist {
     public void setUser(User user) {
         this.user = user;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Artist artist)) return false;
+        return Double.compare(artist.getArtistFollowers(), getArtistFollowers()) == 0 && getArtistName().equals(artist.getArtistName());
+    }
+
 }

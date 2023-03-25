@@ -110,4 +110,28 @@ public class Song {
     public void setUser(User user) {
         this.user = user;
     }
+
+
+    public void setUserId(Long userId) {
+        this.userId = userId;
+    }
+
+    public void setSongTitle(String songTitle) {
+        this.songTitle = songTitle;
+    }
+
+    public void setTrackNumber(int trackNumber) {
+        this.trackNumber = trackNumber;
+    }
+
+    public void setDurationMS(double durationMS) {
+        this.durationMS = durationMS;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Song song)) return false;
+        return getTrackNumber() == song.getTrackNumber() && Double.compare(song.getDurationMS(), getDurationMS()) == 0 && getAlbumId().equals(song.getAlbumId()) && getUrl().equals(song.getUrl()) && getSongTitle().equals(song.getSongTitle());
+    }
 }
