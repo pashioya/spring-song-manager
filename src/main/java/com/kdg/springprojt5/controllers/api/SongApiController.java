@@ -3,27 +3,28 @@ package com.kdg.springprojt5.controllers.api;
 import com.kdg.springprojt5.controllers.api.dto.NewSongDto;
 import com.kdg.springprojt5.controllers.api.dto.SongDto;
 import com.kdg.springprojt5.domain.Song;
-import com.kdg.springprojt5.service.AlbumService;
+import com.kdg.springprojt5.security.CustomUserDetails;
 import com.kdg.springprojt5.service.SongService;
 import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api")
 public class SongApiController {
     private final SongService songService;
-    private final AlbumService albumService;
     private final Logger logger;
     private final ModelMapper modelMapper;
 
-    public SongApiController(SongService songService, AlbumService albumService, ModelMapper modelMapper) {
+    public SongApiController(SongService songService, ModelMapper modelMapper) {
         this.songService = songService;
-        this.albumService = albumService;
         this.logger = LoggerFactory.getLogger(this.getClass().getName());
         this.modelMapper = modelMapper;
     }
@@ -31,26 +32,28 @@ public class SongApiController {
     @GetMapping("/song/{id}")
     public ResponseEntity<SongDto> getSong(@PathVariable("id") Long songId) {
         var song = songService.getSongById(songId);
-        return new ResponseEntity<>(
-                new SongDto(song.getSongTitle(), song.getDurationMS(), song.getUrl())
-                , HttpStatus.OK);
+       return new ResponseEntity<>(modelMapper.map(song, SongDto.class), HttpStatus.OK);
     }
 
     @GetMapping("/songs")
-    public ResponseEntity<Iterable<SongDto>> getSongs() {
+    public ResponseEntity<List<SongDto>> getSongs() {
         var songs = songService.getAllSongs();
-        return new ResponseEntity<>(
-                modelMapper.map(songs, Iterable.class), HttpStatus.OK);
+        List<SongDto> songDtos = songs.stream()
+                .map(song -> modelMapper.map(song, SongDto.class))
+                .toList();
+        return new ResponseEntity<>(songDtos, HttpStatus.OK);
 
     }
 
 //    get albums songs
     @GetMapping("/album/{id}/songs")
-    public ResponseEntity<Iterable<SongDto>> getAlbumSongs(@PathVariable("id") Long albumId) {
-        var songs = albumService.getAlbumById(albumId).getSongs();
+    public ResponseEntity<List<SongDto>> getAlbumSongs(@PathVariable("id") Long albumId) {
+        var songs = songService.getSongsByAlbumId(albumId);
         if (songs != null) {
-            return new ResponseEntity<>(
-                    modelMapper.map(songs, Iterable.class), HttpStatus.OK);
+            List<SongDto> songDtos = songs.stream()
+                    .map(song -> modelMapper.map(song, SongDto.class))
+                    .toList();
+            return new ResponseEntity<>(songDtos, HttpStatus.OK);
         }
         return new ResponseEntity<>(null, HttpStatus.NO_CONTENT);
     }
@@ -59,26 +62,28 @@ public class SongApiController {
     public ResponseEntity<SongDto> addSongToAlbum(
             @PathVariable Long albumId,
             @RequestBody NewSongDto songDto,
-            BindingResult errors
+            BindingResult errors,
+            Authentication authentication
     ) {
         if (errors.hasErrors()) {
             errors.getAllErrors().forEach(error -> logger.error(error.toString()));
-            return new ResponseEntity<>(
-                    new SongDto(songDto.getSongTitle(), songDto.getDurationMS(), songDto.getUrl())
-                    , HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
         }
+
+        CustomUserDetails currentUser = (CustomUserDetails) authentication.getPrincipal();
+        Long userId = currentUser.getUserId();
+
         Song song = new Song(
                 albumId,
                 songDto.getUrl(),
                 songDto.getSongTitle(),
                 songDto.getTrackNumber(),
                 songDto.getDurationMS(),
-                songDto.isExplicit()
+                songDto.isExplicit(),
+                userId
         );
         songService.saveSong(song);
-        return new ResponseEntity<>(
-                new SongDto(song.getSongTitle(), song.getDurationMS(), song.getUrl())
-                , HttpStatus.CREATED);
+        return new ResponseEntity<>(modelMapper.map(song, SongDto.class), HttpStatus.CREATED);
     }
 
 

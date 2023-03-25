@@ -12,8 +12,9 @@ import jakarta.servlet.http.HttpSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.time.LocalDateTime;
@@ -67,7 +68,8 @@ public class AlbumsController {
                     album.getGenre(),
                     album.getReleaseDate(),
                     album.getArtists(),
-                    album.getSongs()
+                    album.getSongs(),
+                    album.getUser().getUsername()
             ));
         } catch (Exception e) {
             throw new EntityNotFoundException("Album not found",e);
@@ -88,7 +90,7 @@ public class AlbumsController {
     }
 
     @GetMapping("/artist/{artistId}/addAlbum")
-    public ModelAndView addAlbum(Model model, HttpSession session, @PathVariable Long artistId) {
+    public ModelAndView addAlbum(HttpSession session, @PathVariable Long artistId) {
         setHistory(session, "Add Album");
         ModelAndView mav = new ModelAndView("addAlbum");
         mav.addObject("title", "Add Album");

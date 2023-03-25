@@ -3,10 +3,7 @@ package com.kdg.springprojt5.service.springdata;
 
 import com.kdg.springprojt5.domain.Album;
 import com.kdg.springprojt5.domain.AlbumArtist;
-import com.kdg.springprojt5.repository.springdata.SpringDataAlbumArtistRepository;
-import com.kdg.springprojt5.repository.springdata.SpringDataAlbumRepository;
-import com.kdg.springprojt5.repository.springdata.SpringDataArtistRepository;
-import com.kdg.springprojt5.repository.springdata.SpringDataSongRepository;
+import com.kdg.springprojt5.repository.springdata.*;
 import com.kdg.springprojt5.service.AlbumService;
 import com.kdg.springprojt5.util.JsonHandler;
 import org.slf4j.Logger;
@@ -23,19 +20,19 @@ public class SpringDataAlbumService implements AlbumService {
     private final SpringDataArtistRepository artistRepository;
     private final SpringDataSongRepository songRepository;
     private final SpringDataAlbumArtistRepository albumArtistRepository;
+
     private final Logger logger;
     private final JsonHandler jsonHandler;
 
 
-    public SpringDataAlbumService(SpringDataAlbumRepository albumRepository, SpringDataArtistRepository artistRepository, SpringDataSongRepository songRepository, SpringDataAlbumArtistRepository albumArtistRepository, JsonHandler jsonHandler) {
+    public SpringDataAlbumService(SpringDataAlbumRepository albumRepository, SpringDataArtistRepository artistRepository, SpringDataSongRepository songRepository, SpringDataAlbumArtistRepository albumArtistRepository) {
         this.albumRepository = albumRepository;
         this.artistRepository = artistRepository;
         this.songRepository = songRepository;
         this.albumArtistRepository = albumArtistRepository;
-        this.jsonHandler = jsonHandler;
-        this.logger = LoggerFactory.getLogger(this.getClass());
+        this.logger = LoggerFactory.getLogger(this.getClass().getName());
+        this.jsonHandler = new JsonHandler();
     }
-
 
     @Override
     public List<Album> getAllAlbums() {

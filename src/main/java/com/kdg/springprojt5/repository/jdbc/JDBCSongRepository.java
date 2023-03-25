@@ -37,7 +37,8 @@ public class JDBCSongRepository implements SongRepository {
                 rs.getString("song_title"),
                 rs.getInt("track_number"),
                 rs.getDouble("duration_ms"),
-                rs.getBoolean("explicit")
+                rs.getBoolean("explicit"),
+                rs.getLong("user_id")
         );
     }
 

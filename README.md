@@ -159,6 +159,7 @@
     - password: admin  
     - role : ADMIN
   - admin page is locked out for users url : http://localhost:8080/adminPage
+  - only admins can create new Artists. users create albums and songs for existing artists
 - Week 5
   - 
 - Week 6

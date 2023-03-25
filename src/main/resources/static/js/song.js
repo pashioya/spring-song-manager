@@ -51,7 +51,7 @@ class pageController {
             row.innerHTML = `
                 <td>${song.songTitle}</td>
                 <td>${song.trackNumber}</td>
-                <td>${song.durationMS}</td>
+                <td>${song.durationMs}</td>
                 <td>${song.explicit}</td>
             `;
             // set the row to be clickable

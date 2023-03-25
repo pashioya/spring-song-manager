@@ -3,6 +3,7 @@ package com.kdg.springprojt5.controllers.mvc;
 import com.kdg.springprojt5.controllers.mvc.helper.DataItem;
 import com.kdg.springprojt5.controllers.mvc.helper.HistoryItem;
 import com.kdg.springprojt5.controllers.mvc.viewmodel.ArtistViewModel;
+import com.kdg.springprojt5.domain.Artist;
 import com.kdg.springprojt5.service.ArtistService;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.servlet.http.HttpSession;
@@ -56,8 +57,20 @@ public class ArtistsController {
     public ModelAndView fullArtist(@PathVariable Long id, HttpSession session) {
         setHistory(session, "Full Artist: " + id);
         ModelAndView mav = new ModelAndView("fullArtist");
+
+        Artist artist = artistService.getArtistById(id);
+
+        ArtistViewModel artistViewModel = new ArtistViewModel(
+                artist.getId(),
+                artist.getArtistName(),
+                artist.getArtistFollowers(),
+                artist.getFavoriteGenre(),
+                artist.getUser().getUsername(),
+                artist.getAlbums()
+        );
+
         try{
-            mav.addObject("artist", artistService.getArtistById(id));
+            mav.addObject("artist", artistViewModel);
         }
         catch (Exception e){
             throw new EntityNotFoundException("Artist with id " + id + " not found",e);
@@ -74,8 +87,6 @@ public class ArtistsController {
                 new DataItem("createAlbum", String.valueOf(id)),
                 new DataItem("printArtist")
         )));
-        mav.addObject("artist", artistService.getArtistById(id));
-        mav.addObject("albums", artistService.getArtistById(id).getAlbums());
         logger.info("full artist called");
         return mav;
     }

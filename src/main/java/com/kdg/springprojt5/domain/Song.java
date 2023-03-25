@@ -12,6 +12,9 @@ public class Song {
     @Column(name="album_id")
     private Long albumId;
 
+    @Column(name="user_id")
+    private Long userId;
+
     private String url;
     private String songTitle;
     private int trackNumber;
@@ -21,10 +24,14 @@ public class Song {
     @JoinColumn(name="album_id",insertable=false, updatable=false)
     private Album album;
 
+    @ManyToOne
+    @JoinColumn(name="user_id",insertable=false, updatable=false)
+    private User user;
+
     public Song() {
     }
 
-    public Song(Long id, Long albumId, String url, String songTitle, int trackNumber, double durationMS, boolean explicit) {
+    public Song(Long id, Long albumId, String url, String songTitle, int trackNumber, double durationMS, boolean explicit, Long userId) {
         this.id = id;
         this.albumId = albumId;
         this.url = url;
@@ -32,15 +39,17 @@ public class Song {
         this.trackNumber = trackNumber;
         this.durationMS = durationMS;
         this.explicit = explicit;
+        this.userId = userId;
     }
 
-    public Song(Long albumId, String url, String songTitle, int trackNumber, double durationMS, boolean explicit) {
+    public Song(Long albumId, String url, String songTitle, int trackNumber, double durationMS, boolean explicit, Long userId) {
         this.albumId = albumId;
         this.url = url;
         this.songTitle = songTitle;
         this.trackNumber = trackNumber;
         this.durationMS = durationMS;
         this.explicit = explicit;
+        this.userId = userId;
     }
 
     public Long getId() {
@@ -71,31 +80,34 @@ public class Song {
         return songTitle;
     }
 
-    public void setSongTitle(String songTitle) {
-        this.songTitle = songTitle;
-    }
 
     public int getTrackNumber() {
         return trackNumber;
     }
-
-    public void setTrackNumber(int trackNumber) {
-        this.trackNumber = trackNumber;
-    }
-
     public double getDurationMS() {
         return durationMS;
     }
-
-    public void setDurationMS(double durationMS) {
-        this.durationMS = durationMS;
-    }
-
     public boolean isExplicit() {
         return explicit;
     }
 
     public void setExplicit(boolean explicit) {
         this.explicit = explicit;
+    }
+
+    public Album getAlbum() {
+        return album;
+    }
+
+    public void setAlbum(Album album) {
+        this.album = album;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 }

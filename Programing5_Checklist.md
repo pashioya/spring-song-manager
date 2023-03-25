@@ -47,7 +47,7 @@
 - Week4:
 
 - Implement at least two different roles with different access rights within your application. These access rights should differ from unauthenticated users.
-- Add users with different roles to your seeding routine. The user should be implemented as a persisted entity with at least one association to another domain entity. *******************************************
+- Add users with different roles to your seeding routine. The user should be implemented as a persisted entity with at least one association to another domain entity. 
 - Create meaningful features and functionality in your application so users can be associated with certain dataset records. Ensure that unauthenticated users can create no such associations or records. *******************************************
 - Visually, your application should hide actions/links/pages which a user cannot access. The backend must also verify if the client can take such actions.
 - The REST API and Ajax features should work as before.
@@ -57,8 +57,8 @@
 - 
 - README.md:
   - List the users that are added in your seeding step, including their login, password, and role.
-  - Give an overview of the different roles in your application and which actions each type of user can (not) take: unauthenticated users, the first role, and the second role. *******************************************
-  - Specify which information you've hidden for unauthenticated users and provide a link to this page. *******************************************
+  - Give an overview of the different roles in your application and which actions each type of user can (not) take: unauthenticated users, the first role, and the second role.
+  - Specify which information you've hidden for unauthenticated users and provide a link to this page. 
   - Specify how users are related to other entities and who can update/access that information. This information may be already covered by explaining the different roles. Provide a link to this page. 
 
 - Week5:

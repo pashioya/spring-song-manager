@@ -33,23 +33,20 @@ public class JDBCAlbumRepository implements AlbumRepository {
 
     private Album mapAlbumRow(ResultSet rs, long rowid)
     throws SQLException {
-        try{
-            String dateString = rs.getString("release_date");
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-            LocalDate date = LocalDate.parse(dateString, formatter);
+        String dateString = rs.getString("release_date");
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        LocalDate date = LocalDate.parse(dateString, formatter);
 
-            return new Album(
-                    rs.getLong("id"),
-                    rs.getString("album_title"),
-                    rs.getInt("official_track_count"),
-                    StatusEnum.valueOf(rs.getString("album_status").toUpperCase()),
-                    rs.getString("genre"),
-                    date
-            );
+        return new Album(
+                rs.getLong("id"),
+                rs.getString("album_title"),
+                rs.getInt("official_track_count"),
+                StatusEnum.valueOf(rs.getString("album_status").toUpperCase()),
+                rs.getString("genre"),
+                date,
+                rs.getLong("user_id")
+        );
 
-        } catch (SQLException e) {
-            throw e;
-        }
     }
     @Override
     public Album save(Album album) {

@@ -4,6 +4,7 @@ import com.kdg.springprojt5.controllers.api.dto.AlbumDto;
 import com.kdg.springprojt5.controllers.api.dto.NewAlbumDto;
 import com.kdg.springprojt5.domain.Album;
 import com.kdg.springprojt5.domain.StatusEnum;
+import com.kdg.springprojt5.security.CustomUserDetails;
 import com.kdg.springprojt5.service.AlbumService;
 import com.kdg.springprojt5.service.ArtistService;
 import com.kdg.springprojt5.service.SongService;
@@ -12,6 +13,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -107,15 +109,19 @@ public class AlbumApiController {
     @PostMapping("/artist/{artistId}/album/create")
     public String createAlbum(
             @PathVariable("artistId") Long artistId,
-            @RequestBody NewAlbumDto albumDto
+            @RequestBody NewAlbumDto albumDto,
+            Authentication authentication
     ) {
+        CustomUserDetails currentUser = (CustomUserDetails) authentication.getPrincipal();
+        Long userId = currentUser.getUserId();
 
         var album = new Album(
                 albumDto.getAlbumName(),
                 albumDto.getOfficialTrackCount(),
                 StatusEnum.valueOf(albumDto.getAlbumStatus().toUpperCase()),
                 albumDto.getGenre(),
-                albumDto.getReleaseDate()
+                albumDto.getReleaseDate(),
+                userId
         );
         Long id = albumService.saveAlbum(album, artistId).getId();
         return "redirect:/album/" + id;

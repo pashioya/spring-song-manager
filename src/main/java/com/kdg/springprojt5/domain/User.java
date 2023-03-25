@@ -54,10 +54,6 @@ public User(String username, String password, UserRole role) {
         return username;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
     public String getPassword() {
         return password;
     }
@@ -75,4 +71,14 @@ public User(String username, String password, UserRole role) {
     }
 
 
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", username='" + username + '\'' +
+                ", password='" + password + '\'' +
+                ", role=" + role +
+                ", artists=" + artists +
+                '}';
+    }
 }

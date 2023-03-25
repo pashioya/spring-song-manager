@@ -3,17 +3,18 @@ package com.kdg.springprojt5.controllers.api.dto;
 public class SongDto {
     private Long id;
     private String songTitle;
-
     private int trackNumber;
     private double durationMs;
-
+    private boolean explicit;
     private String url;
 
 
-
-    public SongDto(String songTitle, double durationMs, String url) {
+    public SongDto(Long id, String songTitle, int trackNumber, double durationMs, boolean explicit, String url) {
+        this.id = id;
         this.songTitle = songTitle;
+        this.trackNumber = trackNumber;
         this.durationMs = durationMs;
+        this.explicit = explicit;
         this.url = url;
     }
 
@@ -44,6 +45,21 @@ public class SongDto {
         this.durationMs = durationMs;
     }
 
+    public boolean isExplicit() {
+        return explicit;
+    }
+
+    public void setExplicit(boolean explicit) {
+        this.explicit = explicit;
+    }
+
+    public int getTrackNumber() {
+        return trackNumber;
+    }
+
+    public void setTrackNumber(int trackNumber) {
+        this.trackNumber = trackNumber;
+    }
     public String getUrl() {
         return url;
     }

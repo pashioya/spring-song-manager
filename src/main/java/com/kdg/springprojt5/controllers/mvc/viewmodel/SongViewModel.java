@@ -2,15 +2,27 @@ package com.kdg.springprojt5.controllers.mvc.viewmodel;
 
 
 public class SongViewModel {
+    private Long id;
     private String url;
     private String songTitle;
-    private String artistName;
-    private String albumName;
     private int trackNumber;
-    private int durationMS;
+    private double durationMS;
     private boolean explicit;
+    private String user;
 
 
+    public SongViewModel() {
+    }
+
+    public SongViewModel(Long id, String url, String songTitle, int trackNumber, double durationMS, boolean explicit, String user) {
+        this.id = id;
+        this.url = url;
+        this.songTitle = songTitle;
+        this.trackNumber = trackNumber;
+        this.durationMS = durationMS;
+        this.explicit = explicit;
+        this.user = user;
+    }
     public String getUrl() {
         return url;
     }
@@ -23,24 +35,13 @@ public class SongViewModel {
         return songTitle;
     }
 
-    public void setSongTitle(String songTitle) {
-        this.songTitle = songTitle;
+
+    public boolean isExplicit() {
+        return explicit;
     }
 
-    public String getArtistName() {
-        return artistName;
-    }
-
-    public void setArtistName(String artistName) {
-        this.artistName = artistName;
-    }
-
-    public String getAlbumName() {
-        return albumName;
-    }
-
-    public void setAlbumName(String albumName) {
-        this.albumName = albumName;
+    public void setExplicit(boolean explicit) {
+        this.explicit = explicit;
     }
 
     public int getTrackNumber() {
@@ -51,20 +52,27 @@ public class SongViewModel {
         this.trackNumber = trackNumber;
     }
 
-    public int getDurationMS() {
+    public double getDurationMS() {
         return durationMS;
     }
 
-    public void setDurationMS(int durationMS) {
+    public void setDurationMS(double durationMS) {
         this.durationMS = durationMS;
     }
 
-    public boolean isExplicit() {
-        return explicit;
+    public String getUser() {
+        return user;
     }
 
-    public void setExplicit(boolean explicit) {
-        this.explicit = explicit;
+    public void setUser(String user) {
+        this.user = user;
+    }
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     @Override
@@ -72,8 +80,6 @@ public class SongViewModel {
         return "SongViewModel{" +
                 "url='" + url + '\'' +
                 ", songTitle='" + songTitle + '\'' +
-                ", artistName='" + artistName + '\'' +
-                ", albumName='" + albumName + '\'' +
                 ", trackNumber=" + trackNumber +
                 ", durationMS=" + durationMS +
                 ", explicit=" + explicit +

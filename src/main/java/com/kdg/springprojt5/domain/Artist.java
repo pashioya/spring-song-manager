@@ -14,7 +14,7 @@ public class Artist {
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name="user_id", insertable=false, updatable=false)
+    @Column(name="user_id")
     private Long userId;
 
     @Column(name="artist_name")
@@ -26,7 +26,7 @@ public class Artist {
     private List<Album> albums = new ArrayList<>();
 
     @ManyToOne
-    @JoinColumn(name="user_id")
+    @JoinColumn(name="user_id",insertable=false, updatable=false)
     private User user;
 
     // constructor, getters and setters
@@ -102,10 +102,6 @@ public class Artist {
         return favoriteGenre;
     }
 
-    public void setFavoriteGenre(String favoriteGenre) {
-        this.favoriteGenre = favoriteGenre;
-    }
-
     public List<Album> getAlbums() {
         return albums;
     }
@@ -113,5 +109,12 @@ public class Artist {
     public void setAlbums(List<Album> albums) {
         this.albums = albums;
         calcFavoriteGenre();
+    }
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 }

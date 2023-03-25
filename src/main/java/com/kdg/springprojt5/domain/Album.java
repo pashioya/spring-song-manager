@@ -13,6 +13,9 @@ public class Album {
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     @Column
     private Long id;
+
+    @Column(name="user_id")
+    private Long userId;
     @Column(nullable = false)
     private String albumName;
     @Column(nullable = false)
@@ -35,24 +38,30 @@ public class Album {
     @OneToMany(mappedBy = "album")
     private List<Song> songs;
 
-    public Album(Long id, String albumName, int officialTrackCount, StatusEnum albumStatus, String genre, LocalDate releaseDate) {
+    @ManyToOne
+    @JoinColumn(name="user_id",insertable=false, updatable=false)
+    private User user;
+
+    public Album(Long id, String albumName, int officialTrackCount, StatusEnum albumStatus, String genre, LocalDate releaseDate, Long userId) {
         this.id = id;
         this.albumName = albumName;
         this.officialTrackCount = officialTrackCount;
         this.albumStatus = albumStatus;
         this.genre = genre;
         this.releaseDate = releaseDate;
+        this.userId = userId;
     }
 
     public Album() {
     }
 
-    public Album(String albumName, int officialTrackCount, StatusEnum albumStatus, String genre, LocalDate releaseDate) {
+    public Album(String albumName, int officialTrackCount, StatusEnum albumStatus, String genre, LocalDate releaseDate, Long userId) {
         this.albumName = albumName;
         this.officialTrackCount = officialTrackCount;
         this.albumStatus = albumStatus;
         this.genre = genre;
         this.releaseDate = releaseDate;
+        this.userId = userId;
     }
 
 
@@ -76,10 +85,6 @@ public class Album {
 
     public int getOfficialTrackCount() {
         return officialTrackCount;
-    }
-
-    public void setOfficialTrackCount(int officialTrackCount) {
-        this.officialTrackCount = officialTrackCount;
     }
 
     public StatusEnum getAlbumStatus() {
@@ -135,7 +140,12 @@ public class Album {
     public void setSongs(List<Song> songs) {
         this.songs = songs;
     }
-    public void addSong(Song song) {
-        songs.add(song);
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 }

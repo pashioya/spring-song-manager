@@ -16,6 +16,10 @@
         </tbody>
     </table>
     <div class="album-item">
+        <span>Created By: </span>
+        <span th:text="${album.getUser()}"></span>
+    </div>
+    <div class="album-item">
         <span>Album Name: </span>
         <span th:text="${album.getAlbumName()}"></span>
     </div>
@@ -42,7 +46,6 @@
         <thead class="table-header">
             <th class="row-item">songURL</th>
             <th class="row-item">songName</th>
-<!--            <th class="row-item">songArtist</th>-->
             <th class="row-item">trackNumber</th>
             <th class="row-item">DurationMS</th>
             <th class="row-item">Explicit?</th>

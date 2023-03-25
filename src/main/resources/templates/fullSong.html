@@ -6,6 +6,10 @@
 <header th:replace="~{fragments/header :: header (${headerList})}"></header>
 <section>
     <div class="song-item">
+        <span>Created By: </span>
+        <span th:text="${song.getUser()}"></span>
+    </div>
+    <div class="song-item">
         <span>URL: </span>
         <span th:text="${song.getUrl()}"></span>
     </div>

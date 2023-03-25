@@ -49,10 +49,6 @@ GET http://localhost:8080/api/song/1
 ###
 # @no-cookie-jar
 GET http://localhost:8080/api/songs
-
-###
-# @no-cookie-jar
-GET http://localhost:8080/users/2
 ###
 # @no-cookie-jar
 GET http://localhost:8080/api/album/1/artists

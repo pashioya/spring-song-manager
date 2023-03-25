@@ -3,7 +3,7 @@ package com.kdg.springprojt5.controllers.mvc;
 import com.kdg.springprojt5.controllers.mvc.helper.DataItem;
 import com.kdg.springprojt5.controllers.mvc.helper.HistoryItem;
 import com.kdg.springprojt5.controllers.mvc.viewmodel.SongViewModel;
-import com.kdg.springprojt5.service.AlbumService;
+import com.kdg.springprojt5.domain.Song;
 import com.kdg.springprojt5.service.SongService;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.servlet.http.HttpSession;
@@ -26,12 +26,11 @@ import java.util.List;
 public class SongsController {
     private final Logger logger;
     private final SongService songService;
-    private final AlbumService albumService;
 
-    public SongsController(SongService songService, AlbumService albumService) {
-        this.logger = LoggerFactory.getLogger(this.getClass());
+
+    public SongsController(SongService songService) {
+        this.logger = LoggerFactory.getLogger(this.getClass().getName());
         this.songService = songService;
-        this.albumService = albumService;
     }
     @GetMapping
     public ModelAndView songs(HttpSession session) {
@@ -54,9 +53,21 @@ public class SongsController {
     public ModelAndView fullSong(@PathVariable Long id, HttpSession session) {
         setHistory(session, "Full Song: " + id);
         ModelAndView mav = new ModelAndView("fullSong");
+
+        Song song = songService.getSongById(id);
+
+        SongViewModel songViewModel = new SongViewModel(
+                song.getId(),
+                song.getUrl(),
+                song.getSongTitle(),
+                song.getTrackNumber(),
+                song.getDurationMS(),
+                song.isExplicit(),
+                song.getUser().getUsername()
+        );
+        System.out.println(song.getUser());
         try {
-            mav.addObject("song", songService.getSongById(id));
-            mav.addObject("artists", albumService.getAlbumById(songService.getSongById(id).getAlbumId()).getArtists());
+            mav.addObject("song", songViewModel);
         }
         catch (Exception e){
             throw new EntityNotFoundException("Song with id " + id + " not found");

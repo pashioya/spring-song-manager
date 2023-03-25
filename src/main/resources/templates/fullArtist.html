@@ -7,6 +7,10 @@
 <header th:replace="~{fragments/header :: header (${headerList})}"></header>
 <section>
     <div class="artist-item">
+        <span>Created By: </span>
+        <span th:text="${artist.getUser()}"></span>
+    </div>
+    <div class="artist-item">
         <span>Artist Name: </span>
         <span th:text="${artist.getArtistName()}"></span>
     </div>
@@ -32,7 +36,7 @@
             <th >releaseDate</th>
         </thead>
         <tbody>
-            <tr class="table-row" th:each="album: ${albums}" th:data-href="${'/allAlbums/fullAlbum/' + album.getId()}">
+            <tr class="table-row" th:each="album: ${artist.getAlbums()}" th:data-href="${'/allAlbums/fullAlbum/' + album.getId()}">
 <!--                <td th:text="${album.getArtistName()}"></td>-->
                 <td th:text="${album.getAlbumName()}"></td>
                 <!--            <div class="row-item" th:text="${album.getTracksInAlbum()}"></div>-->

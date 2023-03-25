@@ -12,9 +12,9 @@ public class AlbumViewModel {
     private String albumName;
     private int officialTrackCount;
     private String albumStatus;
-
     private String genre;
     private LocalDate releaseDate;
+    private String user;
     private List<Artist> artists;
     private List<Song> songs;
 
@@ -22,7 +22,7 @@ public class AlbumViewModel {
     public AlbumViewModel() {
     }
 
-    public AlbumViewModel(Long id, String albumName, int officialTrackCount, String albumStatus, String genre, LocalDate releaseDate, List<Artist> artists, List<Song> songs) {
+    public AlbumViewModel(Long id, String albumName, int officialTrackCount, String albumStatus, String genre, LocalDate releaseDate, List<Artist> artists, List<Song> songs, String user) {
         this.id = id;
         this.albumName = albumName;
         this.officialTrackCount = officialTrackCount;
@@ -31,6 +31,7 @@ public class AlbumViewModel {
         this.releaseDate = releaseDate;
         this.artists = artists;
         this.songs = songs;
+        this.user = user;
     }
     public Long getId() {
         return id;
@@ -94,6 +95,14 @@ public class AlbumViewModel {
 
     public void setSongs(List<Song> songs) {
         this.songs = songs;
+    }
+
+    public String getUser() {
+        return user;
+    }
+
+    public void setUser(String user) {
+        this.user = user;
     }
 
     @Override

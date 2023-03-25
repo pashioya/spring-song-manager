@@ -55,12 +55,41 @@ let albumPreviewColumn = document.getElementById("preview-song-names");
             for (let row of allRows) {
                 row.addEventListener("mouseover", () => {
                     albumPreviewColumn.innerHTML = "";
-                    let id = row.getAttribute("data-href").split("/")[3];
-                    console.log("hovering over row: " + id);
-                    fetchAlbumsSongs(id);
+                    let id = row.getAttribute("data-href").split("/").pop();
+                    this.fetchAlbumsSongs(id);
                 });
             }
 
+        }
+        fetchAlbumsSongs(albumID){
+
+            fetch(`/api/album/${albumID}/songs`,
+                {
+                    headers: {
+                        Accept: "application/json"
+                    }
+                })
+                .then(resp => {
+                        if (resp.status !== 200) {
+                            console.log("Error: " + resp.status);
+                        } else {
+                            return resp.json();
+                        }
+                    }
+                )
+                .then(data => {
+                        console.log(data);
+                        data.forEach(song => {
+                        //     if the song title is already in the song preview column, don't add it again
+                            if (!songPreviewColumn.innerHTML.includes(song.songTitle)) {
+                                let songItem = document.createElement("tr");
+                                songItem.setAttribute("scope","row");
+                                songItem.innerHTML = song.songTitle;
+                                songPreviewColumn.appendChild(songItem);
+                            }
+                        });
+                    }
+                )
         }
 
         renderAlbums() {
@@ -133,33 +162,3 @@ let albumPreviewColumn = document.getElementById("preview-song-names");
     previousPageButton.addEventListener("click", () => {
         page.previousPage();
     });
-function fetchAlbumsSongs(albumID){
-
-    fetch(`/api/album/${albumID}/songs`,
-        {
-            headers: {
-                Accept: "application/json"
-            }
-        })
-        .then(resp => {
-                if (resp.status !== 200) {
-                    console.log("Error: " + resp.status);
-                } else {
-                    return resp.json();
-                }
-            }
-        )
-        .then(data => {
-                console.log(data);
-                data.forEach(song => {
-                    let songItem = document.createElement("tr");
-                    songItem.setAttribute("scope","row");
-                    songItem.innerHTML = song.songTitle;
-                    songPreviewColumn.appendChild(songItem);
-                });
-            }
-        )
-}
-
-
-
