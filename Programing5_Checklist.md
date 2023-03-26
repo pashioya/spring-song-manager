@@ -7,10 +7,10 @@
 - Implement at least one GET endpoint and one DELETE endpoint.
 - Ensure that the endpoints are called from JavaScript in a meaningful way.
 - Add a .http file to your project with HTTP request messages for each endpoint and possible response status code.
-- Add a heading to the README.md file called "Week 1" with the following information:  *******************************************
-  - Add each of the HTTP requests and responses to the markdown file. *******************************************
-  - Use a subtitle for each request/response combination to indicate the action taken and the response description or code. *******************************************
-  - Display each request and response as preformatted text (Markdown: ``` ) *******************************************
+- Add a heading to the README.md file called "Week 1" with the following information: 
+  - Add each of the HTTP requests and responses to the markdown file.
+  - Use a subtitle for each request/response combination to indicate the action taken and the response description or code. 
+  - Display each request and response as preformatted text (Markdown: ``` ) 
 - Ensure that AJAX principles are applied so that no page is refreshed. 
 - Apply REST principles (status codes, verbs, URL patterns, etc.).
 - Push your solution to the git repository of Programming 5.
@@ -24,7 +24,7 @@
 - Edit your .http file to include request messages for each endpoint and possible response status codes, including 400 (handled by Spring). *******************************************
 - Add content negotiation support for JSON and XML formats to your application. *******************************************
 - Add two GET requests to your .http file, one for JSON and one for XML. *******************************************
-- Under "Week 2" in your README.md file, add requests and responses for the two new GET requests. *******************************************
+- Under "Week 2" in your README.md file, add requests and responses for the two new GET requests.
 - Ensure no pages are refreshed from the user's perspective and apply AJAX principles.
 - Apply REST principles to your implementation, including status codes, verbs, and URL patterns.
 
@@ -70,7 +70,7 @@
 - Write at least two tests for the repository layer.
 - Write a test on how deletes are handled. 
 - Write a test on some other Hibernate mapping (uniqueness, nullability, ...). 
-- Write a test on eager/lazy loading. *******************************************
+- Write a test on eager/lazy loading. 
 - Write tests for at least two methods of the service layer. *******************************************
 - Implement tests as integration tests. *******************************************
 - Choose interesting methods with logic to test. *******************************************

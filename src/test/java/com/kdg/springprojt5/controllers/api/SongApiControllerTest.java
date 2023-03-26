@@ -27,21 +27,12 @@ public class SongApiControllerTest {
 
     @Test
     public void testDeleteSong() throws Exception {
-        Song song = new Song();
-        song.setAlbumId(1L);
-        song.setUrl("https://example.com/song.mp3");
-        song.setSongTitle("Test Song");
-        song.setTrackNumber(1);
-        song.setDurationMS(180000L);
-        song.setExplicit(false);
-        song.setUserId(1L);
+        Song song = new Song( 1L, "https://example.com/song.mp3", "Test Song", 1, 180000L, false, 1L);
         Song savedSong = songService.saveSong(song);
 
-        // Send a DELETE request to the API to delete the song
         mockMvc.perform(delete("/api/song/" + savedSong.getId() + "/delete"))
                 .andExpect(status().isOk());
 
-        // Verify that the song was deleted
         assertNull(songService.getSongById(savedSong.getId()));
     }
 

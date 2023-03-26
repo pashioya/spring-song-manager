@@ -1,5 +1,5 @@
 
-### Relevant Information
+## Relevant Information
 - Name - Paul Ashioya
 - KdG Email - paul.ashioya@student.kdg.be
 - Student Number - 
@@ -41,20 +41,31 @@
       - password: 2
 
 
-- Known Bugs
-  - album preview is misbehaving 
+### Known Bugs
+- json print methods arent functioning as intended
 
-- Week 1
+## Week 1
 ```HttpRequests
       ###
       # @no-cookie-jar
       GET http://localhost:8080/api/album/1
       
+      Response:
+            {
+              "id": 1,
+              "albumName": "Abbey Road",
+              "artistName": null,
+              "genre": "Rock",
+              "officialTrackCount": 12,
+              "albumStatus": "SINGLE",
+              "releaseDate": "1969-09-26"
+            }
+      
       ###
       # @no-cookie-jar
       DELETE http://localhost:8080/api/album/1/delete
 ```
-- Week 2
+# Week 2
 ```HttpRequests
       POST http://localhost:8080/api/artist/create
       //@no-cookie-jar
@@ -148,9 +159,9 @@
       Content-Type: application/json
       Cookie: JSESSIONID=75400D8A8763ED4F6B3220A14694DA23
 ```
-- Week 3
-  - 
-- Week 4
+## Week 3
+  - All done
+## Week 4
   -  Users Added in seeding Step
   - username: john_smith 
     - password: user 
@@ -160,9 +171,7 @@
     - role : ADMIN
   - admin page is locked out for users url : http://localhost:8080/adminPage
   - only admins can create new Artists. users create albums and songs for existing artists
-- Week 5
-  - 
-- Week 6
-
-- Week 7
+##  Week 5
+##  Week 6
+##  Week 7
   - 

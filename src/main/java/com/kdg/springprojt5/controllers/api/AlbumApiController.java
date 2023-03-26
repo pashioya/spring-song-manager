@@ -19,7 +19,6 @@ import org.springframework.web.bind.annotation.*;
 import java.util.ArrayList;
 import java.util.List;
 
-//returns information rather than a full page
 @RestController
 @RequestMapping("/api")
 public class AlbumApiController {
@@ -57,26 +56,24 @@ public class AlbumApiController {
         return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
     }
 
+
     @GetMapping("/albums")
-    public ResponseEntity<Iterable<AlbumDto>> getAllAlbums() {
+    public ResponseEntity<List<AlbumDto>> getAllAlbums() {
         var albums = albumService.getAllAlbums();
         if (albums != null) {
-
             List<AlbumDto> albumDtos = new ArrayList<>();
             for (Album album: albums) {
                 AlbumDto albumDto = modelMapper.map(album, AlbumDto.class);
                 albumDto.setArtistName(album.getArtists().get(0).getArtistName());
                 albumDtos.add(albumDto);
             }
-            logger.info("Albums found");
             return new ResponseEntity<>(albumDtos, HttpStatus.OK);
         }
-        logger.info("Albums Not found");
         return new ResponseEntity<>(null, HttpStatus.NO_CONTENT);
     }
 
     @GetMapping("/artist/{id}/albums")
-    public ResponseEntity<Iterable<AlbumDto>> getAlbumsForArtist(
+    public ResponseEntity<List<AlbumDto>> getAlbumsForArtist(
             @PathVariable("id") Long artistId
     ) {
         var artist = artistService.getArtistById(artistId);
@@ -92,6 +89,7 @@ public class AlbumApiController {
         }
         return new ResponseEntity<>(null, HttpStatus.NO_CONTENT);
     }
+
 
     @DeleteMapping("/album/{id}/delete")
     public ResponseEntity<String> deleteAlbum(

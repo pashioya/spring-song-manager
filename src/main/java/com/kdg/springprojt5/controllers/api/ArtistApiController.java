@@ -49,7 +49,7 @@ public class ArtistApiController {
 
 
     @GetMapping("/artists")
-    public ResponseEntity<Iterable<ArtistDto>> getAllArtists() {
+    public ResponseEntity<List<ArtistDto>> getAllArtists() {
         var artists = artistService.getAllArtists();
         if (artists == null) {
             return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
@@ -65,7 +65,7 @@ public class ArtistApiController {
 
 
     @GetMapping("/album/{albumId}/artists")
-    public ResponseEntity<Iterable<ArtistDto>> getAllArtistsForAlbum(@PathVariable("albumId") Long albumId) {
+    public ResponseEntity<List<ArtistDto>> getAllArtistsForAlbum(@PathVariable("albumId") Long albumId) {
         var artists = artistService.getAllArtistsForAlbum(albumId);
         if (artists == null) {
             return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
@@ -78,6 +78,7 @@ public class ArtistApiController {
         }
         return new ResponseEntity<>(artistDtos, HttpStatus.OK);
     }
+
 
     @DeleteMapping("/artist/{id}/delete")
     public ResponseEntity<Void> deleteArtist(@PathVariable Long id) {

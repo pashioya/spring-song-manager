@@ -19,5 +19,4 @@ public interface SpringDataAlbumRepository extends JpaRepository<Album, Long> {
 
     @Query("update AlbumArtist aa set aa = :albumArtist ")
     void updateAlbumArtist(AlbumArtist albumArtist);
-//
 }

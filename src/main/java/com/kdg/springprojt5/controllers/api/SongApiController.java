@@ -45,7 +45,7 @@ public class SongApiController {
 
     }
 
-//    get albums songs
+
     @GetMapping("/album/{id}/songs")
     public ResponseEntity<List<SongDto>> getAlbumSongs(@PathVariable("id") Long albumId) {
         var songs = songService.getSongsByAlbumId(albumId);

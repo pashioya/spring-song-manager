@@ -20,38 +20,68 @@ Cookie: JSESSIONID=75400D8A8763ED4F6B3220A14694DA23
 ###
 # @no-cookie-jar
 DELETE http://localhost:8080/api/artist/1/delete
+Accept: application/json
+Content-Type: application/json
+Cookie: JSESSIONID=75400D8A8763ED4F6B3220A14694DA23
 
 ###
 # @no-cookie-jar
 GET http://localhost:8080/api/artists
+Accept: application/json
+Content-Type: application/json
+Cookie: JSESSIONID=75400D8A8763ED4F6B3220A14694DA23
 
 ###
 # @no-cookie-jar
 GET http://localhost:8080/api/album/1
+Accept: application/json
+Content-Type: application/json
+Cookie: JSESSIONID=75400D8A8763ED4F6B3220A14694DA23
 
 ###
 # @no-cookie-jar
 DELETE http://localhost:8080/api/album/1/delete
+Accept: application/json
+Content-Type: application/json
+Cookie: JSESSIONID=75400D8A8763ED4F6B3220A14694DA23
 
 ###
 # @no-cookie-jar
 GET http://localhost:8080/api/albums
+Accept: application/json
+Content-Type: application/json
+Cookie: JSESSIONID=75400D8A8763ED4F6B3220A14694DA23
 ###
 # @no-cookie-jar
 GET http://localhost:8080/api/artist/1/albums
+Accept: application/json
+Content-Type: application/json
+Cookie: JSESSIONID=75400D8A8763ED4F6B3220A14694DA23
 ###
 # @no-cookie-jar
 GET http://localhost:8080/api/album/1/songs
+Accept: application/json
+Content-Type: application/json
+Cookie: JSESSIONID=75400D8A8763ED4F6B3220A14694DA23
 
 ###
 # @no-cookie-jar
 GET http://localhost:8080/api/song/1
+Accept: application/json
+Content-Type: application/json
+Cookie: JSESSIONID=75400D8A8763ED4F6B3220A14694DA23
 ###
 # @no-cookie-jar
 GET http://localhost:8080/api/songs
+Accept: application/json
+Content-Type: application/json
+Cookie: JSESSIONID=75400D8A8763ED4F6B3220A14694DA23
 ###
 # @no-cookie-jar
 GET http://localhost:8080/api/album/1/artists
+Accept: application/json
+Content-Type: application/json
+Cookie: JSESSIONID=75400D8A8763ED4F6B3220A14694DA23
 ###
 # @no-cookie-jar
 POST http://localhost:8080/api/artist/1/album/create

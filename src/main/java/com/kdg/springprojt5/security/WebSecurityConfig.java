@@ -28,7 +28,7 @@ public class WebSecurityConfig {
                         .requestMatchers(HttpMethod.PATCH, "/api/**") // syntax by which you can specify nested paths generically, like regexes
                         .authenticated()
                         .requestMatchers(HttpMethod.DELETE, "/api/**") // syntax by which you can specify nested paths generically, like regexes
-                        .authenticated()
+                        .permitAll()
                         .requestMatchers("/", "/register").permitAll()
                         .requestMatchers(HttpMethod.POST, "/register").permitAll()
                         .anyRequest().authenticated())
