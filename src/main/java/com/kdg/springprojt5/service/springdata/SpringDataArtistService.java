@@ -73,8 +73,8 @@ public class SpringDataArtistService implements ArtistService {
 
     @Override
     public List<Artist> getAllArtistsForAlbum(Long albumId) {
-        artistRepository.getAlbumsArtists(albumId).forEach(artist -> artist.setAlbums(albumRepository.getAlbumsByArtistId(artist.getId())));
-
-        return null;
+        var artists = artistRepository.getAlbumsArtists(albumId);
+        artists.forEach(artist -> artist.setAlbums(albumRepository.getAlbumsByArtistId(artist.getId())));
+        return artists;
     }
 }

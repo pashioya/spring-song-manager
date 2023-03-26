@@ -44,7 +44,9 @@ public class ImplArtistService implements ArtistService {
     @Override
     public Artist getArtistById(Long id) {
         Artist artist = artistRepository.getArtistById(id);
-        if (artist == null) return null;
+        if (artist == null) {
+            return null;
+        }
         artist.setAlbums(albumRepository.getAlbumsByArtistId(id));
         artist.calcFavoriteGenre();
         return artist;

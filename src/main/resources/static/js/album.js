@@ -12,6 +12,9 @@ let albumPreviewColumn = document.getElementById("preview-song-names");
      * @param albumID
      */
 
+    const header = document.querySelector('meta[name="_csrf_header"]').content;
+    const token = document.querySelector('meta[name="_csrf"]').content;
+
 
     class pageController {
         constructor() {
@@ -29,6 +32,7 @@ let albumPreviewColumn = document.getElementById("preview-song-names");
                 {
                     headers: {
                         Accept: "application/json"
+                        ,[header]: token
                     }
                 })
                 .then(resp => {

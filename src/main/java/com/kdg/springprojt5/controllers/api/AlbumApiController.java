@@ -53,7 +53,7 @@ public class AlbumApiController {
 
         }
         logger.info("Album not found");
-        return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>(null, HttpStatus.NO_CONTENT);
     }
 
 
@@ -101,7 +101,7 @@ public class AlbumApiController {
             albumService.deleteAlbum(albumId);
             return new ResponseEntity<>("Album deleted", HttpStatus.OK);
         }
-        return new ResponseEntity<>("Album not found", HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>("Album not found", HttpStatus.NO_CONTENT);
     }
 
     @PostMapping("/artist/{artistId}/album/create")

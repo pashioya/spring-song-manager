@@ -52,7 +52,7 @@ public class ArtistApiController {
     public ResponseEntity<List<ArtistDto>> getAllArtists() {
         var artists = artistService.getAllArtists();
         if (artists == null) {
-            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(null, HttpStatus.NO_CONTENT);
         }
         List<ArtistDto> artistDtos = new ArrayList<>();
         for (Artist artist : artists) {
@@ -68,7 +68,7 @@ public class ArtistApiController {
     public ResponseEntity<List<ArtistDto>> getAllArtistsForAlbum(@PathVariable("albumId") Long albumId) {
         var artists = artistService.getAllArtistsForAlbum(albumId);
         if (artists == null) {
-            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(null, HttpStatus.NO_CONTENT);
         }
         List<ArtistDto> artistDtos = new ArrayList<>();
         for (Artist artist : artists) {
@@ -85,7 +85,7 @@ public class ArtistApiController {
         Artist artist = artistService.getArtistById(id);
         List<Album> artistAlbums = artist.getAlbums();
         if (artistAlbums == null) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
         for (Album album : artistAlbums) {
             songService.getSongsByAlbumId(album.getId()).forEach(song -> songService.deleteSong(song.getId()));
