@@ -70,4 +70,10 @@ class SpringDataSongServiceTest {
         assertEquals("Album Id is Correct",1L, savedSong.getAlbum().getId());
         assertEquals("Creator Is Correct","Lars", savedSong.getUser().getUsername());
     }
+
+    @Test
+    void getAllSongs(){
+//        assert that the number of songs is correct
+        assertEquals("Number of songs is correct", 1, songRepository.findAll().size());
+    }
 }

@@ -64,16 +64,16 @@
 - Week5:
 
 - Use Spring profiles to separate the seeding routine from tests. *******************************************
-- Use test-specific setups to ensure consistency of tests. *******************************************
-- Document any Spring profiles added for this step in the README.md. *******************************************
+- Use test-specific setups to ensure consistency of tests.
+- Document any Spring profiles added for this step in the README.md. 
 - Document how tests should be executed from the command line in the README.md. *******************************************
 - Write at least two tests for the repository layer.
 - Write a test on how deletes are handled. 
 - Write a test on some other Hibernate mapping (uniqueness, nullability, ...). 
 - Write a test on eager/lazy loading. 
-- Write tests for at least two methods of the service layer. *******************************************
-- Implement tests as integration tests. *******************************************
-- Choose interesting methods with logic to test. *******************************************
+- Write tests for at least two methods of the service layer.
+- Implement tests as integration tests.
+- Choose interesting methods with logic to test.
 - Write multiple testing methods for each method tested, covering success, failure1, and failure2. *******************************************
 
 

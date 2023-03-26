@@ -43,6 +43,7 @@
 
 ### Known Bugs
 - json print methods arent functioning as intended
+- Tests arent working as intended
 
 ## Week 1
 ```HttpRequests
@@ -172,6 +173,10 @@
   - admin page is locked out for users url : http://localhost:8080/adminPage
   - only admins can create new Artists. users create albums and songs for existing artists
 ##  Week 5
+    - Profile for test is added: "test"
+    - To Execute tests run the following command
+        - gradle test --tests "com.kdg.springproj5.*" --info
 ##  Week 6
+
 ##  Week 7
   - 
