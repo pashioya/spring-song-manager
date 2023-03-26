@@ -15,11 +15,11 @@
     - The entities are related as follows
     - Artist has many albums (Many to Many)
     - Album has many songs (One to many)
-    - Album has many Arists (Many to Many)
+    - Album has many Artists (Many to Many)
     - Song has one album
-    - You cannot create songs without a album to be associated with
+    - You cannot create songs without an album to be associated with
     - you cannot create an album without an artist to be associated with
-    - Artists can be created on its own, and with a album to be associated with
+    - Artists can be created on its own, and with an album to be associated with
 - Explanation of the profiles
   - We have 4 profiles
     - springData
@@ -27,7 +27,7 @@
     - Jdbc  (This is the main profile utilizing a massive database)
     - jpa
   - The profiles are switched from the application.properties file by changing the active profile
-  - the application.properties file is setup in blocks to ensure smooth transition between profiles.
+  - the application.properties file is set up in blocks to ensure smooth transition between profiles.
   - Database being used
     - I only use postgres for my database. however each repository implementation has its own set of data.
 
@@ -42,8 +42,8 @@
 
 
 ### Known Bugs
-- json print methods arent functioning as intended
-- Tests arent working as intended
+- json print methods aren't functioning as intended
+- Tests aren't working as intended
 
 ## Week 1
 ```HttpRequests
@@ -177,6 +177,4 @@
     - To Execute tests run the following command
         - gradle test --tests "com.kdg.springproj5.*" --info
 ##  Week 6
-
-##  Week 7
-  - 
+    -

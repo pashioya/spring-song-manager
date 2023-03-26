@@ -25,10 +25,10 @@ import java.util.List;
 @Controller
 @RequestMapping("/allAlbums")
 public class AlbumsController {
-    Logger logger;
-    AlbumService albumService;
-    SongService songService;
-    ArtistService artistService;
+    final Logger logger;
+    final AlbumService albumService;
+    final SongService songService;
+    final ArtistService artistService;
 
     public AlbumsController(AlbumService albumService, SongService songService, ArtistService artistService) {
         this.logger = LoggerFactory.getLogger(this.getClass().getName());

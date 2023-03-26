@@ -1,6 +1,6 @@
 - Week1:
 
-- Update the README.md file with the following information in markdown format:
+- Update the README.md file with the following information in Markdown format:
   - Course name (Programming 5)
   - Your name, KdG email address, and student ID
   - Any important build or run-instructions
