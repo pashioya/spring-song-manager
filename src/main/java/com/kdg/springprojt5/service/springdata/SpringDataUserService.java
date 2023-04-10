@@ -7,17 +7,19 @@ import org.springframework.context.annotation.Profile;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository
 @Profile("springData")
 public class SpringDataUserService implements UserService {
     private final SpringDataUserRepository userRepository;
     private final BCryptPasswordEncoder passwordEncoder;
 
+
     public SpringDataUserService(SpringDataUserRepository userRepository, BCryptPasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
     }
-
     @Override
     public User getByUserName(String username) {
         return userRepository.findByUsername(username);
@@ -28,6 +30,11 @@ public class SpringDataUserService implements UserService {
         String password = user.getPassword();
         user.setPassword(passwordEncoder.encode(password));
         return userRepository.save(user);
+    }
+
+    @Override
+    public List<User> getAllUsers() {
+        return userRepository.findAll();
     }
 
     @Override

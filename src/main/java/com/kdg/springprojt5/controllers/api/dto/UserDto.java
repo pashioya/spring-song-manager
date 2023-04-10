@@ -7,9 +7,9 @@ import lombok.*;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class ArtistDto {
+public class UserDto {
     private Long id;
-    private String name;
-    private double artistFollowers;
-
+    private String username;
+    private String password;
+    private String role;
 }

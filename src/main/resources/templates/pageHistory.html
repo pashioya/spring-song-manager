@@ -14,8 +14,8 @@
                 </thead>
                 <tbody>
                 <tr class="table-row2" th:each="page : ${pageHistory}">
-                    <td th:text="${page.getTimeStamp()}"></td>
-                    <td th:text="${page.getMessage()}"></td>
+                    <td th:text="${page.timeStamp()}"></td>
+                    <td th:text="${page.message()}"></td>
                 </tr>
                 </tbody>
             </table>

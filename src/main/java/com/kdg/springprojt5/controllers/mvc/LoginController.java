@@ -13,7 +13,6 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -35,16 +34,6 @@ public class LoginController {
         this.userService = userService;
         this.passwordEncoder = passwordEncoder;
         this.userDetailsService = userDetailsService;
-    }
-
-    @GetMapping("/login")
-    public ModelAndView login(Model model, HttpSession session) {
-        setHistory(session, "Login");
-        ModelAndView mav = new ModelAndView("login");
-        mav.addObject("title", "Login");
-        mav.addObject("headerList", new ArrayList<>(List.of()));
-        mav.addObject("footerList", new ArrayList<>(List.of()));
-        return mav;
     }
 
     private void setHistory(HttpSession session, String message){
@@ -72,5 +61,15 @@ public class LoginController {
     @GetMapping("/users/{username}")
     public UserDetails getUser(@PathVariable String username) {
         return userDetailsService.loadUserByUsername(username);
+    }
+
+    @GetMapping("/login")
+    public ModelAndView login(HttpSession session) {
+        setHistory(session, "Login");
+        ModelAndView mav = new ModelAndView("login");
+        mav.addObject("title", "Login");
+        mav.addObject("headerList", new ArrayList<>(List.of()));
+        mav.addObject("footerList", new ArrayList<>(List.of()));
+        return mav;
     }
 }

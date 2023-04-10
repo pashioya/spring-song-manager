@@ -2,9 +2,12 @@ package com.kdg.springprojt5.controllers.mvc;
 
 import com.kdg.springprojt5.controllers.mvc.helper.HistoryItem;
 import com.kdg.springprojt5.security.AdminOnly;
+import com.kdg.springprojt5.security.CustomUserDetails;
+import com.kdg.springprojt5.service.UserService;
 import jakarta.servlet.http.HttpSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,8 +22,10 @@ import java.util.List;
 public class IndexController {
 
     private final Logger logger;
+    private final UserService userService;
 
-    public IndexController() {
+    public IndexController(UserService userService) {
+        this.userService = userService;
         this.logger = LoggerFactory.getLogger(this.getClass().getName());
     }
 
@@ -45,10 +50,16 @@ public class IndexController {
 
     @AdminOnly
     @GetMapping("/adminPage")
-    public ModelAndView adminPage(HttpSession session) {
+    public ModelAndView adminPage(HttpSession session,  Authentication authentication) {
         setHistory(session, "Admin Page");
+
+        CustomUserDetails currentUser = (CustomUserDetails) authentication.getPrincipal();
+        Long userId = currentUser.getUserId();
+
         ModelAndView mav = new ModelAndView("adminPage");
         mav.addObject("title", "Admin Page");
+        mav.addObject("users", userService.getAllUsers());
+        mav.addObject("currentUser", userService.getUserById(userId));
         logger.info("Admin Page loading");
         return mav;
     }
