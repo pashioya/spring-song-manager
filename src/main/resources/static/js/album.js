@@ -6,7 +6,6 @@ let nextPageButton = document.getElementById("next-page-button");
 let previousPageButton = document.getElementById("previous-page-button");
 
 let songPreviewColumn = document.getElementById("preview-song-names");
-let allRows = document.querySelectorAll(".table-row");
 let albumPreviewColumn = document.getElementById("preview-song-names");
     /**
      * @param albumID
@@ -16,11 +15,10 @@ let albumPreviewColumn = document.getElementById("preview-song-names");
     const token = document.querySelector('meta[name="_csrf"]').content;
 
 
-    class pageController {
+    class albumPageController {
         constructor() {
             this.albums = [];
             this.albumsInView = [];
-            this.albumsTable = document.getElementById("all-albums-table");
             this.albumsTableBody = document.getElementById("all-albums-table-body");
             this.albumsTableBody.innerHTML = "";
             this.pageNumber = 0;
@@ -44,10 +42,8 @@ let albumPreviewColumn = document.getElementById("preview-song-names");
                     }
                 )
                 .then(data => {
-                    console.log(data);
                     this.albums = data;
-                    this.albumsTableBody.innerHTML = "";
-                    this.totalPages = Math.round(Math.floor(this.albums.length / 10));
+                    this.totalPages = Math.floor(Math.floor(this.albums.length / 10)) - 1;
                     this.renderAlbums();
                 }
             )
@@ -82,9 +78,7 @@ let albumPreviewColumn = document.getElementById("preview-song-names");
                     }
                 )
                 .then(data => {
-                        console.log(data);
                         data.forEach(song => {
-                        //     if the song title is already in the song preview column, don't add it again
                             if (!songPreviewColumn.innerHTML.includes(song.songTitle)) {
                                 let songItem = document.createElement("tr");
                                 songItem.setAttribute("scope","row");
@@ -97,7 +91,8 @@ let albumPreviewColumn = document.getElementById("preview-song-names");
         }
 
         renderAlbums() {
-            pageNumberView.innerHTML = page.pageNumber;
+            pageNumberView.innerHTML = this.pageNumber;
+            this.albumsTableBody.innerHTML = "";
             this.albumsInView = this.albums.slice(this.pageNumber * 10, (this.pageNumber * 10) + 10);
             this.albumsInView.forEach(album => {
                 let albumRow = document.createElement("tr");
@@ -128,41 +123,45 @@ let albumPreviewColumn = document.getElementById("preview-song-names");
 
         firstPage() {
             this.pageNumber = 0;
-            this.fetchAlbums();
+            this.renderAlbums();
         }
 
         lastPage() {
             this.pageNumber = this.totalPages;
-            this.fetchAlbums();
+            this.renderAlbums();
         }
         nextPage() {
+            if(this.pageNumber > this.totalPages) {
+                this.renderAlbums();
+                return;
+            }
             this.pageNumber++;
-            this.fetchAlbums();
+            this.renderAlbums();
         }
 
 
         previousPage() {
             if (this.pageNumber === 0) {
-                this.fetchAlbums();
+                this.renderAlbums();
                 return;
             }
             this.pageNumber--;
-            this.fetchAlbums();
+            this.renderAlbums();
         }
     }
 
-    let page = new pageController();
-    page.init();
+    let albumPage = new albumPageController();
+    albumPage.init();
 
     firstPageButton.addEventListener("click", () => {
-        page.firstPage();
+        albumPage.firstPage();
     });
     lastPageButton.addEventListener("click", () => {
-        page.lastPage();
+        albumPage.lastPage();
     });
     nextPageButton.addEventListener("click", () => {
-        page.nextPage();
+        albumPage.nextPage();
     });
     previousPageButton.addEventListener("click", () => {
-        page.previousPage();
+        albumPage.previousPage();
     });

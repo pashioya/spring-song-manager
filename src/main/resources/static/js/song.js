@@ -4,14 +4,11 @@ let lastPageButton = document.getElementById("last-page-button");
 let nextPageButton = document.getElementById("next-page-button");
 let previousPageButton = document.getElementById("previous-page-button");
 
-
-
-class pageController {
+class songPageController {
 
     constructor() {
         this.songs = [];
         this.songsInView = [];
-        this.songsTable = document.getElementById("all-songs-table");
         this.songsTableBody = document.getElementById("all-songs-table-body");
         this.songsTableBody.innerHTML = "";
         this.pageNumber = 0;
@@ -19,29 +16,27 @@ class pageController {
     }
 
     fetchSongs() {
-        fetch("/api/songs",
-            {
-                headers: {
-                    Accept: "application/json"
+        fetch("/api/songs", {
+            headers: {
+                Accept: "application/json"
+            }
+        })
+            .then(resp => {
+                if (resp.status !== 200) {
+                    console.log("Error: " + resp.status);
+                } else {
+                    return resp.json();
                 }
             })
-            .then(resp => {
-                    if (resp.status !== 200) {
-                        console.log("Error: " + resp.status);
-                    } else {
-                        return resp.json();
-                    }
-                }
-            )
             .then(data => {
-                    this.songs = data;
-                    this.totalPages = Math.round(Math.floor(this.songs.length / 10));
-                    this.renderSongs();
-                }
-            )
+                this.songs = data;
+                this.totalPages = Math.round(Math.floor(this.songs.length / 10)) - 1;
+                this.renderSongs();
+            });
     }
 
     renderSongs() {
+        pageNumberView.innerHTML = this.pageNumber;
         this.songsTableBody.innerHTML = "";
         this.songsInView = this.songs.slice(this.pageNumber * 10, (this.pageNumber * 10) + 10);
         this.songsInView.forEach(song => {
@@ -61,7 +56,6 @@ class pageController {
             });
             this.songsTableBody.appendChild(row);
         });
-        pageNumberView.innerHTML = this.pageNumber + 1;
     }
 
     init() {
@@ -71,44 +65,48 @@ class pageController {
 
     firstPage() {
         this.pageNumber = 0;
-        this.fetchSongs();
+        this.renderSongs();
     }
 
     lastPage() {
         this.pageNumber = this.totalPages;
-        this.fetchSongs();
+        this.renderSongs();
     }
     nextPage() {
+        if(this.pageNumber > this.totalPages) {
+            this.renderSongs();
+            return;
+        }
         this.pageNumber++;
-        this.fetchSongs();
+        this.renderSongs();
     }
 
 
     previousPage() {
         if (this.pageNumber === 0) {
-            this.fetchSongs();
+            this.renderSongs();
             return;
         }
         this.pageNumber--;
-        this.fetchSongs();
+        this.renderSongs();
     }
 }
 
-let page = new pageController();
-page.init();
+let songPage = new songPageController();
+songPage.init();
 
 firstPageButton.addEventListener("click", () => {
-    page.firstPage();
+    songPage.firstPage();
 });
 
 lastPageButton.addEventListener("click", () => {
-    page.lastPage();
+    songPage.lastPage();
 });
 
 nextPageButton.addEventListener("click", () => {
-    page.nextPage();
+    songPage.nextPage();
 });
 
 previousPageButton.addEventListener("click", () => {
-    page.previousPage();
+    songPage.previousPage();
 });

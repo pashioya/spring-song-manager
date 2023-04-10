@@ -188,7 +188,7 @@ footer > .footer-section > .button-container {
     margin-top: 20px;
     margin-bottom: 50px;
 }
-a {
+.pagination a {
     text-decoration: none;
     color: #ffffff;
 }
@@ -199,7 +199,6 @@ a {
     font-size: 20px;
     padding: 10px 15px;
     background-color: dodgerblue;
-    border-radius: 4px;
     margin: 0 5px;
     text-decoration: none;
     transition: background-color 0.3s ease;

@@ -6,44 +6,14 @@ let previousPageButton = document.getElementById("previous-page-button");
 
 
 const albumPreviewColumn = document.getElementById("preview-album-names");
-let allRows = document.getElementsByClassName("entity");
-
 /**
  * @param artistID
  */
 
-function fetchArtistsAlbums(artistID){
-
-    fetch(`/api/artist/${artistID}/albums`,
-        {
-            headers: {
-                Accept: "application/json"
-            }
-        })
-        .then(resp => {
-                if (resp.status !== 200) {
-                    console.log("Error: " + resp.status);
-                } else {
-                    return resp.json();
-                }
-            }
-        )
-        .then(data => {
-                console.log(data);
-                data.forEach(album => {
-                    let albumItem = document.createElement("tr");
-                    albumItem.innerHTML = album.albumName;
-                    albumPreviewColumn.appendChild(albumItem);
-                });
-            }
-        )
-}
-
-class pageController {
+class artistPageController {
     constructor() {
         this.artists = [];
         this.artistsInView = [];
-        this.artistsTable = document.getElementById("all-artists-table");
         this.artistsTableBody = document.getElementById("all-artists-table-body");
         this.artistsTableBody.innerHTML = "";
         this.pageNumber = 0;
@@ -66,10 +36,34 @@ class pageController {
                 }
             )
             .then(data => {
-
                     this.artists = data;
-                    this.totalPages = Math.round(Math.floor(this.artists.length / 10));
+                    this.totalPages = Math.round(Math.floor(this.artists.length / 10)) - 1;
                     this.renderArtists();
+                }
+            )
+    }
+    fetchArtistsAlbums(artistID){
+
+        fetch(`/api/artist/${artistID}/albums`,
+            {
+                headers: {
+                    Accept: "application/json"
+                }
+            })
+            .then(resp => {
+                    if (resp.status !== 200) {
+                        console.log("Error: " + resp.status);
+                    } else {
+                        return resp.json();
+                    }
+                }
+            )
+            .then(data => {
+                    data.forEach(album => {
+                        let albumItem = document.createElement("tr");
+                        albumItem.innerHTML = album.albumName;
+                        albumPreviewColumn.appendChild(albumItem);
+                    });
                 }
             )
     }
@@ -80,13 +74,14 @@ class pageController {
             row.addEventListener("mouseover", () => {
                 albumPreviewColumn.innerHTML = "";
                 let id = row.getAttribute("data-href").split("/")[3];
-                fetchArtistsAlbums(id);
+                this.fetchArtistsAlbums(id);
             });
         }
 
     }
 
     renderArtists() {
+        pageNumberView.innerHTML = this.pageNumber;
         this.artistsTableBody.innerHTML = "";
         this.artistsInView = this.artists.slice(this.pageNumber * 10, (this.pageNumber * 10) + 10);
         this.artistsInView.forEach(artist => {
@@ -105,7 +100,6 @@ class pageController {
             });
             this.artistsTableBody.appendChild(artistRow);
         });
-        pageNumberView.innerHTML = page.pageNumber;
         this.setOnHover();
     }
 
@@ -116,46 +110,50 @@ class pageController {
 
     firstPage() {
         this.pageNumber = 0;
-        this.fetchArtists();
+        this.renderArtists();
     }
 
     lastPage() {
         this.pageNumber = this.totalPages;
-        this.fetchArtists();
+        this.renderArtists();
     }
     nextPage() {
+        if(this.pageNumber > this.totalPages) {
+            this.renderArtists();
+            return;
+        }
         this.pageNumber++;
-        this.fetchArtists();
+        this.renderArtists();
     }
 
 
     previousPage() {
         if (this.pageNumber === 0) {
-            this.fetchArtists();
+            this.renderArtists();
             return;
         }
         this.pageNumber--;
-        this.fetchArtists();
+        this.renderArtists();
     }
 }
 
-let page = new pageController();
-page.init();
+let artistPage = new artistPageController();
+artistPage.init();
 
 firstPageButton.addEventListener("click", () => {
-    page.firstPage();
+    artistPage.firstPage();
 });
 
 lastPageButton.addEventListener("click", () => {
-    page.lastPage();
+    artistPage.lastPage();
 });
 
 nextPageButton.addEventListener("click", () => {
-    page.nextPage();
+    artistPage.nextPage();
 });
 
 previousPageButton.addEventListener("click", () => {
-    page.previousPage();
+    artistPage.previousPage();
 });
 
 

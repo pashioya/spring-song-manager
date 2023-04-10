@@ -81,13 +81,13 @@
 
 - Submission: 
   - Tag your GitLab repository for Programming 5 with highstake_1. 
-  - Ensure that your README is rendered correctly on the GitLab project website. *******************************************
+  - Ensure that your README is rendered correctly on the GitLab project website. 
   - Use Spring profiles to ensure that your seeding routine doesn't interfere with your tests and document any Spring profiles you have added in the README.md file. *******************************************
   - Use test-specific setups (@BeforeAll / @BeforeEach / "Arrange") to ensure that your tests will remain consistent in the future. 
   - Document how tests should be executed from the command line in the README.md file. 
-  - Ensure that your GitLab repository is pushed to the server correctly, and the latest version of your application is visible at the master or main branch. *******************************************
-  - Upload a zip file containing the latest version of your application using the upload option below the GitLab project website. *******************************************
-  - Press the download button from the GitLab project website to create your zip  *******************************************
+  - Ensure that your GitLab repository is pushed to the server correctly, and the latest version of your application is visible at the master or main branch. 
+  - Upload a zip file containing the latest version of your application using the upload option below the GitLab project website. 
+  - Press the download button from the GitLab project website to create your zip  
 - Testing:
   - Write tests for at least two methods of the REST API of the presentation layer, choosing interesting endpoints with some logic, different possible outcomes, parameters, etc. *******************************************
   - Write tests for at least two methods of the MVC part of the presentation layer, choosing interesting views with a model or parameters. *******************************************
