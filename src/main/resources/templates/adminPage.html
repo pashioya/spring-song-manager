@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head th:replace="~{fragments/head :: head (${title})}"></head>
-<script defer th:src="@{/js/forms/editUser.js}"></script>
-<script defer th:src="@{/js/forms/addUser.js}"></script>
-<script defer th:src="@{/js/user.js}"></script>
+<script defer type="module" th:src="@{/js/forms/editUser.js}"></script>
+<script defer type="module" th:src="@{/js/forms/addUser.js}"></script>
+<script defer type="module" th:src="@{/js/user.js}"></script>
 <body>
 <header th:replace="~{fragments/header :: header (${headerList})}"></header>
 <section>
@@ -49,10 +49,6 @@
                         <div class="form-group mb-3">
                             <label for="new-username">UserName</label>
                             <input type="text" class="form-control" id="new-username" name="username">
-                        </div>
-                        <div class="form-group mb-3">
-                            <label for="new-password">New Password</label>
-                            <input type="password" class="form-control" id="new-password" name="password">
                         </div>
                         <div class="form-group mb-2">
                             <label for="new-role">Role</label>

@@ -18,6 +18,8 @@ public class WebSecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http.httpBasic()
                 .and()
+                .csrf()
+                .and()
                 .authorizeHttpRequests(authorizeRequests -> authorizeRequests
                         .requestMatchers(HttpMethod.GET, "/js/**", "/css/**", "/webjars/**", "/favicon.ico").permitAll()
                         .requestMatchers(HttpMethod.GET,"/api/**").permitAll()
@@ -25,10 +27,8 @@ public class WebSecurityConfig {
                         .authenticated()
                         .requestMatchers(HttpMethod.PATCH, "/api/**") // syntax by which you can specify nested paths generically, like regexes
                         .authenticated()
-                        .requestMatchers(HttpMethod.PATCH, "/api/**") // syntax by which you can specify nested paths generically, like regexes
-                        .authenticated()
                         .requestMatchers(HttpMethod.DELETE, "/api/**") // syntax by which you can specify nested paths generically, like regexes
-                        .permitAll()
+                        .authenticated()
                         .requestMatchers("/", "/register").permitAll()
                         .requestMatchers(HttpMethod.POST, "/register").permitAll()
                         .anyRequest().authenticated())

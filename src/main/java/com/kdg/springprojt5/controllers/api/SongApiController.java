@@ -32,7 +32,7 @@ public class SongApiController {
     @GetMapping("/song/{id}")
     public ResponseEntity<SongDto> getSong(@PathVariable("id") Long songId) {
         var song = songService.getSongById(songId);
-       return new ResponseEntity<>(modelMapper.map(song, SongDto.class), HttpStatus.OK);
+        return new ResponseEntity<>(modelMapper.map(song, SongDto.class), HttpStatus.OK);
     }
 
     @GetMapping("/songs")

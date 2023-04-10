@@ -1,6 +1,7 @@
 package com.kdg.springprojt5.controllers.api;
 
 import com.kdg.springprojt5.controllers.api.dto.NewUserDto;
+import com.kdg.springprojt5.controllers.api.dto.UpdateUserDto;
 import com.kdg.springprojt5.controllers.api.dto.UserDto;
 import com.kdg.springprojt5.domain.User;
 import com.kdg.springprojt5.domain.UserRole;
@@ -14,7 +15,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
@@ -29,20 +29,19 @@ public class UserApiController {
     private final AlbumService albumService;
     private final SongService songService;
     private final ArtistService artistService;
-    private final BCryptPasswordEncoder passwordEncoder;
+
     private final Logger logger;
 
     private final ModelMapper modelMapper;
 
 
-    public UserApiController(UserService userService, AlbumService albumService, SongService songService, ArtistService artistService, BCryptPasswordEncoder passwordEncoder, ModelMapper modelMapper) {
+    public UserApiController(UserService userService, AlbumService albumService, SongService songService, ArtistService artistService) {
         this.userService = userService;
         this.albumService = albumService;
         this.songService = songService;
         this.artistService = artistService;
-        this.passwordEncoder = passwordEncoder;
-        this.modelMapper = modelMapper;
-        this.logger = LoggerFactory.getLogger(this.getClass().getName());
+        this.logger = LoggerFactory.getLogger(UserApiController.class);
+        this.modelMapper = new ModelMapper();
     }
 
     @GetMapping("/users")
@@ -66,19 +65,20 @@ public class UserApiController {
     }
 
     @PatchMapping("/{id}")
-    public ResponseEntity<UserDto> editUser(@PathVariable("id") Long id, @Valid @ModelAttribute NewUserDto userDto, BindingResult bindingResult) {
+    public ResponseEntity<UserDto> editUser(@PathVariable("id") Long id, @Valid @RequestBody UpdateUserDto userDto, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
         User user = userService.getUserById(id);
         if (user == null) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
+        System.out.println(userDto);
         user.setUsername(userDto.getUsername());
-        user.setPassword(passwordEncoder.encode(userDto.getPassword()));
         user.setRole(UserRole.valueOf(userDto.getRole()));
         userService.saveUser(user);
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        UserDto userDto1 = modelMapper.map(user, UserDto.class);
+        return new ResponseEntity<>( userDto1 ,HttpStatus.OK);
     }
 
     @PostMapping

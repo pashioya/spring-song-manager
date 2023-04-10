@@ -16,8 +16,7 @@ function trySubmitForm(event) {
     })
         .then((response) => response.json())
         .then((data) => {
-            console.log(data)
-            // click the close button
+
             const closeButton = document.querySelector('#add-user-modal > div > div > div.modal-header > button');
             closeButton.click();
 
