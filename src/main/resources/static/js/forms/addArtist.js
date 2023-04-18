@@ -20,7 +20,7 @@ function trySubmitForm(event) {
     form.classList.add('was-validated');
 
     if (formIsValid) {
-        fetch('/api/artist/create', {
+        fetch('/api/artist', {
             method: "POST",
             headers: {
                 'Accept': 'application/json',
@@ -33,12 +33,10 @@ function trySubmitForm(event) {
                 "artistFollowers": parseInt(artistFollowers.value)
             })
         }).then(response => {
-            if (response.status === 201) {
-
                 form.reset();
                 form.classList.remove('was-validated');
                 window.location.href = "/allArtists";
-            }
+                console.log(response)
         });
     }
 }

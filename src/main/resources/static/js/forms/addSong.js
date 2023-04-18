@@ -49,12 +49,10 @@ fetch('/api/album/'+albumId+'/song/create', {
                 "explicit": explicit
             })
         }).then(response => {
-            if (response.status === 201) {
-
                 form.reset();
                 form.classList.remove('was-validated');
                 window.location.href = "/allAlbums/fullAlbum/"+albumId;
-            }
+                console.log(response)
         });
     }
 }

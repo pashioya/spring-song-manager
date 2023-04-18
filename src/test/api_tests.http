@@ -1,9 +1,10 @@
 #create an artist
-POST http://localhost:8080/api/artist/create
+POST http://localhost:8080/api/artist
 //@no-cookie-jar
 Accept: application/json
 Content-Type: application/json
 Cookie: JSESSIONID=75400D8A8763ED4F6B3220A14694DA23
+X-Csrf-Token: uF8Rtj43_P6eBCcfoApcjNYHOqJ4_tbRV_sWMW4jKTsFW8x8iD0p1V0Ez8uzMR4mlydo6bVhF5sdnLD8NsovUl4QTQg9Y_9M
 
     {
     "artistName" : "DongDing",

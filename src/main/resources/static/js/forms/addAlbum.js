@@ -45,11 +45,10 @@ function trySubmitForm(event) {
                 "releaseDate": albumReleaseDate.value
             })
         }).then(response => {
-            if (response.status === 201) {
-                form.reset();
-                form.classList.remove('was-validated');
-                window.location.href = "/allArtists/fullArtist/"+artistId;
-            }
+            form.reset();
+            form.classList.remove('was-validated');
+            window.location.href = "/allArtists/fullArtist/"+artistId;
+            console.log(response)
         });
     }
 }
