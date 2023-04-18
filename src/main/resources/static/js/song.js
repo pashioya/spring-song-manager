@@ -16,7 +16,7 @@ class songPageController {
     }
 
     fetchSongs() {
-        fetch("/api/songs", {
+        fetch("/api/song/songs", {
             headers: {
                 Accept: "application/json"
             }

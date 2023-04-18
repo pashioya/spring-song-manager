@@ -22,7 +22,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.ArrayList;
 import java.util.List;
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/artist")
 public class ArtistApiController {
 
     private final Logger logger;
@@ -40,14 +40,6 @@ public class ArtistApiController {
         this.artistService = artistService;
     }
 
-    @GetMapping("/artist/{id}")
-    public ResponseEntity<ArtistDto> getArtist(@PathVariable("id") Long artistId) {
-        var artist = artistService.getArtistById(artistId);
-        return new ResponseEntity<>(
-                modelMapper.map(artist, ArtistDto.class), HttpStatus.OK);
-    }
-
-
     @GetMapping("/artists")
     public ResponseEntity<List<ArtistDto>> getAllArtists() {
         var artists = artistService.getAllArtists();
@@ -61,6 +53,13 @@ public class ArtistApiController {
             artistDtos.add(artistDto);
         }
         return new ResponseEntity<>(artistDtos, HttpStatus.OK);
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<ArtistDto> getArtist(@PathVariable("id") Long artistId) {
+        var artist = artistService.getArtistById(artistId);
+        return new ResponseEntity<>(
+                modelMapper.map(artist, ArtistDto.class), HttpStatus.OK);
     }
 
 
@@ -80,7 +79,7 @@ public class ArtistApiController {
     }
 
 
-    @DeleteMapping("/artist/{id}/delete")
+    @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteArtist(@PathVariable Long id) {
         Artist artist = artistService.getArtistById(id);
         List<Album> artistAlbums = artist.getAlbums();
@@ -96,7 +95,7 @@ public class ArtistApiController {
     }
 
     @AdminOnly
-    @PostMapping("/artist/create")
+    @PostMapping()
     public ResponseEntity<ArtistDto> createArtist(
             @Valid
             @RequestBody NewArtistDto artistDto,

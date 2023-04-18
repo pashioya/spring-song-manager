@@ -18,7 +18,6 @@ let artistIndex = parts.indexOf('artist');
 // The artist ID is the next part of the path
 let artistId = parts[artistIndex + 1];
 
-console.log('/api/artist/'+artistId+'/album/create')
 
 function trySubmitForm(event) {
     event.preventDefault();
@@ -30,7 +29,7 @@ function trySubmitForm(event) {
     form.classList.add('was-validated');
 
     if (formIsValid) {
-        fetch('/api/artist/'+artistId+'/album/create', {
+        fetch('/api/album/artist/'+artistId, {
             method: "POST",
             headers: {
                 'Accept': 'application/json',

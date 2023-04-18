@@ -26,7 +26,7 @@ let albumPreviewColumn = document.getElementById("preview-song-names");
         }
 
         fetchAlbums() {
-            fetch("/api/albums",
+            fetch("/api/album/albums",
                 {
                     headers: {
                         Accept: "application/json"
@@ -63,7 +63,7 @@ let albumPreviewColumn = document.getElementById("preview-song-names");
         }
         fetchAlbumsSongs(albumID){
 
-            fetch(`/api/album/${albumID}/songs`,
+            fetch(`/api/song/album/${albumID}/songs`,
                 {
                     headers: {
                         Accept: "application/json"

@@ -19,7 +19,7 @@ deleteSongButton.addEventListener("click", () => {
 });
 
 function deleteSong() {
-    fetch(`/api/song/${songId}/delete`, {
+    fetch(`/api/song/${songId}`, {
         method: "DELETE",
         headers: {
             Accept: "application/json",

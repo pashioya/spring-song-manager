@@ -21,7 +21,7 @@ class artistPageController {
     }
 
     fetchArtists() {
-        fetch("/api/artists",
+        fetch("/api/artist/artists",
             {
                 headers: {
                     Accept: "application/json"
@@ -44,7 +44,7 @@ class artistPageController {
     }
     fetchArtistsAlbums(artistID){
 
-        fetch(`/api/artist/${artistID}/albums`,
+        fetch(`/api/album/artist/${artistID}/albums`,
             {
                 headers: {
                     Accept: "application/json"

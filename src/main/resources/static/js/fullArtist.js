@@ -24,7 +24,7 @@ allRows.forEach(row => {
 
 
 function deleteArtist(){
-    fetch(`/api/artist/${artistId}/delete`, {
+    fetch(`/api/artist/${artistId}`, {
         method: "DELETE",
         headers: {
             Accept: "application/json",

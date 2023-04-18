@@ -106,22 +106,6 @@ public class ArtistsController {
         return "addArtist";
     }
 
-    @GetMapping("/fullAlbum/{albumId}/addArtist")
-    public String addArtistToAlbum(Model model,HttpSession session, @PathVariable Long albumId) {
-        setHistory(session, "Add Artist");
-        model.addAttribute("title", "Add Artist");
-        model.addAttribute("headerList", new ArrayList<>(List.of(
-                new DataItem("backButton", "/allArtists"))
-        ));
-
-        ArtistViewModel artistViewModel = new ArtistViewModel();
-        model.addAttribute("artist", artistViewModel);
-        logger.info("addArtist() called");
-        return "addArtist";
-    }
-
-
-
     @GetMapping("/fullArtist/printArtist/{id}")
     public String printArtist(@PathVariable Long id) {
         artistService.printArtist(id);

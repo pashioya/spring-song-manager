@@ -11,7 +11,7 @@ const header = document.querySelector('meta[name="_csrf_header"]').content;
 const token = document.querySelector('meta[name="_csrf"]').content;
 
 function deleteAlbum() {
-    fetch(`/api/album/${albumId}/delete`, {
+    fetch(`/api/album/${albumId}`, {
         method: "DELETE",
         headers: {
             Accept: "application/json",

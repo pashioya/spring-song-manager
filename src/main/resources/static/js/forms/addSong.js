@@ -41,9 +41,8 @@ fetch('/api/album/'+albumId+'/song/create', {
                 'Content-Type': 'application/json'
                 ,[header]: token
             },
-            body: JSON.stringify(
-                {
-                    "url": url.value,
+            body: JSON.stringify({
+                "url": url.value,
                 "songTitle": songTitle.value,
                 "durationMS": songDuration.value,
                 "trackNumber": parseInt(songTrackNumber.value),

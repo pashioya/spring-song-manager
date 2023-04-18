@@ -20,7 +20,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/album")
 public class AlbumApiController {
 
     private final AlbumService albumService;
@@ -38,25 +38,6 @@ public class AlbumApiController {
         this.logger = LoggerFactory.getLogger(this.getClass().getName());
     }
 
-
-
-
-    @GetMapping("/album/{id}")
-    public ResponseEntity<AlbumDto> getSingleAlbum(
-            @PathVariable("id") Long albumId
-    ) {
-        var album = albumService.getAlbumById(albumId);
-        if (album != null) {
-            AlbumDto albumDto = modelMapper.map(album, AlbumDto.class);
-            return new ResponseEntity<>(
-                    albumDto, HttpStatus.OK);
-
-        }
-        logger.info("Album not found");
-        return new ResponseEntity<>(null, HttpStatus.NO_CONTENT);
-    }
-
-
     @GetMapping("/albums")
     public ResponseEntity<List<AlbumDto>> getAllAlbums() {
         var albums = albumService.getAllAlbums();
@@ -69,6 +50,22 @@ public class AlbumApiController {
             }
             return new ResponseEntity<>(albumDtos, HttpStatus.OK);
         }
+        return new ResponseEntity<>(null, HttpStatus.NO_CONTENT);
+    }
+
+
+    @GetMapping("/{id}")
+    public ResponseEntity<AlbumDto> getSingleAlbum(
+            @PathVariable("id") Long albumId
+    ) {
+        var album = albumService.getAlbumById(albumId);
+        if (album != null) {
+            AlbumDto albumDto = modelMapper.map(album, AlbumDto.class);
+            return new ResponseEntity<>(
+                    albumDto, HttpStatus.OK);
+
+        }
+        logger.info("Album not found");
         return new ResponseEntity<>(null, HttpStatus.NO_CONTENT);
     }
 
@@ -91,7 +88,7 @@ public class AlbumApiController {
     }
 
 
-    @DeleteMapping("/album/{id}/delete")
+    @DeleteMapping("/{id}")
     public ResponseEntity<String> deleteAlbum(
             @PathVariable("id") Long albumId
     ) {
@@ -104,7 +101,7 @@ public class AlbumApiController {
         return new ResponseEntity<>("Album not found", HttpStatus.NO_CONTENT);
     }
 
-    @PostMapping("/artist/{artistId}/album/create")
+    @PostMapping("/artist/{artistId}")
     public String createAlbum(
             @PathVariable("artistId") Long artistId,
             @RequestBody NewAlbumDto albumDto,

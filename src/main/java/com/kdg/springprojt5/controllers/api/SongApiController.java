@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/song")
 public class SongApiController {
     private final SongService songService;
     private final Logger logger;
@@ -29,7 +29,7 @@ public class SongApiController {
         this.modelMapper = modelMapper;
     }
 
-    @GetMapping("/song/{id}")
+    @GetMapping("/{id}")
     public ResponseEntity<SongDto> getSong(@PathVariable("id") Long songId) {
         var song = songService.getSongById(songId);
         return new ResponseEntity<>(modelMapper.map(song, SongDto.class), HttpStatus.OK);
@@ -58,7 +58,7 @@ public class SongApiController {
         return new ResponseEntity<>(null, HttpStatus.NO_CONTENT);
     }
 
-    @PostMapping("/album/{albumId}/song/create")
+    @PostMapping("/album/{albumId}")
     public ResponseEntity<SongDto> addSongToAlbum(
             @PathVariable Long albumId,
             @RequestBody NewSongDto songDto,
@@ -87,7 +87,7 @@ public class SongApiController {
     }
 
 
-    @DeleteMapping("/song/{id}/delete")
+    @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteSong(@PathVariable Long id) {
         songService.deleteSong(id);
         return new ResponseEntity<>(HttpStatus.OK);

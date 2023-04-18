@@ -11,7 +11,6 @@ import lombok.*;
 public class NewArtistDto {
     @NotBlank(message = "ArtistName is mandatory")
     private String artistName;
-    @NotBlank(message = "ArtistFollowers is mandatory")
     private double artistFollowers;
 
 }
