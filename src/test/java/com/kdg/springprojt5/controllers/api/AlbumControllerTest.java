@@ -1,11 +1,7 @@
 package com.kdg.springprojt5.controllers.api;
 
 import com.kdg.springprojt5.domain.*;
-import com.kdg.springprojt5.repository.AlbumRepository;
-import com.kdg.springprojt5.repository.ArtistRepository;
-import com.kdg.springprojt5.repository.SongRepository;
-import com.kdg.springprojt5.repository.springdata.SpringDataAlbumArtistRepository;
-import com.kdg.springprojt5.repository.springdata.SpringDataUserRepository;
+import com.kdg.springprojt5.repository.*;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -32,16 +28,16 @@ public class AlbumControllerTest {
     private SpringDataUserRepository userRepository;
 
     @Autowired
-    private ArtistRepository artistRepository;
+    private SpringDataArtistRepository artistRepository;
 
     @Autowired
     private SpringDataAlbumArtistRepository albumArtistRepository;
 
     @Autowired
-    private SongRepository songRepository;
+    private SpringDataSongRepository songRepository;
 
     @Autowired
-    private AlbumRepository albumRepository;
+    private SpringDataAlbumRepository albumRepository;
 
     @Autowired
     private BCryptPasswordEncoder passwordEncoder;
@@ -57,7 +53,7 @@ public class AlbumControllerTest {
         Album album = new Album("Test Album", 12, StatusEnum.SINGLE, "Rock", LocalDate.of(1969, 9, 26), testUser.getId());
         albumRepository.save(album);
 
-        albumArtistRepository.save(new AlbumArtist(artist, album));
+        albumArtistRepository.save(new AlbumArtist(album, artist));
         Song song = new Song(1L, "https://www.youtube.com/watch?v=1", "Test Song", 1, 180000L, false, testUser.getId());
         songRepository.save(song);
     }

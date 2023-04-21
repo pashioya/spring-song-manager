@@ -1,7 +1,6 @@
 package com.kdg.springprojt5.repository;
 
 import com.kdg.springprojt5.domain.User;
-import com.kdg.springprojt5.repository.springdata.SpringDataUserRepository;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

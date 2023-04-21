@@ -12,8 +12,9 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @SpringBootTest
 public class ArtistRepositoryTest {
+
     @Autowired
-    private ArtistRepository artistRepository;
+    private SpringDataArtistRepository artistRepository;
 
     @Test
     public void testSaveArtistWithoutName() {

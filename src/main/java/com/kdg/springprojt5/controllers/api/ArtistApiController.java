@@ -10,6 +10,7 @@ import com.kdg.springprojt5.service.AlbumService;
 import com.kdg.springprojt5.service.ArtistService;
 import com.kdg.springprojt5.service.SongService;
 import jakarta.validation.Valid;
+import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -21,24 +22,18 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
+
 @RestController
 @RequestMapping("/api/artist")
+@AllArgsConstructor
 public class ArtistApiController {
 
-    private final Logger logger;
+    private final Logger logger = LoggerFactory.getLogger(this.getClass().getName());
     private final ArtistService artistService;
     private final AlbumService albumService;
     private final SongService songService;
-
     private final ModelMapper modelMapper;
 
-    public ArtistApiController(ArtistService artistService, AlbumService albumService, SongService songService, ModelMapper modelMapper) {
-        this.albumService = albumService;
-        this.songService = songService;
-        this.modelMapper = modelMapper;
-        this.logger = LoggerFactory.getLogger(this.getClass().getName());
-        this.artistService = artistService;
-    }
 
     @GetMapping("/artists")
     public ResponseEntity<List<ArtistDto>> getAllArtists() {

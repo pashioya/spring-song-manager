@@ -2,37 +2,27 @@ package com.kdg.springprojt5.service.springdata;
 
 
 import com.kdg.springprojt5.domain.Album;
-import com.kdg.springprojt5.domain.AlbumArtist;
-import com.kdg.springprojt5.repository.springdata.*;
+import com.kdg.springprojt5.repository.SpringDataAlbumRepository;
+import com.kdg.springprojt5.repository.SpringDataArtistRepository;
+import com.kdg.springprojt5.repository.SpringDataSongRepository;
 import com.kdg.springprojt5.service.AlbumService;
 import com.kdg.springprojt5.util.JsonHandler;
+import lombok.AllArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
-@Profile("springData")
+@AllArgsConstructor
 public class SpringDataAlbumService implements AlbumService {
     private final SpringDataAlbumRepository albumRepository;
     private final SpringDataArtistRepository artistRepository;
     private final SpringDataSongRepository songRepository;
-    private final SpringDataAlbumArtistRepository albumArtistRepository;
-
-    private final Logger logger;
+    private final Logger logger = LoggerFactory.getLogger(this.getClass().getName());
     private final JsonHandler jsonHandler;
 
-
-    public SpringDataAlbumService(SpringDataAlbumRepository albumRepository, SpringDataArtistRepository artistRepository, SpringDataSongRepository songRepository, SpringDataAlbumArtistRepository albumArtistRepository) {
-        this.albumRepository = albumRepository;
-        this.artistRepository = artistRepository;
-        this.songRepository = songRepository;
-        this.albumArtistRepository = albumArtistRepository;
-        this.logger = LoggerFactory.getLogger(this.getClass().getName());
-        this.jsonHandler = new JsonHandler();
-    }
 
     @Override
     public List<Album> getAllAlbums() {
@@ -44,23 +34,17 @@ public class SpringDataAlbumService implements AlbumService {
 
     @Override
     public Album getAlbumById(Long id) {
-        Album album = albumRepository.getReferenceById(id);
-        album.setSongs(songRepository.getSongsByAlbumId(id));
-        album.setArtists(artistRepository.getAlbumsArtists(id));
-        return album;
+        return albumRepository.getReferenceById(id);
     }
 
     @Override
     public Album saveAlbum(Album album, Long artistId) {
-        for(Album a : albumRepository.findAll()){
-            if(a.equals(album)){
+        for (Album a : albumRepository.findAll()) {
+            if (a.equals(album)) {
                 return a;
             }
         }
         albumRepository.save(album);
-
-        AlbumArtist albumArtist = new AlbumArtist(artistRepository.getArtistById(artistId),albumRepository.getReferenceById(album.getId()));
-        albumArtistRepository.save(albumArtist);
         return album;
     }
 
@@ -68,8 +52,6 @@ public class SpringDataAlbumService implements AlbumService {
     @Override
     public void deleteAlbum(Long id) {
         songRepository.getSongsByAlbumId(id).forEach(song -> songRepository.deleteById(song.getId()));
-        albumArtistRepository.delete(new AlbumArtist(artistRepository.getArtistById(artistRepository.getAlbumsArtists(id).get(0).getId()), albumRepository.getReferenceById(id)));
-        albumRepository.deleteById(id);
     }
 
     @Override

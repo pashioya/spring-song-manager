@@ -7,6 +7,7 @@ import com.kdg.springprojt5.domain.Song;
 import com.kdg.springprojt5.service.SongService;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.servlet.http.HttpSession;
+import lombok.AllArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -22,16 +23,12 @@ import java.util.Arrays;
 import java.util.List;
 
 @Controller
+@AllArgsConstructor
 @RequestMapping("/allSongs")
 public class SongsController {
-    private final Logger logger;
+    private final Logger logger = LoggerFactory.getLogger(this.getClass().getName());
     private final SongService songService;
 
-
-    public SongsController(SongService songService) {
-        this.logger = LoggerFactory.getLogger(this.getClass().getName());
-        this.songService = songService;
-    }
     @GetMapping
     public ModelAndView songs(HttpSession session) {
         setHistory(session, "All Songs");
@@ -49,6 +46,7 @@ public class SongsController {
         )));
         return mav;
     }
+
     @GetMapping("/fullSong/{id}")
     public ModelAndView fullSong(@PathVariable Long id, HttpSession session) {
         setHistory(session, "Full Song: " + id);
@@ -68,8 +66,7 @@ public class SongsController {
         System.out.println(song.getUser());
         try {
             mav.addObject("song", songViewModel);
-        }
-        catch (Exception e){
+        } catch (Exception e) {
             throw new EntityNotFoundException("Song with id " + id + " not found");
         }
         logger.info("Song with id " + id + " found");
@@ -108,7 +105,7 @@ public class SongsController {
         return "redirect:/allSongs";
     }
 
-    private void setHistory(HttpSession session,String message){
+    private void setHistory(HttpSession session, String message) {
         List<HistoryItem> history = (List<HistoryItem>) session.getAttribute("history");
         if (session.getAttribute("history") == null) {
             history = new ArrayList<>();

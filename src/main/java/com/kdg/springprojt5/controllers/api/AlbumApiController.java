@@ -8,12 +8,13 @@ import com.kdg.springprojt5.security.CustomUserDetails;
 import com.kdg.springprojt5.service.AlbumService;
 import com.kdg.springprojt5.service.ArtistService;
 import com.kdg.springprojt5.service.SongService;
+import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.Authentication;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -21,29 +22,21 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/album")
+@AllArgsConstructor
 public class AlbumApiController {
 
     private final AlbumService albumService;
     private final ArtistService artistService;
     private final SongService songService;
-    private final Logger logger;
-
+    private final Logger logger = LoggerFactory.getLogger(this.getClass().getName());
     private final ModelMapper modelMapper;
-
-    public AlbumApiController(AlbumService albumService, ArtistService artistService, SongService songService, ModelMapper modelMapper) {
-        this.albumService = albumService;
-        this.artistService = artistService;
-        this.songService = songService;
-        this.modelMapper = modelMapper;
-        this.logger = LoggerFactory.getLogger(this.getClass().getName());
-    }
 
     @GetMapping("/albums")
     public ResponseEntity<List<AlbumDto>> getAllAlbums() {
         var albums = albumService.getAllAlbums();
         if (albums != null) {
             List<AlbumDto> albumDtos = new ArrayList<>();
-            for (Album album: albums) {
+            for (Album album : albums) {
                 AlbumDto albumDto = modelMapper.map(album, AlbumDto.class);
                 albumDto.setArtistName(album.getArtists().get(0).getArtistName());
                 albumDtos.add(albumDto);
@@ -77,7 +70,7 @@ public class AlbumApiController {
         var albums = artist.getAlbums();
         if (albums != null) {
             List<AlbumDto> albumDtos = new ArrayList<>();
-            for (Album album: albums) {
+            for (Album album : albums) {
                 AlbumDto albumDto = modelMapper.map(album, AlbumDto.class);
                 albumDto.setArtistName(artist.getArtistName());
                 albumDtos.add(albumDto);
@@ -105,9 +98,8 @@ public class AlbumApiController {
     public String createAlbum(
             @PathVariable("artistId") Long artistId,
             @RequestBody NewAlbumDto albumDto,
-            Authentication authentication
+            @AuthenticationPrincipal CustomUserDetails currentUser
     ) {
-        CustomUserDetails currentUser = (CustomUserDetails) authentication.getPrincipal();
         Long userId = currentUser.getUserId();
 
         var album = new Album(

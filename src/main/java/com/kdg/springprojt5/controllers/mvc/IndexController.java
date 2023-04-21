@@ -5,6 +5,7 @@ import com.kdg.springprojt5.security.AdminOnly;
 import com.kdg.springprojt5.security.CustomUserDetails;
 import com.kdg.springprojt5.service.UserService;
 import jakarta.servlet.http.HttpSession;
+import lombok.AllArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.core.Authentication;
@@ -18,16 +19,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Controller
+@AllArgsConstructor
 @RequestMapping("/")
 public class IndexController {
 
-    private final Logger logger;
+    private final Logger logger = LoggerFactory.getLogger(this.getClass().getName());
     private final UserService userService;
-
-    public IndexController(UserService userService) {
-        this.userService = userService;
-        this.logger = LoggerFactory.getLogger(this.getClass().getName());
-    }
 
     @GetMapping
     public ModelAndView index(HttpSession session) {
@@ -50,7 +47,7 @@ public class IndexController {
 
     @AdminOnly
     @GetMapping("/adminPage")
-    public ModelAndView adminPage(HttpSession session,  Authentication authentication) {
+    public ModelAndView adminPage(HttpSession session, Authentication authentication) {
         setHistory(session, "Admin Page");
 
         CustomUserDetails currentUser = (CustomUserDetails) authentication.getPrincipal();
@@ -65,7 +62,7 @@ public class IndexController {
     }
 
 
-    private void setHistory(HttpSession session,String message){
+    private void setHistory(HttpSession session, String message) {
         List<HistoryItem> history = (List<HistoryItem>) session.getAttribute("history");
         if (session.getAttribute("history") == null) {
             history = new ArrayList<>();
@@ -73,7 +70,6 @@ public class IndexController {
         history.add(new HistoryItem(message, LocalDateTime.now()));
         session.setAttribute("history", history);
     }
-
 
 
 }

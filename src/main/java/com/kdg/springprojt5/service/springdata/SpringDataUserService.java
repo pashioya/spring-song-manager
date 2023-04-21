@@ -1,25 +1,20 @@
 package com.kdg.springprojt5.service.springdata;
 
 import com.kdg.springprojt5.domain.User;
-import com.kdg.springprojt5.repository.springdata.SpringDataUserRepository;
+import com.kdg.springprojt5.repository.SpringDataUserRepository;
 import com.kdg.springprojt5.service.UserService;
-import org.springframework.context.annotation.Profile;
+import lombok.AllArgsConstructor;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
 @Repository
-@Profile("springData")
+@AllArgsConstructor
 public class SpringDataUserService implements UserService {
     private final SpringDataUserRepository userRepository;
     private final BCryptPasswordEncoder passwordEncoder;
 
-
-    public SpringDataUserService(SpringDataUserRepository userRepository, BCryptPasswordEncoder passwordEncoder) {
-        this.userRepository = userRepository;
-        this.passwordEncoder = passwordEncoder;
-    }
     @Override
     public User getByUserName(String username) {
         return userRepository.findByUsername(username);

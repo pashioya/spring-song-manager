@@ -11,6 +11,7 @@ public interface SongService {
     Song getSongById(Long id);
 
     List<Song> getAllSongs();
+
     List<Song> getSongsByAlbumId(Long albumId);
 
     Song saveSong(Song song);

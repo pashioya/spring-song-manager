@@ -15,7 +15,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 public class SongRepositoryTest {
 
     @Autowired
-    private SongRepository songRepository;
+    private SpringDataSongRepository songRepository;
     @Test
     public void testNullabilityConstraints() {
         // create a song with a null url

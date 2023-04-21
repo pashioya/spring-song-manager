@@ -1,9 +1,15 @@
 package com.kdg.springprojt5.domain;
 
 import jakarta.persistence.*;
+import lombok.*;
 
-@Entity
 @Table(name = "album_artist")
+@ToString
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@Entity
 public class AlbumArtist {
 
     @Id
@@ -18,19 +24,8 @@ public class AlbumArtist {
     @JoinColumn(name = "artist_id")
     private Artist artist;
 
-    public AlbumArtist() {
-    }
-
-    public AlbumArtist(Artist artist, Album album) {
+    public AlbumArtist(Album album, Artist artist) {
         this.album = album;
         this.artist = artist;
-    }
-
-    public Artist getArtist() {
-        return artist;
-    }
-
-    public Album getAlbum() {
-        return album;
     }
 }

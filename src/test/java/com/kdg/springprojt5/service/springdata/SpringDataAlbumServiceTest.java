@@ -3,8 +3,8 @@ package com.kdg.springprojt5.service.springdata;
 import com.kdg.springprojt5.domain.Album;
 import com.kdg.springprojt5.domain.Song;
 import com.kdg.springprojt5.domain.StatusEnum;
-import com.kdg.springprojt5.repository.AlbumRepository;
-import com.kdg.springprojt5.repository.SongRepository;
+import com.kdg.springprojt5.repository.SpringDataAlbumRepository;
+import com.kdg.springprojt5.repository.SpringDataSongRepository;
 import org.hibernate.Hibernate;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
@@ -23,10 +23,10 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class SpringDataAlbumServiceTest {
     @Autowired
-    private AlbumRepository albumRepository;
+    private SpringDataAlbumRepository albumRepository;
 
     @Autowired
-    private SongRepository songRepository;
+    private SpringDataSongRepository songRepository;
 
     @BeforeAll
     public void setup() {
@@ -50,7 +50,7 @@ public class SpringDataAlbumServiceTest {
     @Test
     public void testEagerLoading() {
         // Retrieve the album using eager loading
-        Album album = albumRepository.getAlbumById(1L);
+        Album album = albumRepository.getReferenceById(1L);
 
         // Assert that the album's songs were eagerly loaded
         assertTrue(Hibernate.isInitialized(album.getSongs()));
@@ -59,7 +59,7 @@ public class SpringDataAlbumServiceTest {
 
     @Test
     public void testLazyLoading() {
-        Album album = albumRepository.getAlbumById(1L);
+        Album album = albumRepository.getReferenceById(1L);
         assertFalse(Hibernate.isInitialized(album.getSongs()));
         Hibernate.initialize(album.getSongs());
         assertTrue(Hibernate.isInitialized(album.getSongs()));

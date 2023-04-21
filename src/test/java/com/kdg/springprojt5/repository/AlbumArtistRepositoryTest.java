@@ -4,9 +4,6 @@ import com.kdg.springprojt5.domain.Album;
 import com.kdg.springprojt5.domain.AlbumArtist;
 import com.kdg.springprojt5.domain.Artist;
 import com.kdg.springprojt5.domain.StatusEnum;
-import com.kdg.springprojt5.repository.springdata.SpringDataAlbumArtistRepository;
-import com.kdg.springprojt5.repository.springdata.SpringDataAlbumRepository;
-import com.kdg.springprojt5.repository.springdata.SpringDataArtistRepository;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -27,15 +24,15 @@ public class AlbumArtistRepositoryTest {
 
     @Autowired
     private SpringDataAlbumArtistRepository albumArtistRepository;
+
     @BeforeEach
     public void setUp() {
         Artist artist = new Artist("Test Artist", 156, 1L);
         Album album = new Album("Test Album", 12, StatusEnum.SINGLE, "Rock", LocalDate.of(1969, 9, 26), 2L);
+        AlbumArtist albumArtist = new AlbumArtist(album, artist);
 
         artistRepository.save(artist);
         albumRepository.save(album);
-
-        AlbumArtist albumArtist = new AlbumArtist(artist, album);
         albumArtistRepository.save(albumArtist);
     }
 
@@ -47,4 +44,6 @@ public class AlbumArtistRepositoryTest {
         Assertions.assertNull(albumArtist.getArtist());
         Assertions.assertNull(albumArtist.getAlbum());
     }
+
+
 }

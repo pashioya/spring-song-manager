@@ -7,6 +7,7 @@ import com.kdg.springprojt5.domain.Artist;
 import com.kdg.springprojt5.service.ArtistService;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.servlet.http.HttpSession;
+import lombok.AllArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -23,16 +24,12 @@ import java.util.List;
 
 
 @Controller
+@AllArgsConstructor
 @RequestMapping("/allArtists")
 public class ArtistsController {
 
-    private final Logger logger;
+    private final Logger logger = LoggerFactory.getLogger(this.getClass().getName());
     private final ArtistService artistService;
-
-    public ArtistsController(ArtistService  artistService) {
-        this.logger = LoggerFactory.getLogger(this.getClass().getName());
-        this.artistService = artistService;
-    }
 
     @GetMapping()
     public ModelAndView artists(HttpSession session) {
@@ -64,16 +61,14 @@ public class ArtistsController {
                 artist.getId(),
                 artist.getArtistName(),
                 artist.getArtistFollowers(),
-                artist.getFavoriteGenre(),
                 artist.getUser().getUsername(),
                 artist.getAlbums()
         );
 
-        try{
+        try {
             mav.addObject("artist", artistViewModel);
-        }
-        catch (Exception e){
-            throw new EntityNotFoundException("Artist with id " + id + " not found",e);
+        } catch (Exception e) {
+            throw new EntityNotFoundException("Artist with id " + id + " not found", e);
         }
         mav.addObject("title", "Artists");
         mav.addObject("headerList", new ArrayList<>(Arrays.asList(
@@ -93,7 +88,7 @@ public class ArtistsController {
 
 
     @GetMapping("/addArtist")
-    public String addArtist(Model model,HttpSession session) {
+    public String addArtist(Model model, HttpSession session) {
         setHistory(session, "Add Artist");
         model.addAttribute("title", "Add Artist");
         model.addAttribute("headerList", new ArrayList<>(List.of(
@@ -111,7 +106,8 @@ public class ArtistsController {
         artistService.printArtist(id);
         return "redirect:/allArtists";
     }
-    private void setHistory(HttpSession session,String message){
+
+    private void setHistory(HttpSession session, String message) {
         List<HistoryItem> history = (List<HistoryItem>) session.getAttribute("history");
         if (session.getAttribute("history") == null) {
             history = new ArrayList<>();

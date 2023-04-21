@@ -9,6 +9,7 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
+import lombok.AllArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -24,26 +25,12 @@ import java.util.List;
 
 
 @Controller
+@AllArgsConstructor
 public class LoginController {
 
     private final UserService userService;
     private final BCryptPasswordEncoder passwordEncoder;
     private final UserDetailsService userDetailsService;
-
-    public LoginController(UserService userService, BCryptPasswordEncoder passwordEncoder, UserDetailsService userDetailsService) {
-        this.userService = userService;
-        this.passwordEncoder = passwordEncoder;
-        this.userDetailsService = userDetailsService;
-    }
-
-    private void setHistory(HttpSession session, String message){
-        List<HistoryItem> history = (List<HistoryItem>) session.getAttribute("history");
-        if (session.getAttribute("history") == null) {
-            history = new ArrayList<>();
-        }
-        history.add(new HistoryItem(message, LocalDateTime.now()));
-        session.setAttribute("history", history);
-    }
 
     @PostMapping("/register")
     public ModelAndView registerNewUser(
@@ -71,5 +58,14 @@ public class LoginController {
         mav.addObject("headerList", new ArrayList<>(List.of()));
         mav.addObject("footerList", new ArrayList<>(List.of()));
         return mav;
+    }
+
+    private void setHistory(HttpSession session, String message) {
+        List<HistoryItem> history = (List<HistoryItem>) session.getAttribute("history");
+        if (session.getAttribute("history") == null) {
+            history = new ArrayList<>();
+        }
+        history.add(new HistoryItem(message, LocalDateTime.now()));
+        session.setAttribute("history", history);
     }
 }

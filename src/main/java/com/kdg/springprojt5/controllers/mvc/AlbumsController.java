@@ -38,7 +38,7 @@ public class AlbumsController {
     }
 
     @GetMapping()
-    public ModelAndView albums(HttpSession session){
+    public ModelAndView albums(HttpSession session) {
         ModelAndView mav = new ModelAndView("allAlbums");
         mav.addObject("title", "Albums");
         mav.addObject("headerList", new ArrayList<>(Arrays.asList(
@@ -54,6 +54,7 @@ public class AlbumsController {
         setHistory(session, "All Albums");
         return mav;
     }
+
     @GetMapping("/fullAlbum/{id}")
     public ModelAndView fullAlbum(@PathVariable Long id, HttpSession session) {
         setHistory(session, "FullAlbum: " + id);
@@ -67,12 +68,12 @@ public class AlbumsController {
                     album.getAlbumStatus().toString(),
                     album.getGenre(),
                     album.getReleaseDate(),
+                    album.getUser().getUsername(),
                     album.getArtists(),
-                    album.getSongs(),
-                    album.getUser().getUsername()
+                    songService.getSongsByAlbumId(id)
             ));
         } catch (Exception e) {
-            throw new EntityNotFoundException("Album not found",e);
+            throw new EntityNotFoundException("Album not found", e);
         }
         mav.addObject("title", "fullAlbum");
         mav.addObject("headerList", new ArrayList<>(Arrays.asList(
@@ -113,7 +114,7 @@ public class AlbumsController {
         return "redirect:/allAlbums";
     }
 
-    private void setHistory(HttpSession session,String message){
+    private void setHistory(HttpSession session, String message) {
         List<HistoryItem> history = (List<HistoryItem>) session.getAttribute("history");
         if (session.getAttribute("history") == null) {
             history = new ArrayList<>();
