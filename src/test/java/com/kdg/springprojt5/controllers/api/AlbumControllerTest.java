@@ -3,7 +3,8 @@ package com.kdg.springprojt5.controllers.api;
 import com.kdg.springprojt5.domain.*;
 import com.kdg.springprojt5.repository.*;
 import org.hamcrest.Matchers;
-import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,26 +26,26 @@ public class AlbumControllerTest {
     private MockMvc mockMvc;
 
     @Autowired
-    private SpringDataUserRepository userRepository;
+    private UserRepository userRepository;
 
     @Autowired
-    private SpringDataArtistRepository artistRepository;
+    private ArtistRepository artistRepository;
 
     @Autowired
-    private SpringDataAlbumArtistRepository albumArtistRepository;
+    private AlbumArtistRepository albumArtistRepository;
 
     @Autowired
-    private SpringDataSongRepository songRepository;
+    private SongRepository songRepository;
 
     @Autowired
-    private SpringDataAlbumRepository albumRepository;
+    private AlbumRepository albumRepository;
 
     @Autowired
     private BCryptPasswordEncoder passwordEncoder;
 
-    @BeforeAll
+    @BeforeEach
     void setUp() {
-        User testUser = new User("testuser", passwordEncoder.encode("password"), UserRole.USER);
+        User testUser = new User("testuser", passwordEncoder.encode("password"), UserRole.ADMIN);
         userRepository.save(testUser);
 
         Artist artist = new Artist("Test Artist", 156, testUser.getId());
@@ -60,7 +61,7 @@ public class AlbumControllerTest {
 
     @Test
     void fullAlbumShouldLoadFullAlbumPageIncludingCorrectAlbum() throws Exception {
-        mockMvc.perform(MockMvcRequestBuilders.get("/fullAlbum/{id}", 1L)
+        mockMvc.perform(MockMvcRequestBuilders.get("/api/album/{id}", 1L)
                         .sessionAttr("history", new LinkedList<String>()))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.model().attributeExists("album"))
@@ -70,5 +71,12 @@ public class AlbumControllerTest {
                 .andExpect(MockMvcResultMatchers.view().name("fullAlbum"));
     }
 
-
+    @AfterEach
+    void tearDown() {
+        songRepository.deleteAll();
+        albumArtistRepository.deleteAll();
+        albumRepository.deleteAll();
+        artistRepository.deleteAll();
+        userRepository.deleteAll();
+    }
 }

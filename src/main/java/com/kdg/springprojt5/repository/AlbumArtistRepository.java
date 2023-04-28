@@ -5,7 +5,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface SpringDataAlbumArtistRepository extends JpaRepository<AlbumArtist, Long> {
+public interface AlbumArtistRepository extends JpaRepository<AlbumArtist, Long> {
 
     void deleteAlbumArtistByArtistId(Long id);
 }

@@ -1,7 +1,7 @@
 package com.kdg.springprojt5.service.springdata;
 
 import com.kdg.springprojt5.domain.User;
-import com.kdg.springprojt5.repository.SpringDataUserRepository;
+import com.kdg.springprojt5.repository.UserRepository;
 import com.kdg.springprojt5.service.UserService;
 import lombok.AllArgsConstructor;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -12,7 +12,7 @@ import java.util.List;
 @Repository
 @AllArgsConstructor
 public class SpringDataUserService implements UserService {
-    private final SpringDataUserRepository userRepository;
+    private final UserRepository userRepository;
     private final BCryptPasswordEncoder passwordEncoder;
 
     @Override

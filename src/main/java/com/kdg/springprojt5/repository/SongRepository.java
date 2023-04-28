@@ -8,7 +8,7 @@ import java.util.List;
 
 
 @Repository
-public interface SpringDataSongRepository extends JpaRepository<Song, Long> {
+public interface SongRepository extends JpaRepository<Song, Long> {
     List<Song> getSongsByAlbumId(Long id);
 }
 

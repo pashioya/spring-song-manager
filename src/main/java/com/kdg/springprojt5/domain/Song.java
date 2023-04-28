@@ -46,6 +46,7 @@ public class Song {
 
     @Override
     public boolean equals(Object o) {
+        if (o == null) return false;
         if (this == o) return true;
         if (!(o instanceof Song song)) return false;
         return getTrackNumber() == song.getTrackNumber() && Double.compare(song.getDurationMS(), getDurationMS()) == 0 && getAlbumId().equals(song.getAlbumId()) && getUrl().equals(song.getUrl()) && getSongTitle().equals(song.getSongTitle());

@@ -9,7 +9,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface SpringDataAlbumRepository extends JpaRepository<Album, Long> {
+public interface AlbumRepository extends JpaRepository<Album, Long> {
 
     @Query("SELECT a FROM Album a JOIN a.artists ar WHERE ar.id = :id")
     List<Album> getAlbumsByArtistId(@Param("id") Long id);

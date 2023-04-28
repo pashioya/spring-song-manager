@@ -2,9 +2,9 @@ package com.kdg.springprojt5.service.springdata;
 
 
 import com.kdg.springprojt5.domain.Album;
-import com.kdg.springprojt5.repository.SpringDataAlbumRepository;
-import com.kdg.springprojt5.repository.SpringDataArtistRepository;
-import com.kdg.springprojt5.repository.SpringDataSongRepository;
+import com.kdg.springprojt5.repository.AlbumRepository;
+import com.kdg.springprojt5.repository.ArtistRepository;
+import com.kdg.springprojt5.repository.SongRepository;
 import com.kdg.springprojt5.service.AlbumService;
 import com.kdg.springprojt5.util.JsonHandler;
 import lombok.AllArgsConstructor;
@@ -17,9 +17,9 @@ import java.util.List;
 @Service
 @AllArgsConstructor
 public class SpringDataAlbumService implements AlbumService {
-    private final SpringDataAlbumRepository albumRepository;
-    private final SpringDataArtistRepository artistRepository;
-    private final SpringDataSongRepository songRepository;
+    private final AlbumRepository albumRepository;
+    private final ArtistRepository artistRepository;
+    private final SongRepository songRepository;
     private final Logger logger = LoggerFactory.getLogger(this.getClass().getName());
     private final JsonHandler jsonHandler;
 

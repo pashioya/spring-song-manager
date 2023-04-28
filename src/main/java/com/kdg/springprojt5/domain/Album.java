@@ -62,6 +62,7 @@ public class Album {
 
     @Override
     public boolean equals(Object o) {
+        if (o == null) return false;
         if (this == o) return true;
         if (!(o instanceof Album album)) return false;
         return getOfficialTrackCount() == album.getOfficialTrackCount() && getAlbumName().equals(album.getAlbumName()) && getAlbumStatus() == album.getAlbumStatus() && Objects.equals(getGenre(), album.getGenre()) && getReleaseDate().equals(album.getReleaseDate());

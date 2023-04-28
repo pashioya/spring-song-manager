@@ -17,11 +17,11 @@
 
 - Week2:
 
-- Implement two additional REST endpoints with different HTTP verbs (POST and either PATCH or PUT). *******************************************
+- Implement two additional REST endpoints with different HTTP verbs (POST and either PATCH or PUT).
 - Use validation framework to add basic input checks and trigger a 400 status code if validation fails. 
 - Add ModelMapper as a dependency and use it in your Web API backend code.
 - Call your endpoints from JavaScript in a meaningful way, such as adding or updating records without page refresh.
-- Edit your .http file to include request messages for each endpoint and possible response status codes, including 400 (handled by Spring). *******************************************
+- Edit your .http file to include request messages for each endpoint and possible response status codes, including 400 (handled by Spring). 
 - Add content negotiation support for JSON and XML formats to your application. *******************************************
 - Add two GET requests to your .http file, one for JSON and one for XML. *******************************************
 - Under "Week 2" in your README.md file, add requests and responses for the two new GET requests.
@@ -63,7 +63,7 @@
 
 - Week5:
 
-- Use Spring profiles to separate the seeding routine from tests. *******************************************
+- Use Spring profiles to separate the seeding routine from tests. 
 - Use test-specific setups to ensure consistency of tests.
 - Document any Spring profiles added for this step in the README.md. 
 - Document how tests should be executed from the command line in the README.md. *******************************************
@@ -92,3 +92,21 @@
   - Write tests for at least two methods of the REST API of the presentation layer, choosing interesting endpoints with some logic, different possible outcomes, parameters, etc. *******************************************
   - Write tests for at least two methods of the MVC part of the presentation layer, choosing interesting views with a model or parameters. *******************************************
   - Testing a single method will probably require writing several testing methods, including expect success, expect failure 1, expect failure 2, etc. *******************************************
+
+
+- Week7:  
+  - Choose an interesting endpoint (method) to test for a web API endpoint
+  - Create unit tests with mocking for the chosen endpoint and ensure tests cover not just the happy path, but also different scenarios
+  - Mock the dependency(ies) of the controller under test using @MockBean
+  - Choose an interesting method to test for the business layer
+  - Create unit tests with mocking for the chosen method in the business layer and ensure tests cover not just the happy path, but also different scenarios
+  - Mock the dependency(ies) of the service under test using @MockBean
+  - Use 'verify' to ensure certain methods are called with specific arguments in at least one test
+  - Re-enable any authentication requirements that were temporarily disabled in Week 6
+  - Update and fix any tests that are failing due to the authentication requirements
+  - Ensure that at least one tested endpoint requires authentication
+  - Implement tests that verify all role requirements (authorization) for one specific page or endpoint
+  - Ensure that all tests can be executed using a single command, such as './gradlew check'
+  - Include a screenshot of the IntelliJ tool window in the README.md file showing code coverage with visible package names and classes
+  - Review command-line instructions for executing all tests using a single command and clearly mention the (part of a) command for setting the Spring profile
+  - Write down the name(s) of the class(es) containing the mocking tests, 'verify' tests, and role verification tests in the README.md file.

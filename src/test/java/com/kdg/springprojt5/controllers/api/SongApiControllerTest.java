@@ -6,6 +6,7 @@ import com.kdg.springprojt5.service.AlbumArtistService;
 import com.kdg.springprojt5.service.AlbumService;
 import com.kdg.springprojt5.service.ArtistService;
 import com.kdg.springprojt5.service.SongService;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -57,6 +58,14 @@ public class SongApiControllerTest {
                 .andExpect(status().isOk());
 
         assertNull(songService.getSongById(savedSong.getId()));
+    }
+
+    @AfterEach
+    public void tearDown() {
+        songService.getAllSongs().forEach(song -> songService.deleteSong(song.getId()));
+        albumArtistService.getAllAlbumArtists().forEach(albumArtist -> albumArtistService.deleteAlbumArtist(albumArtist));
+        albumService.getAllAlbums().forEach(album -> albumService.deleteAlbum(album.getId()));
+        artistService.getAllArtists().forEach(artist -> artistService.deleteArtist(artist.getId()));
     }
 
 }

@@ -2,7 +2,7 @@ package com.kdg.springprojt5.service.springdata;
 
 
 import com.kdg.springprojt5.domain.Song;
-import com.kdg.springprojt5.repository.SpringDataSongRepository;
+import com.kdg.springprojt5.repository.SongRepository;
 import com.kdg.springprojt5.service.SongService;
 import com.kdg.springprojt5.util.JsonHandler;
 import lombok.AllArgsConstructor;
@@ -16,7 +16,7 @@ import java.util.List;
 @AllArgsConstructor
 public class SpringDataSongService implements SongService {
     private final Logger logger = LoggerFactory.getLogger(this.getClass().getName());
-    private final SpringDataSongRepository songRepository;
+    private final SongRepository songRepository;
     private final JsonHandler jsonHandler;
 
 

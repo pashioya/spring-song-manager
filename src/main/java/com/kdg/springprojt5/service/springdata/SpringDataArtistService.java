@@ -1,9 +1,9 @@
 package com.kdg.springprojt5.service.springdata;
 
 import com.kdg.springprojt5.domain.Artist;
-import com.kdg.springprojt5.repository.SpringDataAlbumArtistRepository;
-import com.kdg.springprojt5.repository.SpringDataAlbumRepository;
-import com.kdg.springprojt5.repository.SpringDataArtistRepository;
+import com.kdg.springprojt5.repository.AlbumArtistRepository;
+import com.kdg.springprojt5.repository.AlbumRepository;
+import com.kdg.springprojt5.repository.ArtistRepository;
 import com.kdg.springprojt5.service.ArtistService;
 import com.kdg.springprojt5.util.JsonHandler;
 import lombok.AllArgsConstructor;
@@ -16,9 +16,9 @@ import java.util.List;
 @Service
 @AllArgsConstructor
 public class SpringDataArtistService implements ArtistService {
-    private final SpringDataArtistRepository artistRepository;
-    private final SpringDataAlbumRepository albumRepository;
-    private final SpringDataAlbumArtistRepository albumArtistRepository;
+    private final ArtistRepository artistRepository;
+    private final AlbumRepository albumRepository;
+    private final AlbumArtistRepository albumArtistRepository;
     private final JsonHandler jsonHandler;
     private final Logger logger = LoggerFactory.getLogger(this.getClass().getName());
 
@@ -49,7 +49,8 @@ public class SpringDataArtistService implements ArtistService {
 
     @Override
     public void printArtist(Long id) {
-        jsonHandler.saveToJson(getArtistById(id), getArtistById(id).getArtistName());
+        Artist artist = getArtistById(id);
+        jsonHandler.saveToJson(artist, artist.getArtistName());
         logger.info("Artist saved to json");
     }
 

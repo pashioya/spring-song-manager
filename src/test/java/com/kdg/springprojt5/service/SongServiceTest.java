@@ -1,4 +1,4 @@
-package com.kdg.springprojt5.service.springdata;
+package com.kdg.springprojt5.service;
 
 import com.kdg.springprojt5.domain.*;
 import com.kdg.springprojt5.repository.*;
@@ -16,22 +16,22 @@ import static org.springframework.test.util.AssertionErrors.assertEquals;
 
 
 @SpringBootTest
-class SpringDataSongServiceTest {
+class SongServiceTest {
 
     @Autowired
-    private SpringDataUserRepository userRepository;
+    private UserRepository userRepository;
 
     @Autowired
-    private SpringDataArtistRepository artistRepository;
+    private ArtistRepository artistRepository;
 
     @Autowired
-    private SpringDataAlbumRepository albumRepository;
+    private AlbumRepository albumRepository;
 
     @Autowired
-    private SpringDataSongRepository songRepository;
+    private SongRepository songRepository;
 
     @Autowired
-    private SpringDataAlbumArtistRepository albumArtistRepository;
+    private AlbumArtistRepository albumArtistRepository;
 
     @Autowired
     private BCryptPasswordEncoder passwordEncoder;

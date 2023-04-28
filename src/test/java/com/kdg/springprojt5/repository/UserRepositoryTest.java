@@ -1,35 +1,35 @@
 package com.kdg.springprojt5.repository;
 
 import com.kdg.springprojt5.domain.User;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import com.kdg.springprojt5.domain.UserRole;
+import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
 @SpringBootTest
+@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class UserRepositoryTest {
 
     @Autowired
-    private SpringDataUserRepository userRepository;
-
-    private final BCryptPasswordEncoder passwordEncoder;
-
-    public UserRepositoryTest(BCryptPasswordEncoder passwordEncoder) {
-        this.passwordEncoder = passwordEncoder;
-    }
+    private UserRepository userRepository;
+    @Autowired
+    private BCryptPasswordEncoder passwordEncoder;
 
     @BeforeEach
     public void setUp() {
-        User user = new User();
-        user.setUsername("testuser");
-        user.setPassword(passwordEncoder.encode("testpassword"));
-        userRepository.save(user);
+        userRepository.save(new User(
+                "testuser",
+                passwordEncoder.encode("password"),
+                UserRole.USER
+        ));
     }
 
     @Test
-    public void findByUsername_caseSensitive() {
+    public void findByUsernameIscaseSensitive() {
         User foundUser = userRepository.findByUsername("testuser");
         Assertions.assertNotNull(foundUser, "Found User Shouldn't be null");
 
@@ -42,4 +42,23 @@ public class UserRepositoryTest {
         foundUser = userRepository.findByUsername("testuser1");
         Assertions.assertNull(foundUser, "Found user should be null");
     }
+
+    @Test
+    void usernameShouldBeUnique() {
+        User user = new User(
+                "testuser",
+                passwordEncoder.encode("password"),
+                UserRole.USER
+        );
+        assertThrows(
+                DataIntegrityViolationException.class,
+                () -> userRepository.save(user)
+        );
+    }
+
+    @AfterAll
+    public void tearDown() {
+        userRepository.deleteAll();
+    }
+
 }

@@ -10,7 +10,7 @@ import java.util.List;
 
 
 @Repository
-public interface SpringDataArtistRepository extends JpaRepository<Artist, Long> {
+public interface ArtistRepository extends JpaRepository<Artist, Long> {
     @Query("SELECT a FROM Artist a")
     List<Artist> getAllArtists();
 
