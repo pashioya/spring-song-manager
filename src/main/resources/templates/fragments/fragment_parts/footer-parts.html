@@ -19,11 +19,12 @@
 </a>
 
 
-<a th:fragment="createAlbum (content)" th:href="@{'/allAlbums/artist/' + ${content} + '/addAlbum'}">
-    <button class="btn btn-primary" type="button">
-        Create Album
-    </button>
-</a>
+<button class="btn btn-primary" data-bs-target="#create-album-modal" data-bs-toggle="modal"
+        th:fragment="createAlbum (content)"
+        type="button">
+    Create Album
+</button>
+
 
 <a class="btn btn-danger delete-button" th:fragment="deleteSong (content)">
     <button class="btn btn-danger" type="button">Delete Song</button>

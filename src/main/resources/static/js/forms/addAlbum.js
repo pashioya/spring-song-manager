@@ -8,17 +8,6 @@ let submitButton = document.querySelector("#add-album-form > button");
 
 submitButton.addEventListener("click", trySubmitForm);
 
-
-let pathname = window.location.pathname;
-let parts = pathname.split('/');
-
-// Find the index of the "artist" string in the path
-let artistIndex = parts.indexOf('artist');
-
-// The artist ID is the next part of the path
-let artistId = parts[artistIndex + 1];
-
-
 function trySubmitForm(event) {
     event.preventDefault();
     const formIsValid = form.checkValidity();
@@ -44,8 +33,28 @@ function trySubmitForm(event) {
                     "genre": albumGenre.value,
                     "releaseDate": albumReleaseDate.value
                 })
-        }).then(response => {
-            console.log(response)
+        }).then(async response => {
+            if (response.status !== 201) {
+                console.log("Error: " + response.status);
+            } else {
+                const newAlbum = await response.json();
+                let newAlbumRow = document.createElement("tr");
+                newAlbumRow.setAttribute("data-href", `/allAlbums/fullAlbum/${newAlbum.id}`);
+                newAlbumRow.classList.add("table-row");
+                newAlbumRow.innerHTML = `
+                    <td>${newAlbum.albumName}</td>
+                    <td>${newAlbum.officialTrackCount}</td>
+                    <td>${newAlbum.albumStatus}</td>
+                    <td>${newAlbum.genre}</td>
+                    <td>${newAlbum.releaseDate}</td>
+                `;
+                // set the onclick event for each row
+                newAlbumRow.addEventListener("click", () => {
+                    window.location.href = newAlbumRow.getAttribute("data-href");
+                });
+                document.getElementById("albums-table-body").appendChild(newAlbumRow);
+                document.querySelector(".modal-close-btn").click();
+            }
         });
     }
 }

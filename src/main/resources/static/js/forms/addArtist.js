@@ -5,9 +5,7 @@
 let form = document.getElementById("add-artist-form");
 let artistName = document.getElementById("artistName");
 let artistFollowers = document.getElementById("artistFollowers");
-let submitButton =  form.querySelector('button[type="submit"]');
-
-
+let submitButton = form.querySelector('#create-album-submit');
 
 submitButton.addEventListener("click", trySubmitForm);
 
@@ -25,18 +23,18 @@ function trySubmitForm(event) {
             headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json'
-                ,[header]: token
+                , [header]: token
             },
             body: JSON.stringify(
                 {
-                "artistName": artistName.value,
-                "artistFollowers": parseInt(artistFollowers.value)
-            })
+                    "artistName": artistName.value,
+                    "artistFollowers": parseInt(artistFollowers.value)
+                })
         }).then(response => {
-                form.reset();
-                form.classList.remove('was-validated');
-                window.location.href = "/allArtists";
-                console.log(response)
+            form.reset();
+            form.classList.remove('was-validated');
+            window.location.href = "/allArtists";
+            console.log(response)
         });
     }
 }

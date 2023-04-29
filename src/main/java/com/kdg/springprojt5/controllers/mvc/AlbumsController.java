@@ -3,7 +3,6 @@ package com.kdg.springprojt5.controllers.mvc;
 
 import com.kdg.springprojt5.controllers.mvc.helper.DataItem;
 import com.kdg.springprojt5.controllers.mvc.helper.HistoryItem;
-import com.kdg.springprojt5.controllers.mvc.viewmodel.AlbumViewModel;
 import com.kdg.springprojt5.service.AlbumService;
 import com.kdg.springprojt5.service.ArtistService;
 import com.kdg.springprojt5.service.SongService;
@@ -70,16 +69,6 @@ public class AlbumsController {
                 new DataItem("createSong", String.valueOf(id)),
                 new DataItem("printAlbum")
         )));
-        return mav;
-    }
-
-    @GetMapping("/artist/{artistId}/addAlbum")
-    public ModelAndView addAlbum(HttpSession session) {
-        setHistory(session, "Add Album");
-        ModelAndView mav = new ModelAndView("addAlbum");
-        mav.addObject("title", "Add Album");
-        AlbumViewModel albumViewModel = new AlbumViewModel();
-        mav.addObject("album", albumViewModel);
         return mav;
     }
 

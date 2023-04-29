@@ -3,6 +3,7 @@
 >
 <head th:replace="~{fragments/head :: head (${title})}"></head>
 <script defer th:src="@{/js/fullArtist.js}"></script>
+<script defer th:src="@{/js/forms/addAlbum.js}"></script>
 <body>
 <header th:replace="~{fragments/header :: header (${headerList})}"></header>
 <section>
@@ -32,6 +33,80 @@
         <tbody id="albums-table-body">
         </tbody>
     </table>
+    <!-- Modal -->
+    <div aria-hidden="true" aria-labelledby="create-album-modal-label" class="modal fade" id="create-album-modal"
+         tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="create-album-modal-label">Create Album</h1>
+                    <button aria-label="Close" class="btn-close modal-close-btn" data-bs-dismiss="modal"
+                            type="button"></button>
+                </div>
+                <div class="modal-body">
+                    <form class="row g-3 needs-validation" id="add-album-form" method="post" novalidate>
+                        <div class="col-md-4">
+                            <label class="form-label" for="albumName"> albumName</label>
+                            <input class="form-control" id="albumName" name="albumName" required type="text">
+                            <div class="valid-feedback">
+                                Looks good!
+                            </div>
+                            <div class="invalid-feedback">
+                                Please submit a valid album name.
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <label class="form-label" for="albumStatus">albumStatus</label>
+                            <select class="form-select" id="albumStatus" name="albumStatus" required>
+                                <option disabled value="">Select Your Option</option>
+                                <option value="ALBUM">Album</option>
+                                <option value="SINGLE">Single</option>
+                                <option value="EP">EP</option>
+                                <option value="COMPILATION">Compilation</option>
+                                <option selected value="UNKNOWN">Unknown</option>
+                            </select>
+                            <div class="valid-feedback">
+                                Looks good!
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <label class="form-label" for="officialTrackCount">officialTrackCount</label>
+                            <input class="form-control" id="officialTrackCount" name="officialTrackCount" required
+                                   type="number">
+                            <div class="valid-feedback">
+                                Looks good!
+                            </div>
+                            <div class="invalid-feedback">
+                                Please enter a valid number.
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <label class="form-label" for="genre">genre</label>
+                            <input class="form-control" id="genre" name="genre" required type="text">
+                            <div class="valid-feedback">
+                                Looks good!
+                            </div>
+                            <div class="invalid-feedback">
+                                Please enter a valid genre.
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <label class="form-label" for="releaseDate">ReleaseDate(MM/DD/YYYY)</label>
+                            <input class="form-control" id="releaseDate" name="releaseDate" required type="date">
+                            <div class="valid-feedback">
+                                Looks good!
+                            </div>
+                            <div class="invalid-feedback">
+                                Please enter a valid date.
+                            </div>
+                        </div>
+                        <button class="btn btn-primary" id="create-album-submit" type="submit" value="submit">Submit
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
 </section>
 <footer th:replace="~{fragments/footer :: footer (${footerList})}"></footer>
 </body>
