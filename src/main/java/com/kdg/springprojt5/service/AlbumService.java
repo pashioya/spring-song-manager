@@ -16,4 +16,5 @@ public interface AlbumService {
 
     void printAlbum(Long id);
 
+    List<Album> getAlbumsByArtistId(Long artistId);
 }

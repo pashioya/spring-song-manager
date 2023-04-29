@@ -17,6 +17,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
@@ -26,6 +27,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/artist")
 @AllArgsConstructor
+@Transactional
 public class ArtistApiController {
 
     private final Logger logger = LoggerFactory.getLogger(this.getClass().getName());
@@ -52,9 +54,15 @@ public class ArtistApiController {
 
     @GetMapping("/{id}")
     public ResponseEntity<ArtistDto> getArtist(@PathVariable("id") Long artistId) {
-        var artist = artistService.getArtistById(artistId);
-        return new ResponseEntity<>(
-                modelMapper.map(artist, ArtistDto.class), HttpStatus.OK);
+        try {
+            var artist = artistService.getArtistById(artistId);
+            ArtistDto artistDto = modelMapper.map(artist, ArtistDto.class);
+            artistDto.setUsername(artist.getUser().getUsername());
+            return new ResponseEntity<>(artistDto, HttpStatus.OK);
+        } catch (Exception e) {
+            logger.error(e.getMessage());
+            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+        }
     }
 
 

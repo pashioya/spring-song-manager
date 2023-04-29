@@ -3,9 +3,7 @@ package com.kdg.springprojt5.controllers.mvc;
 import com.kdg.springprojt5.controllers.mvc.helper.DataItem;
 import com.kdg.springprojt5.controllers.mvc.helper.HistoryItem;
 import com.kdg.springprojt5.controllers.mvc.viewmodel.SongViewModel;
-import com.kdg.springprojt5.domain.Song;
 import com.kdg.springprojt5.service.SongService;
-import jakarta.persistence.EntityNotFoundException;
 import jakarta.servlet.http.HttpSession;
 import lombok.AllArgsConstructor;
 import org.slf4j.Logger;
@@ -51,26 +49,6 @@ public class SongsController {
     public ModelAndView fullSong(@PathVariable Long id, HttpSession session) {
         setHistory(session, "Full Song: " + id);
         ModelAndView mav = new ModelAndView("fullSong");
-
-        Song song = songService.getSongById(id);
-
-        SongViewModel songViewModel = new SongViewModel(
-                song.getId(),
-                song.getUrl(),
-                song.getSongTitle(),
-                song.getTrackNumber(),
-                song.getDurationMS(),
-                song.isExplicit(),
-                song.getUser().getUsername()
-        );
-        System.out.println(song.getUser());
-        try {
-            mav.addObject("song", songViewModel);
-        } catch (Exception e) {
-            throw new EntityNotFoundException("Song with id " + id + " not found");
-        }
-        logger.info("Song with id " + id + " found");
-
         mav.addObject("title", "Songs");
         mav.addObject("headerList", new ArrayList<>(Arrays.asList(
                 new DataItem("allSongs", "active"),
@@ -85,7 +63,7 @@ public class SongsController {
     }
 
     @GetMapping("/album/{albumId}/addSong")
-    public String addSong(Model model, HttpSession session, @PathVariable Long albumId) {
+    public String addSong(Model model, HttpSession session) {
         setHistory(session, "Add Song");
 
         model.addAttribute("title", "Add Song");

@@ -1,58 +1,56 @@
-
-
-<a th:fragment="gitLab (content)" href="https://gitlab.com/pashioya/spring-proj-t3">
-    <button type="button" class="btn btn-primary" >
+<a href="https://gitlab.com/pashioya/spring-proj-t3" th:fragment="gitLab (content)">
+    <button class="btn btn-primary" type="button">
         Gitlab
     </button>
 </a>
 
 
 <a th:fragment="createSong (content)" th:href="@{'/allSongs/album/' + ${content} + '/addSong'}">
-    <button type="button" class="btn btn-primary" >
+    <button class="btn btn-primary" type="button">
         Create Song
     </button>
 </a>
 
 
-<a th:fragment="createArtist (content)"  sec:authorize="hasRole('ADMIN')" href="/allArtists/addArtist">
-    <button  type="button" class="btn btn-primary">
+<a href="/allArtists/addArtist" sec:authorize="hasRole('ADMIN')" th:fragment="createArtist (content)">
+    <button class="btn btn-primary" type="button">
         Create Artist
     </button>
 </a>
 
 
-<a th:fragment="createAlbum (content)" th:href="@{'/allAlbums/artist/' + ${content} + '/addAlbum'}" >
-    <button type="button" class="btn btn-primary">
+<a th:fragment="createAlbum (content)" th:href="@{'/allAlbums/artist/' + ${content} + '/addAlbum'}">
+    <button class="btn btn-primary" type="button">
         Create Album
     </button>
 </a>
 
-<a th:fragment="deleteSong (content)" class="btn btn-danger delete-button">
-    <button type="button" class="btn btn-danger">Delete Song</button>
+<a class="btn btn-danger delete-button" th:fragment="deleteSong (content)">
+    <button class="btn btn-danger" type="button">Delete Song</button>
 </a>
 
-<a th:fragment="printSong (content)" th:href="${'/allSongs/fullSong/printSong/' + song.getId()}" >
-    <button type="button" class="btn btn-primary">Print Song</button>
+<a th:fragment="printSong (content)">
+    <button class="btn btn-primary" type="button">Print Song</button>
 </a>
 
-<a th:fragment="deleteAlbum (content)" class="btn btn-danger delete-button">
-    <button type="button" class="btn btn-danger">Delete Album</button>
+<a class="btn btn-danger delete-button" th:fragment="deleteAlbum (content)">
+    <button class="btn btn-danger" type="button">Delete Album</button>
 </a>
 
 
-<a th:fragment="printAlbum (content)" th:href="${'/allAlbums/fullAlbum/printAlbum/' + album.getId()}" class="btn btn-primary">
-    <button type="button" class="btn btn-primary">Print Album</button>
+<a class="btn btn-primary" th:fragment="printAlbum (content)">
+    <button class="btn btn-primary" type="button">Print Album</button>
 </a>
 
-<a th:fragment="deleteArtist (content)" class="btn btn-danger delete-button">
-    <button type="button" class="btn btn-danger">Delete Artist</button>
+<a class="btn btn-danger delete-button" th:fragment="deleteArtist (content)">
+    <button class="btn btn-danger" type="button">Delete Artist</button>
 </a>
-<a th:fragment="printArtist (content)" th:href="${'/allArtists/fullArtist/printArtist/' + artist.getId()}" class="btn btn-primary">
-    <button type="button" class="btn btn-primary">
+<a class="btn btn-primary" th:fragment="printArtist (content)">
+    <button class="btn btn-primary" type="button">
         Print Artist
     </button>
 </a>
 
-<a th:fragment="pageHistory (content)" th:href="${'/pageHistory'}" >
-    <button type="button" class="btn btn-primary">Page History</button>
+<a th:fragment="pageHistory (content)" th:href="${'/pageHistory'}">
+    <button class="btn btn-primary" type="button">Page History</button>
 </a>

@@ -7,7 +7,6 @@ import com.kdg.springprojt5.controllers.mvc.viewmodel.AlbumViewModel;
 import com.kdg.springprojt5.service.AlbumService;
 import com.kdg.springprojt5.service.ArtistService;
 import com.kdg.springprojt5.service.SongService;
-import jakarta.persistence.EntityNotFoundException;
 import jakarta.servlet.http.HttpSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -59,22 +58,6 @@ public class AlbumsController {
     public ModelAndView fullAlbum(@PathVariable Long id, HttpSession session) {
         setHistory(session, "FullAlbum: " + id);
         ModelAndView mav = new ModelAndView("fullAlbum");
-        var album = albumService.getAlbumById(id);
-        try {
-            mav.addObject("album", new AlbumViewModel(
-                    album.getId(),
-                    album.getAlbumName(),
-                    album.getOfficialTrackCount(),
-                    album.getAlbumStatus().toString(),
-                    album.getGenre(),
-                    album.getReleaseDate(),
-                    album.getUser().getUsername(),
-                    album.getArtists(),
-                    songService.getSongsByAlbumId(id)
-            ));
-        } catch (Exception e) {
-            throw new EntityNotFoundException("Album not found", e);
-        }
         mav.addObject("title", "fullAlbum");
         mav.addObject("headerList", new ArrayList<>(Arrays.asList(
                 new DataItem("allSongs"),
@@ -91,20 +74,12 @@ public class AlbumsController {
     }
 
     @GetMapping("/artist/{artistId}/addAlbum")
-    public ModelAndView addAlbum(HttpSession session, @PathVariable Long artistId) {
+    public ModelAndView addAlbum(HttpSession session) {
         setHistory(session, "Add Album");
         ModelAndView mav = new ModelAndView("addAlbum");
         mav.addObject("title", "Add Album");
         AlbumViewModel albumViewModel = new AlbumViewModel();
         mav.addObject("album", albumViewModel);
-        return mav;
-    }
-
-    @GetMapping("/fullAlbum/{id}/deleteAlbum")
-    public ModelAndView deleteAlbum(@PathVariable Long id) {
-        ModelAndView mav = new ModelAndView("allAlbums");
-        mav.addObject("title", "Delete Album");
-        mav.addObject("album", albumService.getAlbumById(id));
         return mav;
     }
 

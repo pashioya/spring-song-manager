@@ -5,12 +5,14 @@ import com.kdg.springprojt5.controllers.api.dto.SongDto;
 import com.kdg.springprojt5.domain.Song;
 import com.kdg.springprojt5.security.CustomUserDetails;
 import com.kdg.springprojt5.service.SongService;
+import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
@@ -18,31 +20,39 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/song")
+@Transactional
+@AllArgsConstructor
 public class SongApiController {
     private final SongService songService;
-    private final Logger logger;
+    private final Logger logger = LoggerFactory.getLogger(this.getClass().getName());
     private final ModelMapper modelMapper;
-
-    public SongApiController(SongService songService, ModelMapper modelMapper) {
-        this.songService = songService;
-        this.logger = LoggerFactory.getLogger(this.getClass().getName());
-        this.modelMapper = modelMapper;
-    }
 
     @GetMapping("/{id}")
     public ResponseEntity<SongDto> getSong(@PathVariable("id") Long songId) {
-        var song = songService.getSongById(songId);
-        return new ResponseEntity<>(modelMapper.map(song, SongDto.class), HttpStatus.OK);
+        try {
+            var song = songService.getSongById(songId);
+            SongDto songDto = modelMapper.map(song, SongDto.class);
+            songDto.setUsername(song.getUser().getUsername());
+            return new ResponseEntity<>(songDto, HttpStatus.OK);
+        } catch (Exception e) {
+            logger.error(e.getMessage());
+            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+        }
     }
 
     @GetMapping("/songs")
     public ResponseEntity<List<SongDto>> getSongs() {
-        var songs = songService.getAllSongs();
-        List<SongDto> songDtos = songs.stream()
-                .map(song -> modelMapper.map(song, SongDto.class))
-                .toList();
-        return new ResponseEntity<>(songDtos, HttpStatus.OK);
 
+        try {
+            var songs = songService.getAllSongs();
+            List<SongDto> songDtos = songs.stream()
+                    .map(song -> modelMapper.map(song, SongDto.class))
+                    .toList();
+            return new ResponseEntity<>(songDtos, HttpStatus.OK);
+        } catch (Exception e) {
+            logger.error(e.getMessage());
+            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+        }
     }
 
 
@@ -55,7 +65,7 @@ public class SongApiController {
                     .toList();
             return new ResponseEntity<>(songDtos, HttpStatus.OK);
         }
-        return new ResponseEntity<>(null, HttpStatus.NO_CONTENT);
+        return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
     }
 
     @PostMapping("/album/{albumId}")
@@ -85,7 +95,6 @@ public class SongApiController {
         songService.saveSong(song);
         return new ResponseEntity<>(modelMapper.map(song, SongDto.class), HttpStatus.CREATED);
     }
-
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteSong(@PathVariable Long id) {

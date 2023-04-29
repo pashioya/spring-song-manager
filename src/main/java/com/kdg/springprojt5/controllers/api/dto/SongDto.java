@@ -14,4 +14,5 @@ public class SongDto {
     private double durationMs;
     private boolean explicit;
     private String url;
+    private String username;
 }

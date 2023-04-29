@@ -1,63 +1,51 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head th:replace="~{fragments/head :: head (${title})}"></head>
-<body id="full" class="pb-5">
+<body class="pb-5" id="full">
 <header th:replace="~{fragments/header :: header (${headerList})}"></header>
 <script defer th:src="@{/js/fullAlbum.js}"></script>
 <section>
-    <table class='table table-bordered table-condensed table-striped table-hover'>
+    <table class='table table-bordered table-condensed table-striped table-hover' id="albums-artist-table">
         <thead class="table-header">
         <th>All Artists</th>
         </thead>
-        <tbody>
-        <tr class="table-row" th:each="artist : ${album.getArtists()}" th:data-href="${'/allArtists/fullArtist/' + artist.getId()}">
-            <td th:text="${artist.getArtistName()}"></td>
-        </tr>
+        <tbody id="album-artistsList">
         </tbody>
     </table>
     <div class="album-item">
         <span>Created By: </span>
-        <span th:text="${album.getUser()}"></span>
+        <span id="album-username"></span>
     </div>
     <div class="album-item">
         <span>Album Name: </span>
-        <span th:text="${album.getAlbumName()}"></span>
+        <span id="album-albumName"></span>
     </div>
     <div class="album-item">
         <span>Release Date</span>
-        <span th:text="${album.getReleaseDate()}"></span>
+        <span id="album-releaseDate"></span>
     </div>
     <div class="album-item">
         <span>Genre: </span>
-        <span th:text="${album.getGenre()}"></span>
+        <span id="album-genre"></span>
     </div>
     <div class="album-item">
         <span>Track Count: </span>
-        <span th:text="${album.getOfficialTrackCount()}"></span>
+        <span id="album-officialTrackCount"></span>
     </div>
     <div class="album-item">
         <span>Album Status: </span>
-        <span th:text="${album.getAlbumStatus()}"></span>
+        <span id="album-albumStatus"></span>
     </div>
     <div class="table-caption">
         <h1>Albums Songs</h1>
     </div>
     <table class='table table-bordered table-condensed table-striped table-hover'>
         <thead class="table-header">
-            <th class="row-item">songURL</th>
-            <th class="row-item">songName</th>
-            <th class="row-item">trackNumber</th>
-            <th class="row-item">DurationMS</th>
-            <th class="row-item">Explicit?</th>
+        <th class="row-item">songName</th>
+        <th class="row-item">trackNumber</th>
+        <th class="row-item">Explicit?</th>
         </thead>
-        <tbody>
-            <tr class="table-row" th:each="song : ${album.getSongs()}" th:data-href="${'/allSongs/fullSong/' + song.getId()}">
-                <td class="row-item" th:text="${song.getUrl()}"></td>
-                <td class="row-item" th:text="${song.getSongTitle()}"></td>
-                <td class="row-item" th:text="${song.getTrackNumber()}"></td>
-                <td class="row-item" th:text="${song.getDurationMS()}"></td>
-                <td class="row-item" th:text="${song.isExplicit()}"></td>
-            </tr>
+        <tbody id="album-songsList">
         </tbody>
     </table>
 

@@ -1,11 +1,7 @@
 package com.kdg.springprojt5.controllers.api.dto;
 
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 
 @ToString
 @Getter
@@ -15,8 +11,8 @@ import lombok.ToString;
 public class AlbumDto {
 
     private Long id;
+    private String username;
     private String albumName;
-    private String artistName;
     private String genre;
     private int officialTrackCount;
     private String albumStatus;

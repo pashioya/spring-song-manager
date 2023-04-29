@@ -62,5 +62,15 @@ public class SpringDataAlbumService implements AlbumService {
         logger.info("Album saved to JSON file: " + filename);
         logger.info(json);
     }
+
+    @Override
+    public List<Album> getAlbumsByArtistId(Long artistId) {
+        List<Album> albums = albumRepository.getAlbumsByArtistId(artistId);
+        albums.forEach(album -> album.setSongs(songRepository.getSongsByAlbumId(album.getId())));
+        albums.forEach(album -> album.setArtists(artistRepository.getAlbumsArtists(album.getId())));
+        albums.forEach(album -> logger.info(album.toString()));
+        logger.info("Albums by artistId: " + artistId);
+        return albums;
+    }
 }
 

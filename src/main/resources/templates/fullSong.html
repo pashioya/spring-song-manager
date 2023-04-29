@@ -7,27 +7,27 @@
 <section>
     <div class="song-item">
         <span>Created By: </span>
-        <span th:text="${song.getUser()}"></span>
-    </div>
-    <div class="song-item">
-        <span>URL: </span>
-        <span th:text="${song.getUrl()}"></span>
+        <span id="song-user"></span>
     </div>
     <div class="song-item">
         <span>Song Name: </span>
-        <span th:text="${song.getSongTitle()}"></span>
+        <span id="song-title"></span>
     </div>
     <div class="song-item">
         <span>Track Number: </span>
-        <span th:text="${song.getTrackNumber()}"></span>
+        <span id="song-track-number"></span>
     </div>
     <div class="song-item">
         <span>Duration MS: </span>
-        <span th:text="${song.getDurationMS()}"></span>
+        <span id="song-duration-ms"></span>
     </div>
     <div class="song-item">
         <span>Explicit?: </span>
-        <span th:text="${song.isExplicit()}"></span>
+        <span id="song-explicit"></span>
+    </div>
+    <div class="song-item">
+        <span>URL: </span>
+        <span id="song-url"></span>
     </div>
 </section>
 <footer th:replace="~{fragments/footer :: footer (${footerList})}"></footer>

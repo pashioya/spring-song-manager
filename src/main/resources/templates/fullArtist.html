@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org"
-      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+>
 <head th:replace="~{fragments/head :: head (${title})}"></head>
 <script defer th:src="@{/js/fullArtist.js}"></script>
 <body>
@@ -8,43 +8,28 @@
 <section>
     <div class="artist-item">
         <span>Created By: </span>
-        <span th:text="${artist.getUser()}"></span>
+        <span id="artist-username"></span>
     </div>
     <div class="artist-item">
         <span>Artist Name: </span>
-        <span th:text="${artist.getArtistName()}"></span>
+        <span id="artist-name"></span>
     </div>
     <div class="artist-item">
         <span>Artist Followers: </span>
-        <span th:text="${artist.getArtistFollowers()}"></span>
-    </div>
-    <div class="artist-item">
-        <span>Favorite Genre: </span>
-        <span th:text="${artist.getFavoriteGenre()}"></span>
+        <span id="artist-followers"></span>
     </div>
     <div class="table-caption">
         <h1>Artists Albums</h1>
     </div>
-    <table class='table table-bordered table-condensed table-striped table-hover'>
+    <table class='table table-bordered table-condensed table-striped table-hover' id="albums-table">
         <thead class="table-header">
-<!--            <th >artistName</th>-->
-            <th >albumName</th>
-            <!--            <div class="row-item">tracksInAlbum</div>-->
-            <th >officialTrackCount</th>
-            <th >albumStatus</th>
-            <th >genre</th>
-            <th >releaseDate</th>
+        <th>albumName</th>
+        <th>officialTrackCount</th>
+        <th>albumStatus</th>
+        <th>genre</th>
+        <th>releaseDate</th>
         </thead>
-        <tbody>
-            <tr class="table-row" th:each="album: ${artist.getAlbums()}" th:data-href="${'/allAlbums/fullAlbum/' + album.getId()}">
-<!--                <td th:text="${album.getArtistName()}"></td>-->
-                <td th:text="${album.getAlbumName()}"></td>
-                <!--            <div class="row-item" th:text="${album.getTracksInAlbum()}"></div>-->
-                <td th:text="${album.getOfficialTrackCount()}"></td>
-                <td th:text="${album.getAlbumStatus()}"></td>
-                <td th:text="${album.getGenre()}"></td>
-                <td th:text="${album.getReleaseDate()}"></td>
-            </tr>
+        <tbody id="albums-table-body">
         </tbody>
     </table>
 </section>
