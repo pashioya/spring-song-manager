@@ -46,22 +46,31 @@ public class UserApiController {
 
     @GetMapping("/users")
     public ResponseEntity<List<User>> getUsers() {
-        List<User> users = userService.getAllUsers();
-        if (users.isEmpty()) {
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        try {
+            List<User> users = userService.getAllUsers();
+            if (users == null) {
+                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            }
+            return new ResponseEntity<>(users, HttpStatus.OK);
+        } catch (Exception e) {
+            logger.error(e.getMessage());
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
-        return new ResponseEntity<>(users, HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<UserDto> getUserById(@PathVariable("id") Long id) {
-        UserDto user = modelMapper.map(userService.getUserById(id), UserDto.class);
-        logger.info("User with id: " + id + " was found");
-        if (user == null) {
-            logger.info("User with id: " + id + " was not found");
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        try {
+            User user = userService.getUserById(id);
+            if (user == null) {
+                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            }
+            UserDto userDto = modelMapper.map(user, UserDto.class);
+            return new ResponseEntity<>(userDto, HttpStatus.OK);
+        } catch (Exception e) {
+            logger.error(e.getMessage());
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
-        return new ResponseEntity<>(user, HttpStatus.OK);
     }
 
     @PatchMapping("/{id}")
@@ -69,16 +78,20 @@ public class UserApiController {
         if (bindingResult.hasErrors()) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
-        User user = userService.getUserById(id);
-        if (user == null) {
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        try {
+            User user = userService.getUserById(id);
+            if (user == null) {
+                return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+            }
+            System.out.println(userDto);
+            user.setUsername(userDto.getUsername());
+            user.setRole(UserRole.valueOf(userDto.getRole()));
+            userService.saveUser(user);
+            return new ResponseEntity<>(modelMapper.map(user, UserDto.class), HttpStatus.OK);
+        } catch (Exception e) {
+            logger.error(e.getMessage());
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
-        System.out.println(userDto);
-        user.setUsername(userDto.getUsername());
-        user.setRole(UserRole.valueOf(userDto.getRole()));
-        userService.saveUser(user);
-        UserDto userDto1 = modelMapper.map(user, UserDto.class);
-        return new ResponseEntity<>( userDto1 ,HttpStatus.OK);
     }
 
     @PostMapping
@@ -86,31 +99,44 @@ public class UserApiController {
         if (bindingResult.hasErrors()) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
-        User user = userService.saveUser(modelMapper.map(newUserDto, User.class));
-        UserDto userDto = modelMapper.map(user, UserDto.class);
-        return new ResponseEntity<>(userDto, HttpStatus.CREATED);
+        try {
+            User user = modelMapper.map(newUserDto, User.class);
+            if (user == null) {
+                return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            }
+            userService.saveUser(user);
+            return new ResponseEntity<>(modelMapper.map(user, UserDto.class), HttpStatus.CREATED);
+        } catch (Exception e) {
+            logger.error(e.getMessage());
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<UserDto> deleteUser(@PathVariable("id") Long id) {
-        User user = userService.getUserById(id);
-        if (user == null) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        try {
+            User user = userService.getUserById(id);
+            if (user == null) {
+                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            }
+
+            artistService.getAllArtists().stream()
+                    .filter(artist -> artist.getUser().getId().equals(id))
+                    .forEach(artist -> artistService.deleteArtist(artist.getId()));
+
+            albumService.getAllAlbums().stream()
+                    .filter(album -> album.getUser().getId().equals(id))
+                    .forEach(album -> albumService.deleteAlbum(album.getId()));
+
+            songService.getAllSongs().stream()
+                    .filter(song -> song.getUser().getId().equals(id))
+                    .forEach(song -> songService.deleteSong(song.getId()));
+
+            userService.deleteUser(id);
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        } catch (Exception e) {
+            logger.error(e.getMessage());
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
-
-        artistService.getAllArtists().stream()
-                .filter(artist -> artist.getUser().getId().equals(id))
-                .forEach(artist -> artistService.deleteArtist(artist.getId()));
-
-        albumService.getAllAlbums().stream()
-                .filter(album -> album.getUser().getId().equals(id))
-                .forEach(album -> albumService.deleteAlbum(album.getId()));
-
-        songService.getAllSongs().stream()
-                .filter(song -> song.getUser().getId().equals(id))
-                .forEach(song -> songService.deleteSong(song.getId()));
-
-        userService.deleteUser(id);
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 }

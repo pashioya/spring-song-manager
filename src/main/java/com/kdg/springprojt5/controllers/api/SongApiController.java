@@ -11,7 +11,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.Authentication;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
@@ -31,41 +31,50 @@ public class SongApiController {
     public ResponseEntity<SongDto> getSong(@PathVariable("id") Long songId) {
         try {
             var song = songService.getSongById(songId);
-            SongDto songDto = modelMapper.map(song, SongDto.class);
-            songDto.setUsername(song.getUser().getUsername());
+            if (song == null) {
+                return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+            }
+            var songDto = modelMapper.map(song, SongDto.class);
             return new ResponseEntity<>(songDto, HttpStatus.OK);
         } catch (Exception e) {
             logger.error(e.getMessage());
-            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
     @GetMapping("/songs")
     public ResponseEntity<List<SongDto>> getSongs() {
-
         try {
             var songs = songService.getAllSongs();
+            if (songs == null) {
+                return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+            }
             List<SongDto> songDtos = songs.stream()
                     .map(song -> modelMapper.map(song, SongDto.class))
                     .toList();
             return new ResponseEntity<>(songDtos, HttpStatus.OK);
         } catch (Exception e) {
             logger.error(e.getMessage());
-            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
 
     @GetMapping("/album/{id}/songs")
     public ResponseEntity<List<SongDto>> getAlbumSongs(@PathVariable("id") Long albumId) {
-        var songs = songService.getSongsByAlbumId(albumId);
-        if (songs != null) {
+        try {
+            var songs = songService.getSongsByAlbumId(albumId);
+            if (songs == null) {
+                return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+            }
             List<SongDto> songDtos = songs.stream()
                     .map(song -> modelMapper.map(song, SongDto.class))
                     .toList();
             return new ResponseEntity<>(songDtos, HttpStatus.OK);
+        } catch (Exception e) {
+            logger.error(e.getMessage());
+            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
-        return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
     }
 
     @PostMapping("/album/{albumId}")
@@ -73,33 +82,43 @@ public class SongApiController {
             @PathVariable Long albumId,
             @RequestBody NewSongDto songDto,
             BindingResult errors,
-            Authentication authentication
+            @AuthenticationPrincipal CustomUserDetails currentUser
     ) {
         if (errors.hasErrors()) {
             errors.getAllErrors().forEach(error -> logger.error(error.toString()));
             return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
         }
-
-        CustomUserDetails currentUser = (CustomUserDetails) authentication.getPrincipal();
-        Long userId = currentUser.getUserId();
-
-        Song song = new Song(
-                albumId,
-                songDto.getUrl(),
-                songDto.getSongTitle(),
-                songDto.getTrackNumber(),
-                songDto.getDurationMS(),
-                songDto.isExplicit(),
-                userId
-        );
-        songService.saveSong(song);
-        return new ResponseEntity<>(modelMapper.map(song, SongDto.class), HttpStatus.CREATED);
+        try {
+            var song = songService.saveSong(
+                    new Song(albumId,
+                            songDto.getUrl(),
+                            songDto.getSongTitle(),
+                            songDto.getTrackNumber(),
+                            songDto.getDurationMS(),
+                            songDto.isExplicit(),
+                            currentUser.getUserId())
+            );
+            if (song == null) {
+                return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+            }
+            SongDto songDto1 = modelMapper.map(song, SongDto.class);
+            songDto1.setUsername(currentUser.getUsername());
+            return new ResponseEntity<>(songDto1, HttpStatus.CREATED);
+        } catch (Exception e) {
+            logger.error(e.getMessage());
+            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteSong(@PathVariable Long id) {
-        songService.deleteSong(id);
-        return new ResponseEntity<>(HttpStatus.OK);
+        try {
+            songService.deleteSong(id);
+            return new ResponseEntity<>(HttpStatus.OK);
+        } catch (Exception e) {
+            logger.error(e.getMessage());
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
     }
 
 }

@@ -16,7 +16,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.Authentication;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
@@ -68,33 +68,43 @@ public class ArtistApiController {
 
     @GetMapping("/album/{albumId}/artists")
     public ResponseEntity<List<ArtistDto>> getAllArtistsForAlbum(@PathVariable("albumId") Long albumId) {
-        var artists = artistService.getAllArtistsForAlbum(albumId);
-        if (artists == null) {
-            return new ResponseEntity<>(null, HttpStatus.NO_CONTENT);
+        try {
+            var artists = artistService.getAllArtistsForAlbum(albumId);
+            if (artists == null) {
+                return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+            }
+            List<ArtistDto> artistDtos = new ArrayList<>();
+            for (Artist artist : artists) {
+                ArtistDto artistDto = modelMapper.map(artist, ArtistDto.class);
+                artistDto.setId(artist.getId());
+                artistDtos.add(artistDto);
+            }
+            return new ResponseEntity<>(artistDtos, HttpStatus.OK);
+        } catch (Exception e) {
+            logger.error(e.getMessage());
+            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
-        List<ArtistDto> artistDtos = new ArrayList<>();
-        for (Artist artist : artists) {
-            ArtistDto artistDto = modelMapper.map(artist, ArtistDto.class);
-            artistDto.setId(artist.getId());
-            artistDtos.add(artistDto);
-        }
-        return new ResponseEntity<>(artistDtos, HttpStatus.OK);
     }
 
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteArtist(@PathVariable Long id) {
-        Artist artist = artistService.getArtistById(id);
-        List<Album> artistAlbums = artist.getAlbums();
-        if (artistAlbums == null) {
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        try {
+            Artist artist = artistService.getArtistById(id);
+            List<Album> artistAlbums = artist.getAlbums();
+            if (artistAlbums == null) {
+                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            }
+            for (Album album : artistAlbums) {
+                songService.getSongsByAlbumId(album.getId()).forEach(song -> songService.deleteSong(song.getId()));
+                albumService.deleteAlbum(album.getId());
+            }
+            artistService.deleteArtist(id);
+            return new ResponseEntity<>(HttpStatus.OK);
+        } catch (Exception e) {
+            logger.error(e.getMessage());
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
-        for (Album album : artistAlbums) {
-            songService.getSongsByAlbumId(album.getId()).forEach(song -> songService.deleteSong(song.getId()));
-            albumService.deleteAlbum(album.getId());
-        }
-        artistService.deleteArtist(id);
-        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @AdminOnly
@@ -103,21 +113,24 @@ public class ArtistApiController {
             @Valid
             @RequestBody NewArtistDto artistDto,
             BindingResult errors,
-            Authentication authentication
+            @AuthenticationPrincipal CustomUserDetails currentUser
     ) {
-        if (errors.hasErrors()) {
-            errors.getAllErrors().forEach(error -> logger.error(error.toString()));
-            return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+        try {
+            if (errors.hasErrors()) {
+                return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+            }
+            Artist artist = modelMapper.map(artistDto, Artist.class);
+            if (artist == null) {
+                return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+            }
+            artist.setUserId(currentUser.getUserId());
+            artistService.saveArtist(artist);
+            ArtistDto artistDto1 = modelMapper.map(artist, ArtistDto.class);
+            artistDto1.setUsername(artist.getUser().getUsername());
+            return new ResponseEntity<>(artistDto1, HttpStatus.CREATED);
+        } catch (Exception e) {
+            logger.error(e.getMessage());
+            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
-        CustomUserDetails currentUser = (CustomUserDetails) authentication.getPrincipal();
-        Long userId = currentUser.getUserId();
-
-        Artist artist = new Artist(
-                artistDto.getArtistName(),
-                artistDto.getArtistFollowers(),
-                userId
-        );
-        artistService.saveArtist(artist);
-        return new ResponseEntity<>(modelMapper.map(artist, ArtistDto.class), HttpStatus.CREATED);
     }
 }

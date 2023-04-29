@@ -11,7 +11,6 @@ const songTrackNumber = document.getElementById("trackNumber");
 let explicit = Boolean(document.getElementById("explicit"))
 
 
-
 const submitButton = form.querySelector('button[type="submit"]');
 submitButton.addEventListener("click", trySubmitForm);
 const pathname = window.location.pathname;
@@ -23,7 +22,7 @@ const albumIndex = parts.indexOf('album');
 // The album ID is the next part of the path
 const albumId = parts[albumIndex + 1];
 
-console.log('/api/album/'+albumId+'/song/create')
+console.log('/api/album/' + albumId + '/song/create')
 
 function trySubmitForm(event) {
     event.preventDefault();
@@ -34,12 +33,12 @@ function trySubmitForm(event) {
     form.classList.add('was-validated');
 
     if (formIsValid) {
-fetch('/api/album/'+albumId+'/song/create', {
+        fetch('/api/song/album/' + albumId, {
             method: "POST",
             headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json'
-                ,[header]: token
+                , [header]: token
             },
             body: JSON.stringify({
                 "url": url.value,
@@ -49,10 +48,7 @@ fetch('/api/album/'+albumId+'/song/create', {
                 "explicit": explicit
             })
         }).then(response => {
-                form.reset();
-                form.classList.remove('was-validated');
-                window.location.href = "/allAlbums/fullAlbum/"+albumId;
-                console.log(response)
+            console.log(response)
         });
     }
 }

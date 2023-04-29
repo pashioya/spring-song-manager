@@ -29,25 +29,22 @@ function trySubmitForm(event) {
     form.classList.add('was-validated');
 
     if (formIsValid) {
-        fetch('/api/album/artist/'+artistId, {
+        fetch('/api/album/artist/' + artistId, {
             method: "POST",
             headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json'
-                ,[header]: token
+                , [header]: token
             },
             body: JSON.stringify(
                 {
-                "albumName": albumName.value,
-                "officialTrackCount": parseInt(albumTrackCount.value),
-                "albumStatus": albumStatus.value,
-                "genre": albumGenre.value,
-                "releaseDate": albumReleaseDate.value
-            })
+                    "albumName": albumName.value,
+                    "officialTrackCount": parseInt(albumTrackCount.value),
+                    "albumStatus": albumStatus.value,
+                    "genre": albumGenre.value,
+                    "releaseDate": albumReleaseDate.value
+                })
         }).then(response => {
-            form.reset();
-            form.classList.remove('was-validated');
-            window.location.href = "/allArtists/fullArtist/"+artistId;
             console.log(response)
         });
     }

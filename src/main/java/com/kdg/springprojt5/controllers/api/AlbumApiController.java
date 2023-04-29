@@ -3,10 +3,12 @@ package com.kdg.springprojt5.controllers.api;
 import com.kdg.springprojt5.controllers.api.dto.AlbumDto;
 import com.kdg.springprojt5.controllers.api.dto.NewAlbumDto;
 import com.kdg.springprojt5.domain.Album;
+import com.kdg.springprojt5.domain.AlbumArtist;
 import com.kdg.springprojt5.domain.StatusEnum;
 import com.kdg.springprojt5.security.CustomUserDetails;
+import com.kdg.springprojt5.service.AlbumArtistService;
 import com.kdg.springprojt5.service.AlbumService;
-import com.kdg.springprojt5.service.SongService;
+import com.kdg.springprojt5.service.ArtistService;
 import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
@@ -27,7 +29,8 @@ import java.util.List;
 public class AlbumApiController {
 
     private final AlbumService albumService;
-    private final SongService songService;
+    private final ArtistService artistService;
+    private final AlbumArtistService albumArtistService;
     private final Logger logger = LoggerFactory.getLogger(this.getClass().getName());
     private final ModelMapper modelMapper;
 
@@ -66,16 +69,26 @@ public class AlbumApiController {
     public ResponseEntity<List<AlbumDto>> getAlbumsForArtist(
             @PathVariable("id") Long artistId
     ) {
-        var albums = albumService.getAlbumsByArtistId(artistId);
-        if (albums != null) {
+        try {
+            var artist = artistService.getArtistById(artistId);
+            if (artist == null) {
+                return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+            }
             List<AlbumDto> albumDtos = new ArrayList<>();
+            var albums = albumService.getAlbumsByArtistId(artistId);
+            if (albums == null) {
+                return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+            }
             for (Album album : albums) {
                 AlbumDto albumDto = modelMapper.map(album, AlbumDto.class);
+                albumDto.setUsername(album.getUser().getUsername());
                 albumDtos.add(albumDto);
             }
             return new ResponseEntity<>(albumDtos, HttpStatus.OK);
+        } catch (Exception e) {
+            logger.error(e.getMessage());
+            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
-        return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
     }
 
 
@@ -83,32 +96,45 @@ public class AlbumApiController {
     public ResponseEntity<String> deleteAlbum(
             @PathVariable("id") Long albumId
     ) {
-        var album = albumService.getAlbumById(albumId);
-        if (album != null) {
-            songService.getSongsByAlbumId(albumId).forEach(song -> songService.deleteSong(song.getId()));
-            albumService.deleteAlbum(albumId);
-            return new ResponseEntity<>("Album deleted", HttpStatus.OK);
+        try {
+            var album = albumService.getAlbumById(albumId);
+            if (album != null) {
+                albumService.deleteAlbum(albumId);
+                return new ResponseEntity<>("Album deleted", HttpStatus.OK);
+            }
+            return new ResponseEntity<>("Album not found", HttpStatus.NOT_FOUND);
+        } catch (Exception e) {
+            logger.error(e.getMessage());
+            return new ResponseEntity<>("Something went wrong", HttpStatus.INTERNAL_SERVER_ERROR);
         }
-        return new ResponseEntity<>("Album not found", HttpStatus.NOT_FOUND);
     }
 
     @PostMapping("/artist/{artistId}")
-    public String createAlbum(
+    public ResponseEntity<AlbumDto> createAlbum(
             @PathVariable("artistId") Long artistId,
             @RequestBody NewAlbumDto albumDto,
             @AuthenticationPrincipal CustomUserDetails currentUser
     ) {
-        Long userId = currentUser.getUserId();
-
-        var album = new Album(
-                albumDto.getAlbumName(),
-                albumDto.getOfficialTrackCount(),
-                StatusEnum.valueOf(albumDto.getAlbumStatus().toUpperCase()),
-                albumDto.getGenre(),
-                albumDto.getReleaseDate(),
-                userId
-        );
-        Long id = albumService.saveAlbum(album, artistId).getId();
-        return "redirect:/album/" + id;
+        try {
+            var album = albumService.saveAlbum(new Album(
+                    albumDto.getAlbumName(),
+                    albumDto.getOfficialTrackCount(),
+                    StatusEnum.valueOf(albumDto.getAlbumStatus()),
+                    albumDto.getGenre(),
+                    albumDto.getReleaseDate(),
+                    currentUser.getUserId()), artistId);
+            if (album != null) {
+                albumArtistService.saveAlbumArtist(new AlbumArtist(
+                        album,
+                        artistService.getArtistById(artistId)
+                ));
+                AlbumDto albumDto1 = modelMapper.map(album, AlbumDto.class);
+                return new ResponseEntity<>(albumDto1, HttpStatus.CREATED);
+            }
+            return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+        } catch (Exception e) {
+            logger.error(e.getMessage());
+            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 }
