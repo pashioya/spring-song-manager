@@ -5,7 +5,7 @@
 let form = document.getElementById("add-artist-form");
 let artistName = document.getElementById("artistName");
 let artistFollowers = document.getElementById("artistFollowers");
-let submitButton = form.querySelector('#create-album-submit');
+let submitButton = form.querySelector('#create-artist-submit');
 
 submitButton.addEventListener("click", trySubmitForm);
 

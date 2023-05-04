@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org"
-      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+>
 <head th:replace="~{fragments/head :: head (${title})}"></head>
 <body>
 <header th:replace="~{fragments/header :: header (${headerList})}"></header>
@@ -10,28 +10,28 @@
     </div>
     <table class='table table-bordered table-condensed table-striped table-hover' id="all-songs-table">
         <thead class="table-header">
-            <th >songTitle</th>
-<!--            <th >artistName</th>-->
-<!--            <th >albumName</th>-->
-            <th >officialTrackNumber</th>
-            <th >durationMS</th>
-            <th >explicit</th>
-<!--            <th >featuredArtists</th>-->
+        <th>songTitle</th>
+        <!--            <th >artistName</th>-->
+        <!--            <th >albumName</th>-->
+        <th>officialTrackNumber</th>
+        <th>durationMS</th>
+        <th>explicit</th>
+        <!--            <th >featuredArtists</th>-->
         </thead>
         <tbody id="all-songs-table-body">
         </tbody>
     </table>
     <div class="pagination">
 
-        <div class="page-viewer__button button"  id="first-page-button">
+        <div class="page-viewer__button button" id="first-page-button">
             <a class="page-viewer__button__link">First</a>
         </div>
-        <div class="page-viewer__button button"  id="previous-page-button">
+        <div class="page-viewer__button button" id="previous-page-button">
             <a class="page-viewer__button__link">Previous</a>
         </div>
         <!--            current page viewer div-->
         <div class="page-viewer__button button">
-            <span class="page-viewer__button__link"  id="current-page-view"></span>
+            <span class="page-viewer__button__link" id="current-page-view"></span>
         </div>
         <div class="page-viewer__button button" id="next-page-button">
             <a class="page-viewer__button__link">Next</a>
@@ -43,6 +43,5 @@
     </div>
 </section>
 <footer th:replace="~{fragments/footer :: footer (${footerList})}"></footer>
-<script src="/js/song.js" defer></script>
 </body>
 </html>

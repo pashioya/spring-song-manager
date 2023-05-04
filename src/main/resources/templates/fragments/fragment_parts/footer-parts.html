@@ -1,3 +1,11 @@
+<html lang="en"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>footer-parts</title>
+</head>
+<body>
 <a href="https://gitlab.com/pashioya/spring-proj-t3" th:fragment="gitLab (content)">
     <button class="btn btn-primary" type="button">
         Gitlab
@@ -5,18 +13,18 @@
 </a>
 
 
-<a th:fragment="createSong (content)" th:href="@{'/allSongs/album/' + ${content} + '/addSong'}">
-    <button class="btn btn-primary" type="button">
-        Create Song
-    </button>
-</a>
+<button class="btn btn-primary" data-bs-target="#create-song-modal" data-bs-toggle="modal"
+        th:fragment="createSong (content)"
+        type="button">
+    Create Song
+</button>
 
 
-<a href="/allArtists/addArtist" sec:authorize="hasRole('ADMIN')" th:fragment="createArtist (content)">
-    <button class="btn btn-primary" type="button">
-        Create Artist
-    </button>
-</a>
+<button class="btn btn-primary" data-bs-target="#create-artist-modal" data-bs-toggle="modal"
+        sec:authorize="hasRole('ADMIN')"
+        th:fragment="createArtist (content)" type="button">
+    Create Artist
+</button>
 
 
 <button class="btn btn-primary" data-bs-target="#create-album-modal" data-bs-toggle="modal"
@@ -55,3 +63,5 @@
 <a th:fragment="pageHistory (content)" th:href="${'/pageHistory'}">
     <button class="btn btn-primary" type="button">Page History</button>
 </a>
+</body>
+</html>

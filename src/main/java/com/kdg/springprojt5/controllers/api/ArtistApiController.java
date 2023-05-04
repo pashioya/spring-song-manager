@@ -126,7 +126,7 @@ public class ArtistApiController {
             artist.setUserId(currentUser.getUserId());
             artistService.saveArtist(artist);
             ArtistDto artistDto1 = modelMapper.map(artist, ArtistDto.class);
-            artistDto1.setUsername(artist.getUser().getUsername());
+            artistDto1.setUsername(currentUser.getUsername());
             return new ResponseEntity<>(artistDto1, HttpStatus.CREATED);
         } catch (Exception e) {
             logger.error(e.getMessage());

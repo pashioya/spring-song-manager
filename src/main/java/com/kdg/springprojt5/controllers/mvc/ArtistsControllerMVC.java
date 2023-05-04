@@ -2,14 +2,12 @@ package com.kdg.springprojt5.controllers.mvc;
 
 import com.kdg.springprojt5.controllers.mvc.helper.DataItem;
 import com.kdg.springprojt5.controllers.mvc.helper.HistoryItem;
-import com.kdg.springprojt5.controllers.mvc.viewmodel.ArtistViewModel;
 import com.kdg.springprojt5.service.ArtistService;
 import jakarta.servlet.http.HttpSession;
 import lombok.AllArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -24,7 +22,7 @@ import java.util.List;
 @Controller
 @AllArgsConstructor
 @RequestMapping("/allArtists")
-public class ArtistsController {
+public class ArtistsControllerMVC {
 
     private final Logger logger = LoggerFactory.getLogger(this.getClass().getName());
     private final ArtistService artistService;
@@ -66,21 +64,6 @@ public class ArtistsController {
         )));
         logger.info("full artist called");
         return mav;
-    }
-
-
-    @GetMapping("/addArtist")
-    public String addArtist(Model model, HttpSession session) {
-        setHistory(session, "Add Artist");
-        model.addAttribute("title", "Add Artist");
-        model.addAttribute("headerList", new ArrayList<>(List.of(
-                new DataItem("backButton", "/allArtists"))
-        ));
-
-        ArtistViewModel artistViewModel = new ArtistViewModel();
-        model.addAttribute("artist", artistViewModel);
-        logger.info("addArtist() called");
-        return "addArtist";
     }
 
     @GetMapping("/fullArtist/printArtist/{id}")

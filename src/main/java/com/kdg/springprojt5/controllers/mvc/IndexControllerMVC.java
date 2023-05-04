@@ -21,7 +21,7 @@ import java.util.List;
 @Controller
 @AllArgsConstructor
 @RequestMapping("/")
-public class IndexController {
+public class IndexControllerMVC {
 
     private final Logger logger = LoggerFactory.getLogger(this.getClass().getName());
     private final UserService userService;

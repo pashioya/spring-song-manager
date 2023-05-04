@@ -116,6 +116,7 @@ public class AlbumApiController {
             @AuthenticationPrincipal CustomUserDetails currentUser
     ) {
         try {
+            System.out.println(currentUser);
             var album = albumService.saveAlbum(new Album(
                     albumDto.getAlbumName(),
                     albumDto.getOfficialTrackCount(),
@@ -129,6 +130,7 @@ public class AlbumApiController {
                         artistService.getArtistById(artistId)
                 ));
                 AlbumDto albumDto1 = modelMapper.map(album, AlbumDto.class);
+                albumDto1.setUsername(currentUser.getUsername());
                 return new ResponseEntity<>(albumDto1, HttpStatus.CREATED);
             }
             return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);

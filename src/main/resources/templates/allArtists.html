@@ -53,8 +53,43 @@
             <a class="page-viewer__button__link">Last</a>
         </div>
     </div>
+    <!-- Modal -->
+    <div aria-hidden="true" aria-labelledby="create-artist-modal-label" class="modal fade" id="create-artist-modal"
+         tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="create-artist-modal-label">Create Artist</h1>
+                    <button aria-label="Close" class="btn-close modal-close-btn" data-bs-dismiss="modal"
+                            type="button"></button>
+                </div>
+                <div class="modal-body">
+                    <form class="row g-3 needs-validation" id="add-artist-form" novalidate>
+                        <div class="col-md-4">
+                            <label class="form-label" for="artistName">artistName</label>
+                            <input class="form-control" id="artistName" name="artistName" required type="text">
+                            <div class="valid-feedback">
+                                Looks good!
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <label class="form-label" for="artistFollowers"> artistFollowers</label>
+                            <input class="form-control" id="artistFollowers" name="artistFollowers" required
+                                   type="text">
+                            <div class="valid-feedback">
+                                Looks good!
+                            </div>
+                        </div>
+                        <button class="btn btn-primary" id="create-artist-submit" type="submit" value="submit">Submit
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
 </section>
 <footer th:replace="~{fragments/footer :: footer (${footerList})}"></footer>
-<script src="/js/artist.js"></script>
+<script th:src="@{/js/artist.js}"></script>
+<script th:src="@{/js/forms/addArtist.js}"></script>
 </body>
 </html>

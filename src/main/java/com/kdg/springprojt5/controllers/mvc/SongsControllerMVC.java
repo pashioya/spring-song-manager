@@ -2,7 +2,6 @@ package com.kdg.springprojt5.controllers.mvc;
 
 import com.kdg.springprojt5.controllers.mvc.helper.DataItem;
 import com.kdg.springprojt5.controllers.mvc.helper.HistoryItem;
-import com.kdg.springprojt5.controllers.mvc.viewmodel.SongViewModel;
 import com.kdg.springprojt5.service.SongService;
 import jakarta.servlet.http.HttpSession;
 import lombok.AllArgsConstructor;
@@ -23,7 +22,7 @@ import java.util.List;
 @Controller
 @AllArgsConstructor
 @RequestMapping("/allSongs")
-public class SongsController {
+public class SongsControllerMVC {
     private final Logger logger = LoggerFactory.getLogger(this.getClass().getName());
     private final SongService songService;
 
@@ -63,18 +62,14 @@ public class SongsController {
     }
 
     @GetMapping("/album/{albumId}/addSong")
-    public String addSong(Model model, HttpSession session) {
+    public ModelAndView addSong(Model model, HttpSession session) {
         setHistory(session, "Add Song");
-
         model.addAttribute("title", "Add Song");
         model.addAttribute("headerList", new ArrayList<>(List.of(
                 new DataItem("backButton", "/allSongs"))
         ));
         logger.info("Add Song page loading");
-
-        SongViewModel songViewModel = new SongViewModel();
-        model.addAttribute("song", songViewModel);
-        return "addSong";
+        return new ModelAndView("addSong");
     }
 
     @GetMapping("/fullSong/printSong/{id}")

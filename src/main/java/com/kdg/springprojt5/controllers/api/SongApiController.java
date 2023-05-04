@@ -5,6 +5,7 @@ import com.kdg.springprojt5.controllers.api.dto.SongDto;
 import com.kdg.springprojt5.domain.Song;
 import com.kdg.springprojt5.security.CustomUserDetails;
 import com.kdg.springprojt5.service.SongService;
+import com.kdg.springprojt5.service.UserService;
 import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
@@ -24,6 +25,7 @@ import java.util.List;
 @AllArgsConstructor
 public class SongApiController {
     private final SongService songService;
+    private final UserService userService;
     private final Logger logger = LoggerFactory.getLogger(this.getClass().getName());
     private final ModelMapper modelMapper;
 
@@ -88,6 +90,7 @@ public class SongApiController {
             errors.getAllErrors().forEach(error -> logger.error(error.toString()));
             return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
         }
+        System.out.println(currentUser);
         try {
             var song = songService.saveSong(
                     new Song(albumId,

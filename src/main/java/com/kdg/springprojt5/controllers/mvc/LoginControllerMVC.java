@@ -26,7 +26,7 @@ import java.util.List;
 
 @Controller
 @AllArgsConstructor
-public class LoginController {
+public class LoginControllerMVC {
 
     private final UserService userService;
     private final BCryptPasswordEncoder passwordEncoder;

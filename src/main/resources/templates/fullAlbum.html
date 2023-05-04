@@ -4,6 +4,7 @@
 <body class="pb-5" id="full">
 <header th:replace="~{fragments/header :: header (${headerList})}"></header>
 <script defer th:src="@{/js/fullAlbum.js}"></script>
+<script defer th:src="@{/js/forms/addSong.js}"></script>
 <section>
     <table class='table table-bordered table-condensed table-striped table-hover' id="albums-artist-table">
         <thead class="table-header">
@@ -59,7 +60,7 @@
                             type="button"></button>
                 </div>
                 <div class="modal-body">
-                    <form class="row g-3 needs-validation" id="add-song-form" method="post" novalidate>
+                    <form class="row g-3 needs-validation" id="add-song-form" novalidate>
                         <div class="col-md-4">
                             <label class="form-label" for="url">url</label>
                             <input class="form-control" id="url" name="url" required type="text">
