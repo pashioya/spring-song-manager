@@ -48,7 +48,62 @@
         <tbody id="album-songsList">
         </tbody>
     </table>
-
+    <!-- Modal -->
+    <div aria-hidden="true" aria-labelledby="create-song-modal-label" class="modal fade" id="create-song-modal"
+         tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="create-song-modal-label">Create Song</h1>
+                    <button aria-label="Close" class="btn-close modal-close-btn" data-bs-dismiss="modal"
+                            type="button"></button>
+                </div>
+                <div class="modal-body">
+                    <form class="row g-3 needs-validation" id="add-song-form" method="post" novalidate>
+                        <div class="col-md-4">
+                            <label class="form-label" for="url">url</label>
+                            <input class="form-control" id="url" name="url" required type="text">
+                            <div class="valid-feedback">
+                                Looks good!
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <label class="form-label" for="songTitle"> Title</label>
+                            <input class="form-control" id="songTitle" name="songTitle" required type="text">
+                            <div class="valid-feedback">
+                                Looks good!
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <label class="form-label" for="trackNumber">Track Number</label>
+                            <input class="form-control" id="trackNumber" name="trackNumber" required type="number">
+                            <div class="valid-feedback">
+                                Looks good!
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <label class="form-label" for="durationMS">~duration in MS</label>
+                            <input class="form-control" id="durationMS" name="durationMS" required type="number">
+                            <div class="valid-feedback">
+                                Looks good!
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <label class="form-label" for="explicit">Explicit?</label>
+                            <select class="form-select" id="explicit" name="explicit" required>
+                                <option selected value="true">Explicit</option>
+                                <option value="false">Not Explicit</option>
+                            </select>
+                            <div class="valid-feedback">
+                                Looks good!
+                            </div>
+                        </div>
+                        <button class="btn btn-primary" type="submit" value="submit">Submit</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
 </section>
 <footer th:replace="~{fragments/footer :: footer (${footerList})}"></footer>
 </body>
