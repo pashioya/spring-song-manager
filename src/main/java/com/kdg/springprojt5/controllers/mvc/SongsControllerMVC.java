@@ -8,7 +8,6 @@ import lombok.AllArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -59,17 +58,6 @@ public class SongsControllerMVC {
                 new DataItem("printSong")
         )));
         return mav;
-    }
-
-    @GetMapping("/album/{albumId}/addSong")
-    public ModelAndView addSong(Model model, HttpSession session) {
-        setHistory(session, "Add Song");
-        model.addAttribute("title", "Add Song");
-        model.addAttribute("headerList", new ArrayList<>(List.of(
-                new DataItem("backButton", "/allSongs"))
-        ));
-        logger.info("Add Song page loading");
-        return new ModelAndView("addSong");
     }
 
     @GetMapping("/fullSong/printSong/{id}")
