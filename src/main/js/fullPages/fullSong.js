@@ -1,16 +1,13 @@
+import {getCsrfInfo} from "../modules/csrf";
+
 const url = window.location.href;
 let songId = url.substring(url.lastIndexOf("/") + 1);
-
 if (songId.indexOf("?") !== -1) {
     songId = songId.substring(0, songId.indexOf("?"));
 }
 
-console.log(songId);
-
-const header = document.querySelector('meta[name="_csrf_header"]').content;
-const token = document.querySelector('meta[name="_csrf"]').content;
 const deleteSongButton = document.getElementsByClassName("delete-button")[0];
-
+const {header, token} = getCsrfInfo();
 
 getSong();
 deleteSongButton.addEventListener("click", () => {

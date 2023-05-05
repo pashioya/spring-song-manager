@@ -1,7 +1,10 @@
 <!DOCTYPE html>
 <html lang="en"
       xmlns:th="http://www.thymeleaf.org">
-<head th:replace="~{fragments/head :: head (${title})}"></head>
+<head th:replace="~{fragments/head :: head (${title})}">
+</head>
+<script defer th:src="@{/js/allPages/bundle-artist.js}"></script>
+<script defer th:src="@{/js/forms/bundle-addArtist.js}"></script>
 <body>
 <header th:replace="~{fragments/header :: header (${headerList})}"></header>
 <section>
@@ -27,31 +30,10 @@
             <thead class="table-header">
             <th>artistName</th>
             <th>artistFollowers</th>
-            <!--            <th >favoriteGenre</th>-->
             </thead>
             <tbody id="all-artists-table-body">
             </tbody>
         </table>
-    </div>
-    <div class="pagination">
-
-        <div class="page-viewer__button button" id="first-page-button">
-            <a class="page-viewer__button__link">First</a>
-        </div>
-        <div class="page-viewer__button button" id="previous-page-button">
-            <a class="page-viewer__button__link">Previous</a>
-        </div>
-        <!--            current page viewer div-->
-        <div class="page-viewer__button button">
-            <span class="page-viewer__button__link" id="current-page-view"></span>
-        </div>
-        <div class="page-viewer__button button" id="next-page-button">
-            <a class="page-viewer__button__link">Next</a>
-        </div>
-
-        <div class="page-viewer__button button" id="last-page-button">
-            <a class="page-viewer__button__link">Last</a>
-        </div>
     </div>
     <!-- Modal -->
     <div aria-hidden="true" aria-labelledby="create-artist-modal-label" class="modal fade" id="create-artist-modal"
@@ -89,7 +71,5 @@
     </div>
 </section>
 <footer th:replace="~{fragments/footer :: footer (${footerList})}"></footer>
-<script th:src="@{/js/artist.js}"></script>
-<script th:src="@{/js/forms/addArtist.js}"></script>
 </body>
 </html>

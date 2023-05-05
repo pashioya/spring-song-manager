@@ -1,54 +1,62 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head th:replace="~{fragments/head :: head (${title})}"></head>
-<script defer type="module" th:src="@{/js/forms/editUser.js}"></script>
-<script defer type="module" th:src="@{/js/forms/addUser.js}"></script>
-<script defer type="module" th:src="@{/js/user.js}"></script>
+<script defer th:src="@{/js/forms/bundle-editUser.js}" type="module"></script>
+<script defer th:src="@{/js/forms/bundle-addUser.js}" type="module"></script>
+<script defer th:src="@{/js/bundle-user.js}" type="module"></script>
 <body>
 <header th:replace="~{fragments/header :: header (${headerList})}"></header>
 <section>
-<!--  display a list of all users-->
-<div class="container">
-    <div class="row">
-        <div class="col-md-12">
-            <h1>Admin Page</h1>
-            <table class="table table-striped">
-                <thead>
-                <tr>
-                    <th>Username</th>
-                    <th>Role</th>
-                    <th>Actions</th>
-                </tr>
-                </thead>
-                <tbody id="users-table-body">
-                <tr th:each="user : ${users}">
-                    <td th:text="${user.username}"></td>
-                    <td th:text="${user.role}"></td>
-                    <td>
-                        <button type="button" class="btn btn-danger delete-user-button" th:if="${user.id != currentUser.id}"  th:data-user-id="${user.id}">Delete</button>
-                        <button type="button" class="btn btn-secondary edit-user-button" data-bs-toggle="modal" data-bs-target="#edit-user-modal" th:data-user-id="${user.id}">Edit</button>
-                    </td>
-                </tr>
-                </tbody>
-            </table>
-          <div class="d-flex justify-content-center align-content-center">
-              <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#add-user-modal">Add User</button>
-          </div>
+    <!--  display a list of all users-->
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <h1>Admin Page</h1>
+                <table class="table table-striped">
+                    <thead>
+                    <tr>
+                        <th>Username</th>
+                        <th>Role</th>
+                        <th>Actions</th>
+                    </tr>
+                    </thead>
+                    <tbody id="users-table-body">
+                    <tr th:each="user : ${users}">
+                        <td th:text="${user.username}"></td>
+                        <td th:text="${user.role}"></td>
+                        <td>
+                            <button class="btn btn-danger delete-user-button" th:data-user-id="${user.id}"
+                                    th:if="${user.id != currentUser.id}" type="button">Delete
+                            </button>
+                            <button class="btn btn-secondary edit-user-button" data-bs-target="#edit-user-modal"
+                                    data-bs-toggle="modal"
+                                    th:data-user-id="${user.id}" type="button">Edit
+                            </button>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+                <div class="d-flex justify-content-center align-content-center">
+                    <button class="btn btn-primary" data-bs-target="#add-user-modal" data-bs-toggle="modal"
+                            type="button">Add User
+                    </button>
+                </div>
+            </div>
         </div>
     </div>
-</div>
-    <div class="modal fade" id="edit-user-modal" tabindex="-1" aria-labelledby="edit-user-modal-label" aria-hidden="true">
+    <div aria-hidden="true" aria-labelledby="edit-user-modal-label" class="modal fade" id="edit-user-modal"
+         tabindex="-1">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
                     <h1 class="modal-title fs-5 text-center" id="idea-submission-modal-label">Edit User</h1>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    <button aria-label="Close" class="btn-close" data-bs-dismiss="modal" type="button"></button>
                 </div>
                 <div class="modal-body">
                     <form id="edit-user-modal-form">
                         <div class="form-group mb-3">
                             <label for="new-username">UserName</label>
-                            <input type="text" class="form-control" id="new-username" name="username">
+                            <input class="form-control" id="new-username" name="username" type="text">
                         </div>
                         <div class="form-group mb-2">
                             <label for="new-role">Role</label>
@@ -58,29 +66,30 @@
                             </select>
                         </div>
                         <div class="form-group mt-3 mb-5 d-flex align-items-center justify-content-center">
-                            <button type="submit" id="edit-user-modal-submit-button" class="btn btn-primary ">Edit</button>
+                            <button class="btn btn-primary " id="edit-user-modal-submit-button" type="submit">Edit
+                            </button>
                         </div>
                     </form>
                 </div>
             </div>
         </div>
     </div>
-    <div class="modal fade" id="add-user-modal" tabindex="-1" aria-labelledby="add-user-modal-label" aria-hidden="true">
+    <div aria-hidden="true" aria-labelledby="add-user-modal-label" class="modal fade" id="add-user-modal" tabindex="-1">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
                     <h1 class="modal-title fs-5 text-center" id="add-user-modal-label">Add User</h1>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    <button aria-label="Close" class="btn-close" data-bs-dismiss="modal" type="button"></button>
                 </div>
                 <div class="modal-body">
                     <form id="add-user-modal-form">
                         <div class="form-group mb-3">
                             <label for="username">UserName</label>
-                            <input type="text" class="form-control" id="username" name="username">
+                            <input class="form-control" id="username" name="username" type="text">
                         </div>
                         <div class="form-group mb-3">
                             <label for="password">Password</label>
-                            <input type="password" class="form-control" id="password" name="password">
+                            <input class="form-control" id="password" name="password" type="password">
                         </div>
                         <div class="form-group mb-2">
                             <label for="role">Role</label>
@@ -90,7 +99,8 @@
                             </select>
                         </div>
                         <div class="form-group mt-3 mb-5 d-flex align-items-center justify-content-center">
-                            <button id="add-user-modal-submit-button" type="submit" class="btn btn-primary ">Create</button>
+                            <button class="btn btn-primary " id="add-user-modal-submit-button" type="submit">Create
+                            </button>
                         </div>
                     </form>
                 </div>

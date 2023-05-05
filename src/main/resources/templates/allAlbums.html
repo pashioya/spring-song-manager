@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head th:replace="~{fragments/head :: head (${title})}"></head>
+<script defer th:src="@{js/allPages/bundle-album.js}" type="module"></script>
 <body id="all-albums">
 <header th:replace="~{fragments/header :: header (${headerList})}"></header>
 <section>
@@ -34,28 +35,7 @@
             </tbody>
         </table>
     </div>
-
-    <div class="pagination">
-        <div class="page-viewer__button button" id="first-page-button">
-            <a class="page-viewer__button__link">First</a>
-        </div>
-        <div class="page-viewer__button button" id="previous-page-button">
-            <a class="page-viewer__button__link">Previous</a>
-        </div>
-        <!--            current page viewer div-->
-        <div class="page-viewer__button button">
-            <span class="page-viewer__button__link" id="current-page-view"></span>
-        </div>
-        <div class="page-viewer__button button" id="next-page-button">
-            <a class="page-viewer__button__link">Next</a>
-        </div>
-
-        <div class="page-viewer__button button" id="last-page-button">
-            <a class="page-viewer__button__link">Last</a>
-        </div>
-    </div>
 </section>
 <footer th:replace="~{fragments/footer :: footer (${footerList})}"></footer>
-<script th:src="@{/js/album.js}"></script>
 </body>
 </html>

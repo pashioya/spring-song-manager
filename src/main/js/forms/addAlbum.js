@@ -8,7 +8,7 @@ let submitButton = document.querySelector("#add-album-form > button");
 
 submitButton.addEventListener("click", trySubmitForm);
 
-function trySubmitForm(event) {
+export function trySubmitForm(event) {
     event.preventDefault();
     const formIsValid = form.checkValidity();
 

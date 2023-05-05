@@ -7,6 +7,8 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 
 @Configuration
@@ -20,9 +22,11 @@ public class WebSecurityConfig {
                 .and()
                 .csrf()
                 .and()
+                .cors()
+                .and()
                 .authorizeHttpRequests(authorizeRequests -> authorizeRequests
                         .requestMatchers(HttpMethod.GET, "/js/**", "/css/**", "/webjars/**", "/favicon.ico").permitAll()
-                        .requestMatchers(HttpMethod.GET,"/api/**").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/api/**").permitAll()
                         .requestMatchers(HttpMethod.POST, "/api/**") // syntax by which you can specify nested paths generically, like regexes
                         .authenticated()
                         .requestMatchers(HttpMethod.PATCH, "/api/**") // syntax by which you can specify nested paths generically, like regexes
@@ -40,6 +44,17 @@ public class WebSecurityConfig {
                 .permitAll();
 
         return http.build();
+    }
+
+    @Bean
+    public WebMvcConfigurer corsConfigurer() {
+        return new WebMvcConfigurer() {
+            @Override
+            public void addCorsMappings(CorsRegistry registry) {
+                registry.addMapping("/api/**")
+                        .allowedOrigins("http://localhost:9000", "http://localhost:8080");
+            }
+        };
     }
 
 
