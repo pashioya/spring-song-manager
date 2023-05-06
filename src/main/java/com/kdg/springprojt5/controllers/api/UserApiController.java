@@ -5,6 +5,7 @@ import com.kdg.springprojt5.controllers.api.dto.UpdateUserDto;
 import com.kdg.springprojt5.controllers.api.dto.UserDto;
 import com.kdg.springprojt5.domain.User;
 import com.kdg.springprojt5.domain.UserRole;
+import com.kdg.springprojt5.security.AdminOnly;
 import com.kdg.springprojt5.service.AlbumService;
 import com.kdg.springprojt5.service.ArtistService;
 import com.kdg.springprojt5.service.SongService;
@@ -73,6 +74,7 @@ public class UserApiController {
         }
     }
 
+    @AdminOnly
     @PatchMapping("/{id}")
     public ResponseEntity<UserDto> editUser(@PathVariable("id") Long id, @Valid @RequestBody UpdateUserDto userDto, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
@@ -112,6 +114,7 @@ public class UserApiController {
         }
     }
 
+    @AdminOnly
     @DeleteMapping("/{id}")
     public ResponseEntity<UserDto> deleteUser(@PathVariable("id") Long id) {
         try {
@@ -125,15 +128,15 @@ public class UserApiController {
                     .forEach(artist -> artistService.deleteArtist(artist.getId()));
 
             albumService.getAllAlbums().stream()
-                    .filter(album -> album.getUser().getId().equals(id))
+                    .filter(album -> album.getUserId().equals(id))
                     .forEach(album -> albumService.deleteAlbum(album.getId()));
 
             songService.getAllSongs().stream()
-                    .filter(song -> song.getUser().getId().equals(id))
+                    .filter(song -> song.getUserId().equals(id))
                     .forEach(song -> songService.deleteSong(song.getId()));
 
             userService.deleteUser(id);
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+            return new ResponseEntity<>(HttpStatus.OK);
         } catch (Exception e) {
             logger.error(e.getMessage());
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);

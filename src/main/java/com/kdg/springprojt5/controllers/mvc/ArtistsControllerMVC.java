@@ -2,9 +2,11 @@ package com.kdg.springprojt5.controllers.mvc;
 
 import com.kdg.springprojt5.controllers.mvc.helper.DataItem;
 import com.kdg.springprojt5.controllers.mvc.helper.HistoryItem;
+import com.kdg.springprojt5.controllers.mvc.viewmodel.ArtistViewModel;
 import com.kdg.springprojt5.service.ArtistService;
 import jakarta.servlet.http.HttpSession;
 import lombok.AllArgsConstructor;
+import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -26,6 +28,7 @@ public class ArtistsControllerMVC {
 
     private final Logger logger = LoggerFactory.getLogger(this.getClass().getName());
     private final ArtistService artistService;
+    private final ModelMapper modelMaper;
 
     @GetMapping()
     public ModelAndView artists(HttpSession session) {
@@ -42,6 +45,13 @@ public class ArtistsControllerMVC {
                 new DataItem("createArtist"),
                 new DataItem("pageHistory")
         )));
+
+        mav.addObject("artists", artistService.getAllArtists()
+                .stream()
+                .map(artist -> modelMaper
+                        .map(artist, ArtistViewModel.class))
+                .toList());
+
         logger.info("artists() called");
         return mav;
     }
@@ -62,6 +72,7 @@ public class ArtistsControllerMVC {
                 new DataItem("createAlbum", String.valueOf(id)),
                 new DataItem("printArtist")
         )));
+
         logger.info("full artist called");
         return mav;
     }

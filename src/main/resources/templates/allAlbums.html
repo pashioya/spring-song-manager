@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head th:replace="~{fragments/head :: head (${title})}"></head>
-<script defer th:src="@{js/bundle-album.js}" type="module"></script>
-<body id="all-albums">
+<script defer th:src="@{/js/bundle-album.js}" type="module"></script>
+<body>
 <header th:replace="~{fragments/header :: header (${headerList})}"></header>
 <section>
     <div class="table-caption">
@@ -32,6 +32,14 @@
             <th>releaseDate</th>
             </thead>
             <tbody id="all-albums-table-body">
+            <tr class="table-row entity" th:attr="data-href='/allAlbums/fullAlbum/' + ${album.id}"
+                th:each="album : ${albums}">
+                <td th:text="${album.albumName}"></td>
+                <td th:text="${album.officialTrackCount}"></td>
+                <td th:text="${album.albumStatus}"></td>
+                <td th:text="${album.genre}"></td>
+                <td th:text="${album.releaseDate}"></td>
+            </tr>
             </tbody>
         </table>
     </div>

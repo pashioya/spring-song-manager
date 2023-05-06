@@ -1,6 +1,7 @@
-import {getCsrfInfo} from "./modules/csrf";
+import {getCsrfHeader, getCsrfToken} from "./modules/csrf";
 
-const {header, token} = getCsrfInfo();
+const header = getCsrfHeader();
+const token = getCsrfToken();
 
 export function deleteArtist(artistId) {
     fetch(`/api/artist/${artistId}`, {

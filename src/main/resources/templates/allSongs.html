@@ -1,6 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org"
->
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head th:replace="~{fragments/head :: head (${title})}"></head>
 <script defer th:src="@{/js/bundle-song.js}" type="module"></script>
 <body>
@@ -17,6 +16,13 @@
         <th>explicit</th>
         </thead>
         <tbody id="all-songs-table-body">
+        <tr class="table-row entity" th:attr="data-href='/allSongs/fullSong/' + ${song.id}"
+            th:each="song : ${songs}">
+            <td th:text="${song.getSongTitle()}"></td>
+            <td th:text="${song.getTrackNumber()}"></td>
+            <td th:text="${song.getDurationMS()}"></td>
+            <td th:text="${song.isExplicit()}"></td>
+        </tr>
         </tbody>
     </table>
 </section>

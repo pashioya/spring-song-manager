@@ -1,7 +1,7 @@
-export function getCsrfInfo() {
-    const header = document.querySelector('meta[name="_csrf_header"]').content
-    const token = document.querySelector('meta[name="_csrf"]').content
-    return {
-        [header]: token
-    }
+export function getCsrfHeader() {
+    return document.querySelector('meta[name="_csrf_header"]').content
+}
+
+export function getCsrfToken() {
+    return document.querySelector('meta[name="_csrf"]').content
 }

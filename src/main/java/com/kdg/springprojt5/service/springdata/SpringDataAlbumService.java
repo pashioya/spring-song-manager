@@ -52,6 +52,7 @@ public class SpringDataAlbumService implements AlbumService {
     @Override
     public void deleteAlbum(Long id) {
         songRepository.getSongsByAlbumId(id).forEach(song -> songRepository.deleteById(song.getId()));
+        albumRepository.deleteById(id);
     }
 
     @Override

@@ -1,9 +1,13 @@
+import {getCsrfHeader, getCsrfToken} from "./modules/csrf";
+
+const header = getCsrfHeader();
+const token = getCsrfToken();
+
 const addUserForm = document.getElementById("add-user-modal-form");
 const submitAddButton = document.getElementById("add-user-modal-submit-button");
+
 function trySubmitForm(event) {
     event.preventDefault();
-    const header = document.querySelector('meta[name="_csrf_header"]').content;
-    const token = document.querySelector('meta[name="_csrf"]').content;
     const formData = new FormData(addUserForm);
     const url = "/api/user";
     fetch(url, {
@@ -33,9 +37,9 @@ function trySubmitForm(event) {
             console.log(row)
             tableBody.appendChild(row);
         })
-    .catch((error) => {
-        console.error("Error:", error);
-    });
+        .catch((error) => {
+            console.error("Error:", error);
+        });
 }
 
 submitAddButton.addEventListener("click", trySubmitForm);

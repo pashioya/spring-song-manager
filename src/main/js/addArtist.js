@@ -1,6 +1,7 @@
-/**
- * @type {HTMLFormElement}
- */
+import {getCsrfHeader, getCsrfToken} from "./modules/csrf";
+
+const header = getCsrfHeader();
+const token = getCsrfToken();
 
 let form = document.getElementById("add-artist-form");
 let artistName = document.getElementById("artistName");
@@ -16,9 +17,6 @@ submitButton.addEventListener("click", trySubmitForm);
 function trySubmitForm(event) {
     event.preventDefault();
     const formIsValid = form.checkValidity();
-
-    const header = document.querySelector('meta[name="_csrf_header"]').content;
-    const token = document.querySelector('meta[name="_csrf"]').content;
     form.classList.add('was-validated');
 
     if (formIsValid) {

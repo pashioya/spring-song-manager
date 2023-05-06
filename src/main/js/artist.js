@@ -1,7 +1,7 @@
 import {getArtistsAlbums} from "./fullArtist";
 
 const albumPreviewColumn = document.getElementById("preview-album-names");
-const artistsTableBody = document.getElementById("all-artists-table-body");
+const allRows = document.getElementsByClassName("entity");
 
 console.log("hello");
 
@@ -44,23 +44,11 @@ function setOnHover() {
     }
 }
 
-let artists = await getArtists();
-console.log(artists);
-for (let artist of artists) {
-    let artistRow = document.createElement("tr");
-    artistRow.setAttribute("data-href", `/allArtists/fullArtist/${artist.id}`);
-    artistRow.classList.add("table-row");
-    artistRow.classList.add("entity");
-    artistRow.innerHTML = `
-                <td>${artist.name}</td>
-                <td>${artist.artistFollowers}</td>
-            `;
-    // set the row to be clickable
-    artistRow.addEventListener("click", () => {
-        //     on click, redirect to the album page
-        window.location.href = artistRow.getAttribute("data-href");
+for (let row of allRows) {
+    row.addEventListener("click", () => {
+        window.location.href = row.getAttribute("data-href");
     });
-    artistsTableBody.appendChild(artistRow);
+
 }
 
 setOnHover();

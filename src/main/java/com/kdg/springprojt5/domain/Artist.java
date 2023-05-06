@@ -29,7 +29,7 @@ public class Artist {
     @ToString.Exclude
     private List<Album> albums = new ArrayList<>();
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", insertable = false, updatable = false)
     private User user;
 

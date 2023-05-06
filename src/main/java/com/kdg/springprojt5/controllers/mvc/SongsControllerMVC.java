@@ -2,9 +2,11 @@ package com.kdg.springprojt5.controllers.mvc;
 
 import com.kdg.springprojt5.controllers.mvc.helper.DataItem;
 import com.kdg.springprojt5.controllers.mvc.helper.HistoryItem;
+import com.kdg.springprojt5.controllers.mvc.viewmodel.SongViewModel;
 import com.kdg.springprojt5.service.SongService;
 import jakarta.servlet.http.HttpSession;
 import lombok.AllArgsConstructor;
+import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -24,6 +26,7 @@ import java.util.List;
 public class SongsControllerMVC {
     private final Logger logger = LoggerFactory.getLogger(this.getClass().getName());
     private final SongService songService;
+    private final ModelMapper modelMapper;
 
     @GetMapping
     public ModelAndView songs(HttpSession session) {
@@ -40,6 +43,13 @@ public class SongsControllerMVC {
                 new DataItem("gitLab"),
                 new DataItem("pageHistory")
         )));
+
+        mav.addObject("songs", songService.getAllSongs()
+                .stream()
+                .map(song -> modelMapper
+                        .map(song, SongViewModel.class))
+                .toList());
+        
         return mav;
     }
 

@@ -1,5 +1,4 @@
-const songsTableBody = document.getElementById("all-songs-table-body");
-
+const allRows = document.getElementsByClassName("table-row");
 
 export function getSongs() {
     return fetch("/api/song/songs", {
@@ -21,22 +20,9 @@ export function getSongs() {
         );
 }
 
-let songs = await getSongs();
-
-for (let song of songs) {
-    let row = document.createElement("tr");
-    row.setAttribute("data-href", "/allSongs/fullSong/" + song.id);
-    row.classList.add("table-row");
-    row.innerHTML = `
-                <td>${song.songTitle}</td>
-                <td>${song.trackNumber}</td>
-                <td>${song.durationMs}</td>
-                <td>${song.explicit}</td>
-            `;
-    // set the row to be clickable
+for (let row of allRows) {
     row.addEventListener("click", () => {
         //     on click, redirect to the album page
         window.location.href = row.getAttribute("data-href");
     });
-    songsTableBody.appendChild(row);
 }

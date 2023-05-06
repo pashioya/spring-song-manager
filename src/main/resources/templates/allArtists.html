@@ -1,8 +1,6 @@
 <!DOCTYPE html>
-<html lang="en"
-      xmlns:th="http://www.thymeleaf.org">
-<head th:replace="~{fragments/head :: head (${title})}">
-</head>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/head :: head (${title})}"></head>
 <script defer th:src="@{/js/bundle-artist.js}" type="module"></script>
 <script defer th:src="@{/js/bundle-addArtist.js}" type="module"></script>
 <body>
@@ -32,6 +30,11 @@
             <th>artistFollowers</th>
             </thead>
             <tbody id="all-artists-table-body">
+            <tr class="table-row entity" th:attr="data-href='/allArtists/fullArtist/' + ${artist.id}"
+                th:each="artist : ${artists}">
+                <td th:text="${artist.artistName}"></td>
+                <td th:text="${artist.artistFollowers}"></td>
+            </tr>
             </tbody>
         </table>
     </div>

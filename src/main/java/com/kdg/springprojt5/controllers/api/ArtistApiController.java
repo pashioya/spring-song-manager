@@ -87,6 +87,7 @@ public class ArtistApiController {
     }
 
 
+    @AdminOnly
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteArtist(@PathVariable Long id) {
         try {

@@ -1,3 +1,8 @@
+import {getCsrfHeader, getCsrfToken} from "./modules/csrf";
+
+const header = getCsrfHeader();
+const token = getCsrfToken();
+
 let form = document.getElementById("add-album-form");
 let albumName = document.getElementById("albumName");
 let albumStatus = document.getElementById("albumStatus");
@@ -16,10 +21,6 @@ submitButton.addEventListener("click", trySubmitForm);
 export function trySubmitForm(event) {
     event.preventDefault();
     const formIsValid = form.checkValidity();
-
-    const header = document.querySelector('meta[name="_csrf_header"]').content;
-    const token = document.querySelector('meta[name="_csrf"]').content;
-
     form.classList.add('was-validated');
 
     if (formIsValid) {

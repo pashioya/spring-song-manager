@@ -2,7 +2,7 @@ import {getAlbumsSongs} from "./fullAlbum";
 
 let allRows = document.getElementsByClassName("entity");
 let songPreviewColumn = document.getElementById("preview-song-names");
-let albumsTableBody = document.getElementById("albums-table-body");
+
 
 export function getAlbums() {
     return fetch("/api/album/albums",
@@ -25,29 +25,6 @@ export function getAlbums() {
         )
 }
 
-let albums = await getAlbums();
-
-for (let album of albums) {
-    let albumRow = document.createElement("tr");
-    albumRow.classList.add("table-row");
-    albumRow.classList.add("entity");
-    albumRow.setAttribute("data-href", `/allAlbums/fullAlbum/${album.id}`);
-    albumRow.innerHTML = `
-                    <td>${album.albumName}</td>
-                    <td>${album.officialTrackCount}</td>
-                    <td>${album.albumStatus}</td>
-                    <td>${album.genre}</td>
-                    <td>${album.releaseDate}</td>
-                `;
-    // set the row to be clickable
-    albumRow.addEventListener("click", () => {
-        //     on click, redirect to the album page
-        window.location.href = albumRow.getAttribute("data-href");
-    });
-    albumsTableBody.appendChild(albumRow);
-    setOnHover();
-}
-
 function setOnHover() {
     for (let row of allRows) {
         row.addEventListener("mouseover", async () => {
@@ -65,3 +42,5 @@ function setOnHover() {
         });
     }
 }
+
+setOnHover();

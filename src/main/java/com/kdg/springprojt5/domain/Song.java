@@ -30,7 +30,7 @@ public class Song {
     @JoinColumn(name = "album_id", insertable = false, updatable = false)
     private Album album;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", insertable = false, updatable = false)
     private User user;
 

@@ -1,4 +1,7 @@
-import {getCsrfInfo} from "./modules/csrf";
+import {getCsrfHeader, getCsrfToken} from "./modules/csrf";
+
+const header = getCsrfHeader();
+const token = getCsrfToken();
 
 const url = window.location.href;
 let songId = url.substring(url.lastIndexOf("/") + 1);
@@ -7,7 +10,6 @@ if (songId.indexOf("?") !== -1) {
 }
 
 const deleteSongButton = document.getElementsByClassName("delete-button")[0];
-const {header, token} = getCsrfInfo();
 
 getSong();
 deleteSongButton.addEventListener("click", () => {

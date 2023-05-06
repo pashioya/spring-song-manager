@@ -1,8 +1,7 @@
-// get the album id from the url
-import {getCsrfInfo} from "./modules/csrf";
+import {getCsrfHeader, getCsrfToken} from "./modules/csrf";
 
-
-const {header, token} = getCsrfInfo();
+const header = getCsrfHeader();
+const token = getCsrfToken();
 
 export function deleteAlbum(albId) {
     fetch(`/api/album/${albId}`, {

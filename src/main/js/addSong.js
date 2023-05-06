@@ -1,9 +1,9 @@
-/**
- * @type {HTMLFormElement}
- */
+import {getCsrfHeader, getCsrfToken} from "./modules/csrf";
+
+const header = getCsrfHeader();
+const token = getCsrfToken();
 
 const form = document.getElementById("add-song-form");
-
 const songTitle = document.getElementById("songTitle");
 const songDuration = document.getElementById("durationMS");
 const songTrackNumber = document.getElementById("trackNumber");
@@ -20,8 +20,6 @@ submitButton.addEventListener("click", trySubmitForm);
 function trySubmitForm(event) {
     event.preventDefault();
     const formIsValid = form.checkValidity();
-    const header = document.querySelector('meta[name="_csrf_header"]').content;
-    const token = document.querySelector('meta[name="_csrf"]').content;
     form.classList.add('was-validated');
 
     if (formIsValid) {

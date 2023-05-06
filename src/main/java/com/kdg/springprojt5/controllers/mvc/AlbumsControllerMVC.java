@@ -3,10 +3,13 @@ package com.kdg.springprojt5.controllers.mvc;
 
 import com.kdg.springprojt5.controllers.mvc.helper.DataItem;
 import com.kdg.springprojt5.controllers.mvc.helper.HistoryItem;
+import com.kdg.springprojt5.controllers.mvc.viewmodel.AlbumViewModel;
 import com.kdg.springprojt5.service.AlbumService;
 import com.kdg.springprojt5.service.ArtistService;
 import com.kdg.springprojt5.service.SongService;
 import jakarta.servlet.http.HttpSession;
+import lombok.AllArgsConstructor;
+import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -21,19 +24,14 @@ import java.util.Arrays;
 import java.util.List;
 
 @Controller
+@AllArgsConstructor
 @RequestMapping("/allAlbums")
 public class AlbumsControllerMVC {
-    final Logger logger;
+    final Logger logger = LoggerFactory.getLogger(this.getClass().getName());
     final AlbumService albumService;
     final SongService songService;
     final ArtistService artistService;
-
-    public AlbumsControllerMVC(AlbumService albumService, SongService songService, ArtistService artistService) {
-        this.logger = LoggerFactory.getLogger(this.getClass().getName());
-        this.albumService = albumService;
-        this.songService = songService;
-        this.artistService = artistService;
-    }
+    private final ModelMapper modelMapper;
 
     @GetMapping()
     public ModelAndView albums(HttpSession session) {
@@ -49,6 +47,13 @@ public class AlbumsControllerMVC {
                 new DataItem("gitLab"),
                 new DataItem("pageHistory")
         )));
+
+        mav.addObject("albums", albumService.getAllAlbums()
+                .stream()
+                .map(album -> modelMapper
+                        .map(album, AlbumViewModel.class))
+                .toList());
+
         setHistory(session, "All Albums");
         return mav;
     }
