@@ -1,4 +1,4 @@
-import {getCsrfInfo} from "../modules/csrf";
+import {getCsrfInfo} from "./modules/csrf";
 
 const {header, token} = getCsrfInfo();
 

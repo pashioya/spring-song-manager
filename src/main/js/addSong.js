@@ -8,6 +8,11 @@ const songTitle = document.getElementById("songTitle");
 const songDuration = document.getElementById("durationMS");
 const songTrackNumber = document.getElementById("trackNumber");
 let explicit = Boolean(document.getElementById("explicit"))
+let url = window.location.href;
+let albumId = url.substring(url.lastIndexOf("/") + 1);
+if (albumId.indexOf("?") !== -1) {
+    albumId = albumId.substring(0, albumId.indexOf("?"));
+}
 
 const submitButton = form.querySelector('button[type="submit"]');
 submitButton.addEventListener("click", trySubmitForm);

@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head th:replace="~{fragments/head :: head (${title})}"></head>
-<script defer th:src="@{/js/fullPages/bundle-fullAlbum.js}"></script>
-<script defer th:src="@{/js/forms/bundle-addSong.js}"></script>
+<script defer th:src="@{/js/bundle-fullAlbum.js}" type="module"></script>
+<script defer th:src="@{/js/bundle-addSong.js}" type="module"></script>
 <body class="pb-5" id="full">
 <header th:replace="~{fragments/header :: header (${headerList})}"></header>
 <section>

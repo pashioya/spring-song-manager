@@ -1,3 +1,5 @@
+import '../css/global.scss'
+
 const editUserForm = document.getElementById("edit-user-modal-form");
 const header = document.querySelector('meta[name="_csrf_header"]').content;
 const token = document.querySelector('meta[name="_csrf"]').content;
@@ -47,7 +49,6 @@ async function trySubmitForm(event) {
 }
 
 
-
 editUserButtons.forEach(button => {
     button.addEventListener('click', async () => {
         const userId = button.dataset.userId;
@@ -60,7 +61,6 @@ editUserButtons.forEach(button => {
         roleInput.value = userData.role;
     });
 });
-
 
 
 submitEditButton.addEventListener("click", trySubmitForm);

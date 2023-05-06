@@ -1,4 +1,4 @@
-import {getCsrfInfo} from "../modules/csrf";
+import {getCsrfInfo} from "./modules/csrf";
 
 const url = window.location.href;
 let songId = url.substring(url.lastIndexOf("/") + 1);
@@ -11,10 +11,10 @@ const {header, token} = getCsrfInfo();
 
 getSong();
 deleteSongButton.addEventListener("click", () => {
-    deleteSong();
+    deleteSong(songId);
 });
 
-function deleteSong() {
+function deleteSong(songId) {
     fetch(`/api/song/${songId}`, {
         method: "DELETE",
         headers: {

@@ -1,17 +1,4 @@
-import {getCsrfInfo} from "../modules/csrf";
-
-let allRows = document.querySelectorAll(".table-row");
-let url = window.location.href;
-let artistId = url.substring(url.lastIndexOf("/") + 1);
-if (artistId.indexOf("?") !== -1) {
-    artistId = artistId.substring(0, artistId.indexOf("?"));
-}
-let deleteArtistButton = document.getElementsByClassName("delete-button")[0];
-allRows.forEach(row => {
-    row.addEventListener("click", () => {
-        window.location.href = row.getAttribute("data-href");
-    })
-});
+import {getCsrfInfo} from "./modules/csrf";
 
 const {header, token} = getCsrfInfo();
 
@@ -50,18 +37,33 @@ export function getArtistsAlbums(artistId) {
         });
 }
 
-let artist = getArtist(artistId);
-let artistsAlbums = getArtistsAlbums(artistId);
+// check if  the page name is "fullArtist"
+// if it is, then run the code below
+// this is to prevent the code from running on other pages
+if (window.location.href.indexOf("fullArtist") !== -1) {
 
-artist.then(artist => {
+    let allRows = document.querySelectorAll(".table-row");
+    const albumTableBody = document.getElementById("albums-table-body");
+    let url = window.location.href;
+    let artistId = url.substring(url.lastIndexOf("/") + 1);
+    if (artistId.indexOf("?") !== -1) {
+        artistId = artistId.substring(0, artistId.indexOf("?"));
+    }
+    let artist = await getArtist(artistId);
+    let artistsAlbums = await getArtistsAlbums(artistId);
+    let deleteArtistButton = document.getElementsByClassName("delete-button")[0];
+
     document.getElementById("artist-username").innerText = artist.username;
     document.getElementById("artist-name").innerText = artist.name;
     document.getElementById("artist-followers").innerText = artist.artistFollowers;
-});
 
-artistsAlbums.then(albums => {
-    const albumTableBody = document.getElementById("albums-table-body");
-    albums.forEach(album => {
+    allRows.forEach(row => {
+        row.addEventListener("click", () => {
+            window.location.href = row.getAttribute("data-href");
+        })
+    });
+
+    for (let album of artistsAlbums) {
         let row = document.createElement("tr");
         row.setAttribute("data-href", `/allAlbums/fullAlbum/${album.id}`);
         row.classList.add("table-row");
@@ -77,9 +79,10 @@ artistsAlbums.then(albums => {
             window.location.href = row.getAttribute("data-href");
         });
         albumTableBody.appendChild(row);
-    });
-});
+    }
 
-deleteArtistButton.addEventListener("click", () => {
-    deleteArtist(artistId);
-});
+    deleteArtistButton.addEventListener("click", () => {
+        deleteArtist(artistId);
+    });
+
+}

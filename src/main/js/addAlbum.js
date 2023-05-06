@@ -5,6 +5,11 @@ let albumTrackCount = document.getElementById("officialTrackCount");
 let albumGenre = document.getElementById("genre");
 let albumReleaseDate = document.getElementById("releaseDate");
 let submitButton = document.querySelector("#add-album-form > button");
+let url = window.location.href;
+let artistId = url.substring(url.lastIndexOf("/") + 1);
+if (artistId.indexOf("?") !== -1) {
+    artistId = artistId.substring(0, artistId.indexOf("?"));
+}
 
 submitButton.addEventListener("click", trySubmitForm);
 

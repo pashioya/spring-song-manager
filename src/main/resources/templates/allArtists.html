@@ -3,8 +3,8 @@
       xmlns:th="http://www.thymeleaf.org">
 <head th:replace="~{fragments/head :: head (${title})}">
 </head>
-<script defer th:src="@{/js/allPages/bundle-artist.js}"></script>
-<script defer th:src="@{/js/forms/bundle-addArtist.js}"></script>
+<script defer th:src="@{/js/bundle-artist.js}" type="module"></script>
+<script defer th:src="@{/js/bundle-addArtist.js}" type="module"></script>
 <body>
 <header th:replace="~{fragments/header :: header (${headerList})}"></header>
 <section>

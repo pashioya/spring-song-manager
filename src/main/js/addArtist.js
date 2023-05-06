@@ -6,7 +6,11 @@ let form = document.getElementById("add-artist-form");
 let artistName = document.getElementById("artistName");
 let artistFollowers = document.getElementById("artistFollowers");
 let submitButton = form.querySelector('#create-artist-submit');
-
+let url = window.location.href;
+let artistId = url.substring(url.lastIndexOf("/") + 1);
+if (artistId.indexOf("?") !== -1) {
+    artistId = artistId.substring(0, artistId.indexOf("?"));
+}
 submitButton.addEventListener("click", trySubmitForm);
 
 function trySubmitForm(event) {

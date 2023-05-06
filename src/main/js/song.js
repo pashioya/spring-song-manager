@@ -21,8 +21,9 @@ export function getSongs() {
         );
 }
 
-let songs = getSongs();
-songs.forEach(song => {
+let songs = await getSongs();
+
+for (let song of songs) {
     let row = document.createElement("tr");
     row.setAttribute("data-href", "/allSongs/fullSong/" + song.id);
     row.classList.add("table-row");
@@ -38,4 +39,4 @@ songs.forEach(song => {
         window.location.href = row.getAttribute("data-href");
     });
     songsTableBody.appendChild(row);
-});
+}
