@@ -44,7 +44,7 @@
                             type="button"></button>
                 </div>
                 <div class="modal-body">
-                    <form class="row g-3 needs-validation" id="add-album-form" method="post" novalidate>
+                    <form class="row g-3 needs-validation" id="add-album-form" novalidate>
                         <div class="col-md-4">
                             <label class="form-label" for="albumName"> albumName</label>
                             <input class="form-control" id="albumName" name="albumName" required type="text">
@@ -67,6 +67,9 @@
                             </select>
                             <div class="valid-feedback">
                                 Looks good!
+                            </div>
+                            <div class="invalid-feedback">
+                                Please select a valid option.
                             </div>
                         </div>
                         <div class="col-md-4">

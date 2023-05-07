@@ -5,8 +5,8 @@ const token = getCsrfToken();
 
 const form = document.getElementById("add-song-form");
 const songTitle = document.getElementById("songTitle");
-const songDuration = document.getElementById("durationMS");
-const songTrackNumber = document.getElementById("trackNumber");
+const durationMS = document.getElementById("durationMS");
+const trackNumber = document.getElementById("trackNumber");
 let explicit = Boolean(document.getElementById("explicit"))
 let url = window.location.href;
 let albumId = url.substring(url.lastIndexOf("/") + 1);
@@ -15,30 +15,55 @@ if (albumId.indexOf("?") !== -1) {
 }
 
 const submitButton = form.querySelector('button[type="submit"]');
-submitButton.addEventListener("click", trySubmitForm);
 
-function trySubmitForm(event) {
-    event.preventDefault();
-    const formIsValid = form.checkValidity();
-    form.classList.add('was-validated');
-
-    if (formIsValid) {
-        fetch('/api/song/album/' + albumId, {
-            method: "POST",
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-                , [header]: token
-            },
-            body: JSON.stringify({
-                "url": url.value,
-                "songTitle": songTitle.value,
-                "durationMS": songDuration.value,
-                "trackNumber": parseInt(songTrackNumber.value),
+export function addSong(songTitle, durationMS, trackNumber, explicit) {
+    return fetch('/api/song/album/' + albumId, {
+        method: "POST",
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+            , [header]: token
+        },
+        body: JSON.stringify(
+            {
+                "songTitle": songTitle,
+                "durationMS": parseInt(durationMS),
+                "trackNumber": parseInt(trackNumber),
                 "explicit": explicit
             })
-        }).then(response => {
-            console.log(response)
-        });
-    }
+    });
 }
+
+submitButton.addEventListener("click", async function (event) {
+    event.preventDefault();
+    event.stopPropagation();
+    form.classList.add('was-validated');
+
+    if (!form.checkValidity()) {
+        return;
+    }
+    try {
+        const response = await addSong(songTitle.value, durationMS.value, trackNumber.value, explicit.value);
+        const newSong = await response.json();
+        const newSongRow = document.createElement("tr");
+        newSongRow.setAttribute("data-href", `/allSongs/fullSong/${newSong.id}`);
+        newSongRow.classList.add("table-row");
+        newSongRow.innerHTML = `
+            <td>${newSong.songTitle}</td>
+            <td>${newSong.trackNumber}</td>
+            <td>${newSong.explicit}</td>
+        `;
+        // set the onclick event for each row
+        newSongRow.addEventListener("click", () => {
+                window.location.href = newSongRow.getAttribute("data-href");
+            }
+        );
+        document.getElementById("album-songsList").appendChild(newSongRow);
+        document.querySelector(".modal-close-btn").click();
+        form.classList.remove('was-validated');
+        form.reset();
+    } catch (error) {
+        console.error(error);
+        alert("Something went wrong. Please try again.");
+    }
+});

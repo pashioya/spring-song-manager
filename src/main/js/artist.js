@@ -3,43 +3,23 @@ import {getArtistsAlbums} from "./fullArtist";
 const albumPreviewColumn = document.getElementById("preview-album-names");
 const allRows = document.getElementsByClassName("entity");
 
-console.log("hello");
-
 export function getArtists() {
-    return fetch("/api/artist/artists",
-        {
-            headers: {
-                Accept: "application/json"
-            }
-        })
-        .then(resp => {
-                if (resp.status !== 200) {
-                    console.log("Error: " + resp.status);
-                } else {
-                    return resp.json();
-                }
-            }
-        )
-        .then(artists => {
-                return artists;
-            }
-        )
+    return fetch("/api/artist/artists")
 }
-
 
 function setOnHover() {
     let allRows = document.getElementsByClassName("entity");
     for (let row of allRows) {
-        row.addEventListener("mouseover", () => {
+        row.addEventListener("mouseover", async () => {
             albumPreviewColumn.innerHTML = "";
             let id = row.getAttribute("data-href").split("/")[3];
-            getArtistsAlbums(id).then(albums => {
-                albums.forEach(album => {
-                    let albumItem = document.createElement("tr");
-                    albumItem.innerHTML = album.albumName;
-                    albumPreviewColumn.appendChild(albumItem);
-                });
-            });
+            let response = await getArtistsAlbums(id);
+            let artistsAlbums = await response.json();
+            for (let album of artistsAlbums) {
+                let albumItem = document.createElement("tr");
+                albumItem.innerHTML = album.albumName;
+                albumPreviewColumn.appendChild(albumItem);
+            }
         });
     }
 }

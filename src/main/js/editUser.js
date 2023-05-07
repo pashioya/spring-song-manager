@@ -6,7 +6,9 @@ const token = getCsrfToken();
 const editUserForm = document.getElementById("edit-user-modal-form");
 const submitEditButton = document.getElementById("edit-user-modal-submit-button");
 const editUserButtons = document.querySelectorAll('.edit-user-button');
-let id = 0;
+let id;
+let username = document.getElementById("new-username").value;
+let role = document.getElementById("new-role").value;
 
 
 export function editUser(id, newUsername, newRole) {
@@ -21,49 +23,43 @@ export function editUser(id, newUsername, newRole) {
             username: newUsername,
             role: newRole
         }),
-    }).then(r => {
-        return r;
     });
 }
 
-
-async function trySubmitForm(event) {
+submitEditButton.addEventListener("click", async function (event) {
     event.preventDefault();
-    const formData = new FormData(editUserForm);
+    event.stopPropagation();
+    editUserForm.classList.add('was-validated');
+    if (!editUserForm.checkValidity()) {
+        return;
+    }
+    try {
+        let response = await editUser(id, username, role);
+        let newUser = await response.json();
+        let newUserRow = document.createElement("tr");
+        newUserRow.innerHTML = `
+            <td>${newUser.username}</td>
+            <td>${newUser.role}</td>
+            <td>
+                <button type="button" class="btn btn-danger" th:data-user-id="${newUser.id}">Delete</button>
+                <button type="button" class="btn btn-secondary edit-user-button" data-bs-toggle="modal" data-bs-target="#edit-user-modal" data-user-id="${newUser.id}">Edit</button>
+            </td>
+        `;
+        const closeButton = document.querySelector('#edit-user-modal > div > div > div.modal-header > button');
+        const oldRow = document.querySelector(`[data-user-id="${id}"]`).parentElement.parentElement;
+        const tableBody = document.getElementById("users-table-body");
+        closeButton.click();
+        oldRow.remove();
+        tableBody.appendChild(newUserRow);
+        document.querySelector(".modal-close-btn").click();
+        editUserForm.classList.remove('was-validated');
+        editUserForm.reset();
+    } catch (error) {
+        console.error(error);
+        alert("Something went wrong. Please try again.");
 
-    const userDto = {
-        username: formData.get('username'),
-        role: formData.get('role')
-    };
-    await editUser(id, userDto.username, userDto.role)
-        .then(
-            (response) => {
-                response.json().then(
-                    (data) => {
-                        const closeButton = document.querySelector('#edit-user-modal > div > div > div.modal-header > button');
-                        const oldRow = document.querySelector(`[data-user-id="${data.id}"]`).parentElement.parentElement;
-                        const row = document.createElement("tr");
-                        const tableBody = document.getElementById("users-table-body");
-                        row.innerHTML = `
-                                    <td>${data.username}</td>
-                                    <td>${data.role}</td>
-                                    <td>
-                                        <button type="button" class="btn btn-danger" th:data-user-id="${data.id}">Delete</button>
-                                        <button type="button" class="btn btn-secondary edit-user-button" data-bs-toggle="modal" data-bs-target="#edit-user-modal" data-user-id="${data.id}">Edit</button>
-                                    </td>
-                                    `;
-                        closeButton.click();
-                        oldRow.remove();
-                        tableBody.appendChild(row);
-                    }
-                )
-            }
-        ).catch(
-            (error) => {
-                console.log(error);
-            }
-        );
-}
+    }
+});
 
 
 editUserButtons.forEach(button => {
@@ -78,6 +74,3 @@ editUserButtons.forEach(button => {
         roleInput.value = userData.role;
     });
 });
-
-
-submitEditButton.addEventListener("click", trySubmitForm);

@@ -97,7 +97,9 @@ public class UserApiController {
     }
 
     @PostMapping
-    public ResponseEntity<UserDto> addUser(@Valid @ModelAttribute NewUserDto newUserDto, BindingResult bindingResult) {
+    public ResponseEntity<UserDto> addUser(@RequestBody NewUserDto newUserDto,
+                                           BindingResult bindingResult
+    ) {
         if (bindingResult.hasErrors()) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }

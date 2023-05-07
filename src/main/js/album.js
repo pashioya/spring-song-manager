@@ -5,24 +5,7 @@ let songPreviewColumn = document.getElementById("preview-song-names");
 
 
 export function getAlbums() {
-    return fetch("/api/album/albums",
-        {
-            headers: {
-                Accept: "application/json"
-            }
-        })
-        .then(resp => {
-                if (resp.status !== 200) {
-                    console.log("Error: " + resp.status);
-                } else {
-                    return resp.json();
-                }
-            }
-        )
-        .then(data => {
-                return data;
-            }
-        )
+    return fetch("/api/album/albums")
 }
 
 function setOnHover() {
@@ -30,7 +13,8 @@ function setOnHover() {
         row.addEventListener("mouseover", async () => {
             songPreviewColumn.innerHTML = "";
             let id = row.getAttribute("data-href").split("/").pop();
-            let albumsSongs = await getAlbumsSongs(id);
+            let response = await getAlbumsSongs(id);
+            let albumsSongs = await response.json();
             for (let song of albumsSongs) {
                 if (!songPreviewColumn.innerHTML.includes(song.songTitle)) {
                     let songItem = document.createElement("tr");
@@ -41,6 +25,13 @@ function setOnHover() {
             }
         });
     }
+}
+
+for (let row of allRows) {
+    row.addEventListener("click", () => {
+            window.location.href = row.getAttribute("data-href");
+        }
+    );
 }
 
 setOnHover();

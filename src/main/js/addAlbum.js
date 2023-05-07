@@ -3,64 +3,75 @@ import {getCsrfHeader, getCsrfToken} from "./modules/csrf";
 const header = getCsrfHeader();
 const token = getCsrfToken();
 
-let form = document.getElementById("add-album-form");
-let albumName = document.getElementById("albumName");
-let albumStatus = document.getElementById("albumStatus");
-let albumTrackCount = document.getElementById("officialTrackCount");
-let albumGenre = document.getElementById("genre");
-let albumReleaseDate = document.getElementById("releaseDate");
-let submitButton = document.querySelector("#add-album-form > button");
-let url = window.location.href;
+const form = document.querySelector('.needs-validation');
+const albumName = document.getElementById("albumName");
+const albumStatus = document.getElementById("albumStatus");
+const albumTrackCount = document.getElementById("officialTrackCount");
+const albumGenre = document.getElementById("genre");
+const albumReleaseDate = document.getElementById("releaseDate");
+const submitButton = document.querySelector("#add-album-form > button");
+const url = window.location.href;
 let artistId = url.substring(url.lastIndexOf("/") + 1);
 if (artistId.indexOf("?") !== -1) {
     artistId = artistId.substring(0, artistId.indexOf("?"));
 }
 
-submitButton.addEventListener("click", trySubmitForm);
-
-export function trySubmitForm(event) {
-    event.preventDefault();
-    const formIsValid = form.checkValidity();
-    form.classList.add('was-validated');
-
-    if (formIsValid) {
-        fetch('/api/album/artist/' + artistId, {
+export async function addAlbum(albumName, albumStatus, albumTrackCount, albumGenre, albumReleaseDate) {
+    try {
+        return await fetch('/api/album/artist/' + artistId, {
             method: "POST",
             headers: {
                 'Accept': 'application/json',
-                'Content-Type': 'application/json'
-                , [header]: token
+                'Content-Type': 'application/json',
+                [header]: token
             },
-            body: JSON.stringify(
-                {
-                    "albumName": albumName.value,
-                    "officialTrackCount": parseInt(albumTrackCount.value),
-                    "albumStatus": albumStatus.value,
-                    "genre": albumGenre.value,
-                    "releaseDate": albumReleaseDate.value
-                })
-        }).then(async response => {
-            if (response.status !== 201) {
-                console.log("Error: " + response.status);
-            } else {
-                const newAlbum = await response.json();
-                let newAlbumRow = document.createElement("tr");
-                newAlbumRow.setAttribute("data-href", `/allAlbums/fullAlbum/${newAlbum.id}`);
-                newAlbumRow.classList.add("table-row");
-                newAlbumRow.innerHTML = `
-                    <td>${newAlbum.albumName}</td>
-                    <td>${newAlbum.officialTrackCount}</td>
-                    <td>${newAlbum.albumStatus}</td>
-                    <td>${newAlbum.genre}</td>
-                    <td>${newAlbum.releaseDate}</td>
-                `;
-                // set the onclick event for each row
-                newAlbumRow.addEventListener("click", () => {
-                    window.location.href = newAlbumRow.getAttribute("data-href");
-                });
-                document.getElementById("albums-table-body").appendChild(newAlbumRow);
-                document.querySelector(".modal-close-btn").click();
-            }
+            body: JSON.stringify({
+                "albumName": albumName,
+                "officialTrackCount": parseInt(albumTrackCount),
+                "albumStatus": albumStatus,
+                "genre": albumGenre,
+                "releaseDate": albumReleaseDate
+            })
         });
+    } catch (error) {
+        console.error(error);
     }
 }
+
+
+submitButton.addEventListener("click", async function (event) {
+    event.preventDefault();
+    event.stopPropagation();
+    form.classList.add('was-validated');
+
+    if (!form.checkValidity()) {
+        return;
+    }
+
+    try {
+        const response = await addAlbum(albumName.value, albumStatus.value, albumTrackCount.value, albumGenre.value, albumReleaseDate.value);
+        const newAlbum = await response.json();
+        const newAlbumRow = document.createElement("tr");
+        newAlbumRow.setAttribute("data-href", `/allAlbums/fullAlbum/${newAlbum.id}`);
+        newAlbumRow.classList.add("table-row");
+        newAlbumRow.innerHTML = `
+            <td>${newAlbum.albumName}</td>
+            <td>${newAlbum.officialTrackCount}</td>
+            <td>${newAlbum.albumStatus}</td>
+            <td>${newAlbum.genre}</td>
+            <td>${newAlbum.releaseDate}</td>
+        `;
+        // set the onclick event for each row
+        newAlbumRow.addEventListener("click", () => {
+            window.location.href = newAlbumRow.getAttribute("data-href");
+        });
+        document.getElementById("albums-table-body").appendChild(newAlbumRow);
+        document.querySelector(".modal-close-btn").click();
+        form.classList.remove('was-validated');
+        form.reset();
+    } catch (error) {
+        console.error(error);
+        alert("Something went wrong. Please try again.");
+    }
+});
+

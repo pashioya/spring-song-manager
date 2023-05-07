@@ -4,47 +4,29 @@ const header = getCsrfHeader();
 const token = getCsrfToken();
 
 export function deleteAlbum(albId) {
-    fetch(`/api/album/${albId}`, {
+    return fetch(`/api/album/${albId}`, {
         method: "DELETE",
         headers: {
             Accept: "application/json",
             "Content-Type": "application/json",
             [header]: token,
         },
-    }).then((response) => {
-        if (response.status !== 200) {
-            console.log("Error: " + response.status);
-        } else {
-            window.location.href = "/allAlbums";
-        }
-    });
+    })
 }
 
 export function getAlbum(albId) {
     return fetch(`/api/album/${albId}`)
-        .then((response) => response.json())
-        .then((album) => {
-            return album;
-        });
 }
 
 export function getAlbumsArtists(alId) {
     return fetch(`/api/artist/album/${alId}/artists`)
-        .then((response) => response.json())
-        .then((artists) => {
-            return artists;
-        });
 }
 
 export function getAlbumsSongs(alId) {
     return fetch(`/api/song/album/${alId}/songs`)
-        .then((response) => response.json())
-        .then((songs) => {
-            return songs;
-        });
 }
 
-if (window.location.href.indexOf("fullAlbum") !== -1) {
+async function init() {
     let deleteAlbumButton = document.getElementsByClassName("delete-button")[0];
     let url = window.location.href;
     let albumId = url.substring(url.lastIndexOf("/") + 1);
@@ -53,13 +35,14 @@ if (window.location.href.indexOf("fullAlbum") !== -1) {
     }
     let songsList = document.getElementById("album-songsList");
 
-    let album = await getAlbum(albumId);
-    let albumsArtists = await getAlbumsArtists(albumId);
-    let albumsSongs = await getAlbumsSongs(albumId);
+    let albumResponse = await getAlbum(albumId);
+    let album = await albumResponse.json();
+    let albumsArtistsResponse = await getAlbumsArtists(albumId);
+    let albumsArtists = await albumsArtistsResponse.json();
+    let albumsSongsResponse = await getAlbumsSongs(albumId);
+    let albumsSongs = await albumsSongsResponse.json();
     let artistsList = document.getElementById("album-artistsList");
-
-
-    console.log(album);
+    
     document.getElementById("album-username").innerHTML = album.username;
     document.getElementById("album-albumName").innerHTML = album.albumName;
     document.getElementById("album-genre").innerHTML = album.genre;
@@ -101,8 +84,14 @@ if (window.location.href.indexOf("fullAlbum") !== -1) {
         songsList.appendChild(songRow);
     }
     if (deleteAlbumButton) {
-        deleteAlbumButton.addEventListener("click", () => {
-            deleteAlbum(albumId);
+        deleteAlbumButton.addEventListener("click", async () => {
+            let response = await deleteAlbum(albumId);
+            response = await response.json();
+            if (response.status === 200) {
+                window.location.href = "/allAlbums";
+            } else {
+                alert("Error deleting album");
+            }
         });
     }
     let allRows = document.querySelectorAll(".table-row");
@@ -112,3 +101,6 @@ if (window.location.href.indexOf("fullAlbum") !== -1) {
         });
     });
 }
+
+if (window.location.href.indexOf("fullAlbum") !== -1)
+    init();

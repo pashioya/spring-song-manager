@@ -116,7 +116,6 @@ public class AlbumApiController {
             @AuthenticationPrincipal CustomUserDetails currentUser
     ) {
         try {
-            System.out.println(currentUser);
             var album = albumService.saveAlbum(new Album(
                     albumDto.getAlbumName(),
                     albumDto.getOfficialTrackCount(),
