@@ -50,6 +50,14 @@ public class SpringDataSongService implements SongService {
     }
 
     @Override
+    public List<Song> getSongsByTitle(String title) {
+        List<Song> songs = songRepository.findAll();
+//        filter the song titles that contain the title
+        songs.removeIf(song -> !song.getSongTitle().toLowerCase().contains(title.toLowerCase()));
+        return songs;
+    }
+
+    @Override
     public void deleteSong(Long id) {
         songRepository.deleteById(id);
     }

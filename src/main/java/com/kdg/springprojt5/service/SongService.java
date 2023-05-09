@@ -19,4 +19,6 @@ public interface SongService {
     void deleteSong(Long id);
 
     void printSong(Long id);
+
+    List<Song> getSongsByTitle(String title);
 }

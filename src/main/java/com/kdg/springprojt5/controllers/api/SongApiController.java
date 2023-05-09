@@ -44,6 +44,24 @@ public class SongApiController {
         }
     }
 
+    //    find song by title
+    @GetMapping("/title/{title}")
+    public ResponseEntity<List<SongDto>> getSongByTitle(@PathVariable("title") String title) {
+        try {
+            var songs = songService.getSongsByTitle(title);
+            if (songs == null) {
+                return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+            }
+            List<SongDto> songDtos = songs.stream()
+                    .map(song -> modelMapper.map(song, SongDto.class))
+                    .toList();
+            return new ResponseEntity<>(songDtos, HttpStatus.OK);
+        } catch (Exception e) {
+            logger.error(e.getMessage());
+            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
     @GetMapping("/songs")
     public ResponseEntity<List<SongDto>> getSongs() {
         try {
