@@ -1,15 +1,20 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head th:replace="~{fragments/head :: head (${title})}"></head>
-<script defer th:src="@{/js/bundle-album.js}" type="module"></script>
+<head>
+    <thymeleaf th:replace="~{fragments/meta :: meta (${title})}"></thymeleaf>
+    <script defer th:src="@{/js/bundle-album.js}" type="module"></script>
+</head>
 <body>
 <header th:replace="~{fragments/header :: header (${headerList})}"></header>
-<section>
-    <div class="table-caption">
+<section class="min-vh-100 h-100">
+    <div class="table-caption text-center">
         <h1>All Albums</h1>
     </div>
-    <div class="tables-container">
-        <div class="preview-block ">
+    <div class="alert alert-danger w-75" id="songs-error" role="alert">
+        There are no songs
+    </div>
+    <div class="tables-container row p-5 m-5">
+        <div class="preview-block col w-25">
             <div class="preview-block__title">
                 Album Preview
             </div>
@@ -23,7 +28,7 @@
                 </table>
             </div>
         </div>
-        <table class='table table-bordered table-condensed table-striped table-hover ' id="all-albums-table">
+        <table class='table table-bordered table-condensed table-striped table-hover col w-75' id="all-albums-table">
             <thead class="table-header">
             <th>albumName</th>
             <th>officialTrackCount</th>

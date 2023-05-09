@@ -36,8 +36,8 @@ public class SongsControllerMVC {
         mav.addObject("headerList", new ArrayList<>(Arrays.asList(
                 new DataItem("allSongs", "active"),
                 new DataItem("allAlbums"),
-                new DataItem("allArtists")
-
+                new DataItem("allArtists"),
+                new DataItem("searchBar")
         )));
         mav.addObject("footerList", new ArrayList<>(Arrays.asList(
                 new DataItem("gitLab"),
@@ -49,7 +49,7 @@ public class SongsControllerMVC {
                 .map(song -> modelMapper
                         .map(song, SongViewModel.class))
                 .toList());
-        
+
         return mav;
     }
 

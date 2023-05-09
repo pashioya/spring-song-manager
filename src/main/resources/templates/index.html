@@ -1,27 +1,31 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head th:replace="~{fragments/head :: head (${title})}"></head>
-  <body>
-  <div class="index-containers">
-    <a href="/allSongs">
-      <button type="button" class="btn btn-secondary btn-lg">All Songs</button>
-    </a>
-    <a href="/allAlbums">
-      <button type="button" class="btn btn-secondary btn-lg">All Albums</button>
-    </a>
-    <a href="/allArtists">
-      <button type="button" class="btn btn-secondary btn-lg">All Artists</button>
-    </a>
-    <a href="/pageHistory">
-      <button type="button" class="btn btn-secondary btn-lg">Page History</button>
-    </a>
-    <a href="/adminPage">
-      <button type="button" class="btn btn-secondary btn-lg">Admin Only Page</button>
-    </a>
-    <a href="/login">
-      <button type="button" class="btn btn-secondary btn-lg">login</button>
-    </a>
-  </div>
-  </body>
+<head>
+    <thymeleaf th:replace="~{fragments/meta :: meta (${title})}"></thymeleaf>
+</head>
+<body>
+<div class="index-containers min-vh-100 h-100 w-100 d-flex justify-content-center align-items-center align-content-center">
+    <div class="col">
+        <a href="/allSongs">
+            <button class="btn btn-secondary btn-lg" type="button">All Songs</button>
+        </a>
+        <a href="/allAlbums">
+            <button class="btn btn-secondary btn-lg" type="button">All Albums</button>
+        </a>
+        <a href="/allArtists">
+            <button class="btn btn-secondary btn-lg" type="button">All Artists</button>
+        </a>
+        <a href="/pageHistory">
+            <button class="btn btn-secondary btn-lg" type="button">Page History</button>
+        </a>
+        <a href="/adminPage">
+            <button class="btn btn-secondary btn-lg" type="button">Admin Only Page</button>
+        </a>
+        <a href="/login">
+            <button class="btn btn-secondary btn-lg" type="button">login</button>
+        </a>
+    </div>
+</div>
+</body>
 
 </html>

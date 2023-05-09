@@ -1,42 +1,37 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head th:replace="~{fragments/head :: head (${title})}"></head>
-<script defer th:src="@{/js/bundle-song.js}" type="module"></script>
+<head>
+    <thymeleaf th:replace="~{fragments/meta :: meta (${title})}"></thymeleaf>
+    <script defer th:src="@{/js/bundle-song.js}" type="module"></script>
+</head>
 <body>
 <header th:replace="~{fragments/header :: header (${headerList})}"></header>
-<section>
-    <div class="table-caption">
+<section class="min-vh-100 h-100">
+    <div class="table-caption text-center">
         <h1>All Songs</h1>
     </div>
-    <div class="row w-100 height d-flex justify-content-center align-items-center">
-        <div class="col-md-6">
-            <div class="form">
-                <i class="fa fa-search"></i>
-                <input class="form-control form-input" id="search-bar" placeholder="Search anything..." type="text">
-                <span class="left-pan"><i class="fa fa-microphone"></i></span>
-            </div>
-        </div>
-    </div>
-    <div class="alert alert-danger" id="songs-error" role="alert">
+    <div class="alert alert-danger w-75" id="songs-error" role="alert">
         There are no songs
     </div>
-    <table class='table table-bordered table-condensed table-striped table-hover' id="all-songs-table">
-        <thead class="table-header">
-        <th>songTitle</th>
-        <th>officialTrackNumber</th>
-        <th>durationMS</th>
-        <th>explicit</th>
-        </thead>
-        <tbody id="all-songs-table-body">
-        <tr class="table-row entity" th:attr="data-href='/allSongs/fullSong/' + ${song.id}"
-            th:each="song : ${songs}">
-            <td th:text="${song.getSongTitle()}"></td>
-            <td th:text="${song.getTrackNumber()}"></td>
-            <td th:text="${song.getDurationMS()}"></td>
-            <td th:text="${song.isExplicit()}"></td>
-        </tr>
-        </tbody>
-    </table>
+    <div class="d-flex justify-content-center align-content-center">
+        <table class='table table-bordered table-condensed table-striped table-hover w-75 ' id="all-songs-table">
+            <thead class="table-header">
+            <th>songTitle</th>
+            <th>officialTrackNumber</th>
+            <th>durationMS</th>
+            <th>explicit</th>
+            </thead>
+            <tbody id="all-songs-table-body">
+            <tr class="table-row entity" th:attr="data-href='/allSongs/fullSong/' + ${song.id}"
+                th:each="song : ${songs}">
+                <td th:text="${song.getSongTitle()}"></td>
+                <td th:text="${song.getTrackNumber()}"></td>
+                <td th:text="${song.getDurationMS()}"></td>
+                <td th:text="${song.isExplicit()}"></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
 </section>
 <footer th:replace="~{fragments/footer :: footer (${footerList})}"></footer>
 </body>

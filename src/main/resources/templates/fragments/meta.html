@@ -1,0 +1,19 @@
+<html lang="en">
+<head>
+    <thymeleaf th:fragment="meta (title)">
+        <meta charset="UTF-8"/>
+        <meta content="IE=edge" http-equiv="X-UA-Compatible"/>
+        <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+        <meta name="_csrf" th:content="${_csrf.token}"/>
+        <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
+        <title th:text="${title}"></title>
+        <link rel="stylesheet" th:href="@{/css/bundle-site.css}" type="text/css">
+        <script defer th:src="@{/js/bundle-site.js}" type="module"></script>
+    </thymeleaf>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+</body>
+</html>

@@ -1,16 +1,47 @@
-
+<html lang="en"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      xmlns:th="http://www.thymeleaf.org">>
+">
+<head>
+    <title>header</title></head>
+<body>
 <header th:fragment="header (list)">
-    <nav class="navbar navbar-dark bg-dark navbar-expand-lg">
-      <div class="container">
-        <a class="navbar-brand" href="/">Song Manager</a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarNav">
-          <ul class="navbar-nav me-auto" id="navbarText">
-            <li class="navbar-nav" th:each="item : ${list}" th:replace="~{fragments/fragment_parts/header-parts}"></li>
-          </ul>
+    <nav class="navbar navbar-expand-lg bg-light">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">Song Manager</a>
+            <button aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"
+                    class="navbar-toggler" data-bs-target="#navbarSupportedContent"
+                    data-bs-toggle="collapse" type="button">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0 w-50">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/allSongs" th:fragment="allSongs (content)"> All Songs</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/allAlbums" th:fragment="allAlbums (content)">All Albums</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/allArtists" th:fragment="allArtists (content)">All Artists</a>
+                    </li>
+                </ul>
+                <div class="row w-50">
+                    <form class="d-flex col w-75" role="search">
+                        <input aria-label="Search" class="form-control me-2" id="search-bar" placeholder="Search"
+                               type="search">
+                    </form>
+                    <form class="d-flex col" sec:authorize="isAuthenticated()" th:action="@{/logout}" th:method="POST">
+                        <button class="btn btn-secondary" type="submit">Sign out</button>
+                    </form>
+
+                    <a class="col" sec:authorize="!isAuthenticated()" th:href="@{/login}">
+                        <button class="btn btn-secondary">Sign In</button>
+                    </a>
+                </div>
+            </div>
         </div>
-      </div>
     </nav>
 </header>
+</body>
+</html>

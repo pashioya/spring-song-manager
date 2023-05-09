@@ -1,16 +1,21 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head th:replace="~{fragments/head :: head (${title})}"></head>
-<script defer th:src="@{/js/bundle-artist.js}" type="module"></script>
-<script defer th:src="@{/js/bundle-addArtist.js}" type="module"></script>
+<head>
+    <thymeleaf th:replace="~{fragments/meta :: meta (${title})}"></thymeleaf>
+    <script defer th:src="@{/js/bundle-artist.js}" type="module"></script>
+    <script defer th:src="@{/js/bundle-addArtist.js}" type="module"></script>
+</head>
 <body>
 <header th:replace="~{fragments/header :: header (${headerList})}"></header>
 <section>
-    <div class="table-caption">
+    <div class="table-caption text-center">
         <h1>All Artists</h1>
     </div>
-    <div class="tables-container">
-        <div class="preview-block ">
+    <div class="alert alert-danger w-75" id="songs-error" role="alert">
+        There are no songs
+    </div>
+    <div class="tables-container row p-5 m-5">
+        <div class="preview-block col">
             <div class="preview-block__title">
                 Artist Preview
             </div>
@@ -24,7 +29,7 @@
                 </table>
             </div>
         </div>
-        <table class='table table-bordered table-condensed table-striped table-hover' id="all-artists-table">
+        <table class='table table-bordered table-condensed table-striped table-hover col' id="all-artists-table">
             <thead class="table-header">
             <th>artistName</th>
             <th>artistFollowers</th>

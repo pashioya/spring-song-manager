@@ -1,35 +1,43 @@
-  <html lang="en"
-        xmlns:th="http://www.thymeleaf.org"
-        xmlns:sec="http://www.thymeleaf.org/extras/spring-security">>
-  <head>
+<html lang="en"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      xmlns:th="http://www.thymeleaf.org">>
+<head>
     <title>
-      header-parts
+        header-parts
     </title>
-  </head>
-  <body>
-      <a th:fragment="allSongs (content)" class="nav-link" href="/allSongs"> All Songs</a>
+</head>
+<body>
 
-      <a th:fragment="allAlbums (content)" class="nav-link" href="/allAlbums">All Albums</a>
+<div class="col-md-6" th:fragment="searchBar">
+    <div class="form">
+        <i class="fa fa-search"></i>
+        <input class="form-control form-input" id="search-bar" placeholder="Search anything..." type="text">
+        <span class="left-pan"><i class="fa fa-microphone"></i></span>
+    </div>
+</div>
 
-      <a th:fragment="allArtists (content)" class="nav-link" href="/allArtists">All Artists</a>
+<a class="nav-link" href="/allSongs" th:fragment="allSongs (content)"> All Songs</a>
 
-      <a th:fragment="backButton (content)" class="nav-link" th:href="${content}">Back</a>
+<a class="nav-link" href="/allAlbums" th:fragment="allAlbums (content)">All Albums</a>
 
-      <ul th:fragment="loginRegister (content)" class="navbar-nav ms-auto">
-        <!--    <li class="nav-item me-2 pt-2" sec:authorize="isAuthenticated()">-->
-        <!--      <span class="navbar-text">Welcome, <span sec:authentication="isAuthenticated()"></span>!</span>-->
-        <!--    </li>-->
-        <li sec:authorize="isAuthenticated()">
-          <form class="d-flex" th:action="@{/logout}" th:method="POST">
-            <button type="submit" class="btn btn-secondary">Sign out</button>
-          </form>
-        </li>
-        <li class="nav-item" sec:authorize="!isAuthenticated()">
-          <a class="nav-link" th:href="@{/login}" th:classappend="${page == 'login'} ? 'active' : ''">Sign in</a>
-        </li>
-      </ul>
-  </body>
-  </html>
+<a class="nav-link" href="/allArtists" th:fragment="allArtists (content)">All Artists</a>
+
+<ul class="navbar-nav ms-auto" th:fragment="loginRegister (content)">
+    <!--    <li class="nav-item me-2 pt-2" sec:authorize="isAuthenticated()">-->
+    <!--      <span class="navbar-text">Welcome, <span sec:authentication="isAuthenticated()"></span>!</span>-->
+    <!--    </li>-->
+    <li sec:authorize="isAuthenticated()">
+        <form class="d-flex" th:action="@{/logout}" th:method="POST">
+            <button class="btn btn-secondary" type="submit">Sign out</button>
+        </form>
+    </li>
+
+    <li class="nav-item" sec:authorize="!isAuthenticated()">
+        <a class="nav-link" th:classappend="${page == 'login'} ? 'active' : ''" th:href="@{/login}">Sign in</a>
+    </li>
+</ul>
+</body>
+</html>
 
 
 

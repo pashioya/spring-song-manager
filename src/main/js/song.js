@@ -61,6 +61,8 @@ searchBar.addEventListener("keyup", async () => {
         //     if the table is empty, set the error to visible
         if (songTableBody.innerHTML === "") {
             songsError.style.display = "block";
+        } else {
+            songsError.style.display = "none";
         }
     }
 );

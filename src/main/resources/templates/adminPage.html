@@ -1,9 +1,11 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head th:replace="~{fragments/head :: head (${title})}"></head>
-<script defer th:src="@{/js/bundle-editUser.js}" type="module"></script>
-<script defer th:src="@{/js/bundle-addUser.js}" type="module"></script>
-<script defer th:src="@{/js/bundle-user.js}" type="module"></script>
+<head>
+    <thymeleaf th:replace="~{fragments/meta :: meta (${title})}"></thymeleaf>
+    <script defer th:src="@{/js/bundle-editUser.js}" type="module"></script>
+    <script defer th:src="@{/js/bundle-addUser.js}" type="module"></script>
+    <script defer th:src="@{/js/bundle-user.js}" type="module"></script>
+</head>
 <body>
 <header th:replace="~{fragments/header :: header (${headerList})}"></header>
 <section>
