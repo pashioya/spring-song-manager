@@ -33,12 +33,6 @@ public class SongsControllerMVC {
         setHistory(session, "All Songs");
         ModelAndView mav = new ModelAndView("allSongs");
         mav.addObject("title", "Songs");
-        mav.addObject("headerList", new ArrayList<>(Arrays.asList(
-                new DataItem("allSongs", "active"),
-                new DataItem("allAlbums"),
-                new DataItem("allArtists"),
-                new DataItem("searchBar")
-        )));
         mav.addObject("footerList", new ArrayList<>(Arrays.asList(
                 new DataItem("gitLab"),
                 new DataItem("pageHistory")

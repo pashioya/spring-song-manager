@@ -35,11 +35,6 @@ public class ArtistsControllerMVC {
         setHistory(session, "All Artists");
         ModelAndView mav = new ModelAndView("allArtists");
         mav.addObject("title", "Artists");
-        mav.addObject("headerList", new ArrayList<>(Arrays.asList(
-                new DataItem("allSongs"),
-                new DataItem("allAlbums"),
-                new DataItem("allArtists", "active")
-        )));
         mav.addObject(("footerList"), new ArrayList<>(Arrays.asList(
                 new DataItem("gitLab"),
                 new DataItem("createArtist"),
@@ -61,11 +56,7 @@ public class ArtistsControllerMVC {
         setHistory(session, "Full Artist: " + id);
         ModelAndView mav = new ModelAndView("fullArtist");
         mav.addObject("title", "Artists");
-        mav.addObject("headerList", new ArrayList<>(Arrays.asList(
-                new DataItem("allSongs"),
-                new DataItem("allAlbums"),
-                new DataItem("allArtists", "active")
-        )));
+
 
         mav.addObject(("footerList"), new ArrayList<>(Arrays.asList(
                 new DataItem("deleteArtist"),

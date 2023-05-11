@@ -39,9 +39,7 @@ public class WebSecurityConfig {
                         .authenticated()
                         .requestMatchers("/", "/register").permitAll()
                         .requestMatchers(HttpMethod.POST, "/register").permitAll()
-
-                        .requestMatchers(HttpMethod.POST, "/api/song/**").permitAll()  // This Is For testing the client side
-
+                        .requestMatchers(HttpMethod.POST, "/api/song/album/**").permitAll()  // This Is For testing the client side
                         .anyRequest().authenticated())
                 .formLogin()
                 .loginPage("/login")

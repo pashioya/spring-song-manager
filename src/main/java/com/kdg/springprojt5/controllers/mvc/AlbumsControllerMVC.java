@@ -37,11 +37,6 @@ public class AlbumsControllerMVC {
     public ModelAndView albums(HttpSession session) {
         ModelAndView mav = new ModelAndView("allAlbums");
         mav.addObject("title", "Albums");
-        mav.addObject("headerList", new ArrayList<>(Arrays.asList(
-                new DataItem("allSongs"),
-                new DataItem("allAlbums", "active"),
-                new DataItem("allArtists")
-        )));
 
         mav.addObject(("footerList"), new ArrayList<>(Arrays.asList(
                 new DataItem("gitLab"),
