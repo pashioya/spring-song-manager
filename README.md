@@ -400,7 +400,35 @@ Cookie: JSESSIONID=75400D8A8763ED4F6B3220A14694DA23
 
     - Profile for test is added: "test"
     - To Execute tests run the following command
-        
+
 ## Week 6
 
     -
+
+# Week9:
+
+    - Build Instructions:
+        - run 'npm install'
+        - run 'npm build'
+        - run 'npm start'
+
+# Bootstrap icons added:
+
+    - <i class="bi bi-file-music"></i>
+    - added on top of the all songs Page title but under the header
+    - URL : http://localhost:9000/
+    - Javascript Dependencies:
+        - Lodash
+            - lodash's debounce function is used to prevent the search function from executing too frequently when the user types in the search bar.
+            - The debounce function wraps the event listener callback and ensures that it is only called after a certain delay (300 milliseconds in this case) since the last keyup event.
+            - URL: https://www.npmjs.com/package/lodash
+        - Axios
+            - Used for all API calls. simplifies them and makes them more readable
+            - URL: https://www.npmjs.com/package/axios?activeTab=versions
+
+# Client Side Validation
+
+    - I used validator for client side validation.
+    - The validated form is on songModule.ts
+    - the page is located on allSongs.html
+    - URL: https://www.npmjs.com/package/validator
