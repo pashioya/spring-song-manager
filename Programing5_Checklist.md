@@ -179,13 +179,15 @@
         - Java code modifications should be done in your other repository that contains your Spring Boot application (
           Programming 5 project on GitLab).
           **Setup**
-        - Set up a separate project using npm, webpack, and ESLint.
-        - Use Sass for styling.
+        - Set up a separate project using npm, webpack, and ESLint. *******************************************
+        - Use Sass for styling. *******************************************
         - Use at least two features from the SCSS syntax (nesting, variables, mixins, loops, ...).
-        - Add Bootstrap to your application and use Bootstrap components and layout features where possible.
+        - Add Bootstrap to your application and use Bootstrap components and layout features where
+          possible. *******************************************
         - Customize Bootstrap by choosing custom colors.
           **Navigation**
-        - Create an HTML page with a navigation bar containing at least these menu items: Search and Add.
+        - Create an HTML page with a navigation bar containing at least these menu items: Search and
+          Add. *******************************************
         - Implement 'SPA' (single-page application) functionality using your own JavaScript code.
         - Clicking a menu item should show the HTML section in question (Search or Add) and hide the other(s).
         - Use element.style.display block/none to achieve this.

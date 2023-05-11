@@ -1,5 +1,13 @@
 // All Songs
 
+
+$primary-color: #1db954;
+
+.btn-primary {
+  background-color: $primary-color;
+  border-color: $primary-color;
+}
+
 .table-row {
   cursor: pointer;
   transition: all 0.2s ease-in-out;
@@ -8,4 +16,14 @@
     background-color: #f5f5f5;
     transform: scale(1.02);
   }
+}
+
+
+.transition-fade {
+  transition: all 0.5s ease-in-out;
+  opacity: 1;
+}
+
+html.is-animating .transition-fade {
+  opacity: 0;
 }

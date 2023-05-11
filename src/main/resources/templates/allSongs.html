@@ -5,9 +5,10 @@
     <script defer th:src="@{/js/bundle-song.js}" type="module"></script>
 </head>
 <body>
-<header th:replace="~{fragments/header :: header (${headerList})}"></header>
-<section class="min-vh-100 h-100">
+<header th:replace="~{fragments/header :: header(page='AllSongs')}"></header>
+<section class="min-vh-100 h-100 transition-fade">
     <div class="table-caption text-center">
+        <i class="bi bi-file-music"></i>
         <h1>All Songs</h1>
     </div>
     <div class="alert alert-danger w-75" id="songs-error" role="alert">

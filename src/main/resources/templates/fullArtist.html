@@ -8,23 +8,23 @@
 </head>
 <body>
 <header th:replace="~{fragments/header :: header (${headerList})}"></header>
-<section>
-    <div class="artist-item">
+<section class="min-vh-100 h-100 d-flex flex-column align-items-center ">
+    <div class="artist-item card row w-50 mb-3 shadow ">
         <span>Created By: </span>
         <span id="artist-username"></span>
     </div>
-    <div class="artist-item">
+    <div class="artist-item card row w-50 mb-3 shadow">
         <span>Artist Name: </span>
         <span id="artist-name"></span>
     </div>
-    <div class="artist-item">
+    <div class="artist-item card row w-50 mb-3 shadow">
         <span>Artist Followers: </span>
         <span id="artist-followers"></span>
     </div>
     <div class="table-caption">
         <h1>Artists Albums</h1>
     </div>
-    <table class='table table-bordered table-condensed table-striped table-hover' id="albums-table">
+    <table class='table table-bordered table-condensed table-striped table-hover w-75' id="albums-table">
         <thead class="table-header">
         <th>albumName</th>
         <th>officialTrackCount</th>

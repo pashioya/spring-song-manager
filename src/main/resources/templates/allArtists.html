@@ -7,12 +7,10 @@
 </head>
 <body>
 <header th:replace="~{fragments/header :: header (${headerList})}"></header>
-<section>
-    <div class="table-caption text-center">
+<section class="min-vh-100 h-100">
+    <div class="table-caption text-center transition-fade">
+        <i class="bi bi-file-music"></i>
         <h1>All Artists</h1>
-    </div>
-    <div class="alert alert-danger w-75" id="songs-error" role="alert">
-        There are no songs
     </div>
     <div class="tables-container row p-5 m-5">
         <div class="preview-block col">
@@ -65,7 +63,7 @@
                         <div class="col-md-4">
                             <label class="form-label" for="artistFollowers"> artistFollowers</label>
                             <input class="form-control" id="artistFollowers" name="artistFollowers" required
-                                   type="text">
+                                   type="number">
                             <div class="valid-feedback">
                                 Looks good!
                             </div>

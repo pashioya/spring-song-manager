@@ -6,28 +6,28 @@
 </head>
 <body>
 <header th:replace="~{fragments/header :: header (${headerList})}"></header>
-<section>
-    <div class="song-item">
+<section class="min-vh-100 h-100 d-flex flex-column align-items-center">
+    <div class="song-item card row w-50 mb-3 shadow ">
         <span>Created By: </span>
         <span id="song-user"></span>
     </div>
-    <div class="song-item">
+    <div class="song-item card row w-50 mb-3 shadow ">
         <span>Song Name: </span>
         <span id="song-title"></span>
     </div>
-    <div class="song-item">
+    <div class="song-item card row w-50 mb-3 shadow ">
         <span>Track Number: </span>
         <span id="song-track-number"></span>
     </div>
-    <div class="song-item">
+    <div class="song-item card row w-50 mb-3 shadow ">
         <span>Duration MS: </span>
         <span id="song-duration-ms"></span>
     </div>
-    <div class="song-item">
+    <div class="song-item card row w-50 mb-3 shadow ">
         <span>Explicit?: </span>
         <span id="song-explicit"></span>
     </div>
-    <div class="song-item">
+    <div class="song-item card row w-50 mb-3 shadow ">
         <span>URL: </span>
         <span id="song-url"></span>
     </div>

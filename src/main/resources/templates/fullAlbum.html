@@ -6,43 +6,43 @@
     <script defer th:src="@{/js/bundle-addSong.js}" type="module"></script>
 </head>
 <body class="pb-5" id="full">
-<header th:replace="~{fragments/header :: header (${headerList})}"></header>
-<section>
-    <table class='table table-bordered table-condensed table-striped table-hover' id="albums-artist-table">
+<header th:replace="~{fragments/header :: header(page='fullAlbum')}"></header>
+<section class="min-vh-100 h-100 d-flex flex-column align-items-center">
+    <table class='table table-bordered table-condensed table-striped table-hover w-75' id="albums-artist-table">
         <thead class="table-header">
         <th>All Artists</th>
         </thead>
         <tbody id="album-artistsList">
         </tbody>
     </table>
-    <div class="album-item">
+    <div class="album-item card row w-50 mb-3 shadow ">
         <span>Created By: </span>
         <span id="album-username"></span>
     </div>
-    <div class="album-item">
+    <div class="album-item card row w-50 mb-3 shadow ">
         <span>Album Name: </span>
         <span id="album-albumName"></span>
     </div>
-    <div class="album-item">
+    <div class="album-item card row w-50 mb-3 shadow ">
         <span>Release Date</span>
         <span id="album-releaseDate"></span>
     </div>
-    <div class="album-item">
+    <div class="album-item card row w-50 mb-3 shadow ">
         <span>Genre: </span>
         <span id="album-genre"></span>
     </div>
-    <div class="album-item">
+    <div class="album-item card row w-50 mb-3 shadow ">
         <span>Track Count: </span>
         <span id="album-officialTrackCount"></span>
     </div>
-    <div class="album-item">
+    <div class="album-item card row w-50 mb-3 shadow ">
         <span>Album Status: </span>
         <span id="album-albumStatus"></span>
     </div>
     <div class="table-caption">
         <h1>Albums Songs</h1>
     </div>
-    <table class='table table-bordered table-condensed table-striped table-hover'>
+    <table class='table table-bordered table-condensed table-striped table-hover w-75'>
         <thead class="table-header">
         <th class="row-item">songName</th>
         <th class="row-item">trackNumber</th>

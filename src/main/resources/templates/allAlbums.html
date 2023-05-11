@@ -6,12 +6,10 @@
 </head>
 <body>
 <header th:replace="~{fragments/header :: header (${headerList})}"></header>
-<section class="min-vh-100 h-100">
+<section class="min-vh-100 h-100 transition-fade">
     <div class="table-caption text-center">
+        <i class="bi bi-file-music"></i>
         <h1>All Albums</h1>
-    </div>
-    <div class="alert alert-danger w-75" id="songs-error" role="alert">
-        There are no songs
     </div>
     <div class="tables-container row p-5 m-5">
         <div class="preview-block col w-25">

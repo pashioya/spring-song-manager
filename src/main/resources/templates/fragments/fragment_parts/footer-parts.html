@@ -7,20 +7,20 @@
 </head>
 <body>
 <a href="https://gitlab.com/pashioya/spring-proj-t3" th:fragment="gitLab (content)">
-    <button class="btn btn-primary" type="button">
+    <button class="btn btn-primary h-100" type="button">
         Gitlab
     </button>
 </a>
 
 
-<button class="btn btn-primary" data-bs-target="#create-song-modal" data-bs-toggle="modal"
+<button class="col btn btn-primary h-100" data-bs-target="#create-song-modal" data-bs-toggle="modal"
         th:fragment="createSong (content)"
         type="button">
     Create Song
 </button>
 
 
-<button class="btn btn-primary" data-bs-target="#create-artist-modal" data-bs-toggle="modal"
+<button class="btn btn-primary h-100" data-bs-target="#create-artist-modal" data-bs-toggle="modal"
         sec:authorize="hasRole('ADMIN')"
         th:fragment="createArtist (content)" type="button">
     Create Artist

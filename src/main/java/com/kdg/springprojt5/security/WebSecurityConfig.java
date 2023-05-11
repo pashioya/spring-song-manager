@@ -1,5 +1,6 @@
 package com.kdg.springprojt5.security;
 
+import jakarta.validation.constraints.NotNull;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -22,6 +23,9 @@ public class WebSecurityConfig {
                 .and()
                 .csrf()
                 .and()
+                .csrf()
+                .ignoringRequestMatchers("/api/song") // This is for testing the client side
+                .and()
                 .cors()
                 .and()
                 .authorizeHttpRequests(authorizeRequests -> authorizeRequests
@@ -35,6 +39,9 @@ public class WebSecurityConfig {
                         .authenticated()
                         .requestMatchers("/", "/register").permitAll()
                         .requestMatchers(HttpMethod.POST, "/register").permitAll()
+
+                        .requestMatchers(HttpMethod.POST, "/api/song/**").permitAll()  // This Is For testing the client side
+
                         .anyRequest().authenticated())
                 .formLogin()
                 .loginPage("/login")
@@ -50,7 +57,7 @@ public class WebSecurityConfig {
     public WebMvcConfigurer corsConfigurer() {
         return new WebMvcConfigurer() {
             @Override
-            public void addCorsMappings(CorsRegistry registry) {
+            public void addCorsMappings(@NotNull CorsRegistry registry) {
                 registry.addMapping("/api/**")
                         .allowedOrigins("http://localhost:9000", "http://localhost:8080");
             }

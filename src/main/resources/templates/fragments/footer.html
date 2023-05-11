@@ -1,7 +1,7 @@
-
-<footer th:fragment="~{fragments/footer :: footer (${footerList})}" class="text-center text-lg-start bg-light text-muted">
-    <div th:each="item : ${footerList}" class="button-container styled-button-icon">
-      <a th:replace="~{fragments/fragment_parts/footer-parts :: ${item.type} (${item.content})}">
-      </a>
+<footer class="row text-center text-lg-start bg-light text-muted"
+        th:fragment="~{fragments/footer :: footer (${footerList})}">
+    <div class="col button-container styled-button-icon text-center" th:each="item : ${footerList}">
+        <a th:replace="~{fragments/fragment_parts/footer-parts :: ${item.type} (${item.content})}">
+        </a>
     </div>
 </footer>
