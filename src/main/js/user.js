@@ -1,7 +1,4 @@
-import {getCsrfHeader, getCsrfToken} from "./modules/csrf";
-
-const header = getCsrfHeader();
-const token = getCsrfToken();
+import {deleteUser} from "./modules/userModule";
 
 let deleteButtons = document.querySelectorAll('.delete-user-button');
 deleteButtons.forEach(button => {
@@ -17,16 +14,3 @@ deleteButtons.forEach(button => {
     });
 });
 
-
-export function deleteUser(userId) {
-    return fetch(`/api/user/${userId}`, {
-        method: "DELETE",
-        headers: {
-            'Accept': 'application/json',
-            "Content-Type": "application/json",
-            [header]: token,
-        }
-    }).then(r => {
-        return r;
-    });
-}

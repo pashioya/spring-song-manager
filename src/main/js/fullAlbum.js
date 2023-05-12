@@ -1,30 +1,4 @@
-import {getCsrfHeader, getCsrfToken} from "./modules/csrf";
-
-const header = getCsrfHeader();
-const token = getCsrfToken();
-
-export function deleteAlbum(albId) {
-    return fetch(`/api/album/${albId}`, {
-        method: "DELETE",
-        headers: {
-            Accept: "application/json",
-            "Content-Type": "application/json",
-            [header]: token,
-        },
-    })
-}
-
-export function getAlbum(albId) {
-    return fetch(`/api/album/${albId}`)
-}
-
-export function getAlbumsArtists(alId) {
-    return fetch(`/api/artist/album/${alId}/artists`)
-}
-
-export function getAlbumsSongs(alId) {
-    return fetch(`/api/song/album/${alId}/songs`)
-}
+import {deleteAlbum, getAlbum, getAlbumsArtists, getAlbumsSongs} from "./modules/albumModule";
 
 async function init() {
     let deleteAlbumButton = document.getElementsByClassName("delete-button")[0];
@@ -42,7 +16,7 @@ async function init() {
     let albumsSongsResponse = await getAlbumsSongs(albumId);
     let albumsSongs = await albumsSongsResponse.json();
     let artistsList = document.getElementById("album-artistsList");
-    
+
     document.getElementById("album-username").innerHTML = album.username;
     document.getElementById("album-albumName").innerHTML = album.albumName;
     document.getElementById("album-genre").innerHTML = album.genre;

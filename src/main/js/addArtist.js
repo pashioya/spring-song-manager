@@ -1,7 +1,4 @@
-import {getCsrfHeader, getCsrfToken} from "./modules/csrf";
-
-const header = getCsrfHeader();
-const token = getCsrfToken();
+import {addArtist} from "./modules/artistModule";
 
 let form = document.getElementById("add-artist-form");
 let artistName = document.getElementById("artistName");
@@ -13,21 +10,6 @@ if (artistId.indexOf("?") !== -1) {
     artistId = artistId.substring(0, artistId.indexOf("?"));
 }
 
-export function addArtist(artistName, artistFollowers) {
-    return fetch('/api/artist', {
-        method: "POST",
-        headers: {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json'
-            , [header]: token
-        },
-        body: JSON.stringify(
-            {
-                "artistName": artistName,
-                "artistFollowers": parseInt(artistFollowers)
-            })
-    });
-}
 
 submitButton.addEventListener("click", async function (event) {
     event.preventDefault();

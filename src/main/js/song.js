@@ -1,45 +1,6 @@
+import {getSongByTitle, getSongs} from "./modules/songModule";
+
 const allRows = document.getElementsByClassName("table-row");
-
-export function getSongs() {
-    return fetch("/api/song/songs", {
-        headers: {
-            Accept: "application/json"
-        }
-    })
-        .then(resp => {
-                if (resp.status !== 200) {
-                    console.log("Error: " + resp.status);
-                } else {
-                    return resp.json();
-                }
-            }
-        )
-        .then(data => {
-                return data;
-            }
-        );
-}
-
-export function getSongByTitle(title) {
-    return fetch(`/api/song/title/${title}`, {
-        headers: {
-            Accept: "application/json"
-        }
-    })
-        .then(resp => {
-                if (resp.status !== 200) {
-                    console.log("Error: " + resp.status);
-                } else {
-                    return resp.json();
-                }
-            }
-        )
-        .then(data => {
-                return data;
-            }
-        );
-}
-
 const songTableBody = document.getElementById("all-songs-table-body");
 const searchBar = document.getElementById("search-bar");
 const songsError = document.getElementById("songs-error");

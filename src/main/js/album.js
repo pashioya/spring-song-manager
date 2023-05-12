@@ -1,12 +1,8 @@
-import {getAlbumsSongs} from "./fullAlbum";
+import {getAlbumsSongs} from "./modules/albumModule";
 
 let allRows = document.getElementsByClassName("entity");
 let songPreviewColumn = document.getElementById("preview-song-names");
 
-
-export function getAlbums() {
-    return fetch("/api/album/albums")
-}
 
 function setOnHover() {
     for (let row of allRows) {

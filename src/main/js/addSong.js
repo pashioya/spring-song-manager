@@ -1,7 +1,4 @@
-import {getCsrfHeader, getCsrfToken} from "./modules/csrf";
-
-const header = getCsrfHeader();
-const token = getCsrfToken();
+import {addSong} from "./modules/songModule";
 
 const form = document.getElementById("add-song-form");
 const songTitle = document.getElementById("songTitle");
@@ -16,23 +13,6 @@ if (albumId.indexOf("?") !== -1) {
 
 const submitButton = form.querySelector('button[type="submit"]');
 
-export function addSong(songTitle, durationMS, trackNumber, explicit) {
-    return fetch('/api/song/album/' + albumId, {
-        method: "POST",
-        headers: {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json'
-            , [header]: token
-        },
-        body: JSON.stringify(
-            {
-                "songTitle": songTitle,
-                "durationMS": parseInt(durationMS),
-                "trackNumber": parseInt(trackNumber),
-                "explicit": explicit
-            })
-    });
-}
 
 submitButton.addEventListener("click", async function (event) {
     event.preventDefault();

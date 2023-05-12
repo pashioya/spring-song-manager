@@ -1,11 +1,8 @@
-import {getArtistsAlbums} from "./fullArtist";
+import {getArtistsAlbums} from "./modules/artistModule";
 
 const albumPreviewColumn = document.getElementById("preview-album-names");
 const allRows = document.getElementsByClassName("entity");
 
-export function getArtists() {
-    return fetch("/api/artist/artists")
-}
 
 function setOnHover() {
     let allRows = document.getElementsByClassName("entity");

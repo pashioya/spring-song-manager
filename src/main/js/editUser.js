@@ -1,7 +1,4 @@
-import {getCsrfHeader, getCsrfToken} from "./modules/csrf";
-
-const header = getCsrfHeader();
-const token = getCsrfToken();
+import {editUser} from "./modules/userModule";
 
 const editUserForm = document.getElementById("edit-user-modal-form");
 const submitEditButton = document.getElementById("edit-user-modal-submit-button");
@@ -9,22 +6,6 @@ const editUserButtons = document.querySelectorAll('.edit-user-button');
 let id;
 let username = document.getElementById("new-username").value;
 let role = document.getElementById("new-role").value;
-
-
-export function editUser(id, newUsername, newRole) {
-    return fetch(`/api/user/${id}`, {
-        method: "PATCH",
-        headers: {
-            'Accept': 'application/json',
-            "Content-Type": "application/json",
-            [header]: token,
-        },
-        body: JSON.stringify({
-            username: newUsername,
-            role: newRole
-        }),
-    });
-}
 
 submitEditButton.addEventListener("click", async function (event) {
     event.preventDefault();

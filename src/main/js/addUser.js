@@ -1,8 +1,5 @@
-import {getCsrfHeader, getCsrfToken} from "./modules/csrf";
 import {deleteUser} from "./user";
-
-const header = getCsrfHeader();
-const token = getCsrfToken();
+import {addUser} from "./modules/userModule";
 
 const submitAddButton = document.getElementById("add-user-modal-submit-button");
 const form = document.getElementById("add-user-modal-form");
@@ -10,22 +7,6 @@ const username = document.getElementById("username");
 const password = document.getElementById("password");
 const role = document.getElementById("role");
 
-export function addUser(username, password, role) {
-    return fetch('/api/user', {
-        method: "POST",
-        headers: {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json'
-            , [header]: token
-        },
-        body: JSON.stringify(
-            {
-                "username": username,
-                "password": password,
-                "role": role
-            })
-    });
-}
 
 submitAddButton.addEventListener("click", async function (event) {
     event.preventDefault();

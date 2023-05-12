@@ -1,41 +1,10 @@
-import {getCsrfHeader, getCsrfToken} from "./modules/csrf";
-
-const header = getCsrfHeader();
-const token = getCsrfToken();
+import {deleteArtist, getArtist, getArtistsAlbums} from "./modules/artistModule";
 
 const albumTableBody = document.getElementById("albums-table-body");
 const url = window.location.href;
 let artistId = url.substring(url.lastIndexOf("/") + 1);
 if (artistId.indexOf("?") !== -1) {
     artistId = artistId.substring(0, artistId.indexOf("?"));
-}
-
-export async function getArtist(artistId) {
-    return await fetch(`/api/artist/${artistId}`, {
-        method: "GET",
-        headers: {
-            Accept: "application/json",
-        }
-    })
-}
-
-export async function deleteArtist(artistId) {
-    return await fetch(`/api/artist/${artistId}`, {
-        method: "DELETE",
-        headers: {
-            Accept: "application/json",
-            'Content-Type': 'application/json',
-            [header]: token
-        }
-    })
-}
-
-export async function getArtistsAlbums(artistId) {
-    return await fetch(`/api/album/artist/${artistId}/albums`, {
-        headers: {
-            Accept: "application/json",
-        }
-    })
 }
 
 

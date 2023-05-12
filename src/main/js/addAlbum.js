@@ -1,7 +1,4 @@
-import {getCsrfHeader, getCsrfToken} from "./modules/csrf";
-
-const header = getCsrfHeader();
-const token = getCsrfToken();
+import {addAlbum} from "./modules/albumModule";
 
 const form = document.querySelector('.needs-validation');
 const albumName = document.getElementById("albumName");
@@ -16,28 +13,6 @@ if (artistId.indexOf("?") !== -1) {
     artistId = artistId.substring(0, artistId.indexOf("?"));
 }
 
-export async function addAlbum(albumName, albumStatus, albumTrackCount, albumGenre, albumReleaseDate) {
-    try {
-        return await fetch('/api/album/artist/' + artistId, {
-            method: "POST",
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json',
-                [header]: token
-            },
-            body: JSON.stringify({
-                "albumName": albumName,
-                "officialTrackCount": parseInt(albumTrackCount),
-                "albumStatus": albumStatus,
-                "genre": albumGenre,
-                "releaseDate": albumReleaseDate
-            })
-        });
-    } catch (error) {
-        console.error(error);
-    }
-}
-
 
 submitButton.addEventListener("click", async function (event) {
     event.preventDefault();
@@ -49,7 +24,7 @@ submitButton.addEventListener("click", async function (event) {
     }
 
     try {
-        const response = await addAlbum(albumName.value, albumStatus.value, albumTrackCount.value, albumGenre.value, albumReleaseDate.value);
+        const response = await addAlbum(albumName.value, albumStatus.value, albumTrackCount.value, albumGenre.value, albumReleaseDate.value, artistId);
         const newAlbum = await response.json();
         const newAlbumRow = document.createElement("tr");
         newAlbumRow.setAttribute("data-href", `/allAlbums/fullAlbum/${newAlbum.id}`);
