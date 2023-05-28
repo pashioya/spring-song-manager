@@ -7,12 +7,32 @@ plugins {
 }
 
 bootRun {
-    dependsOn 'executeInitDatabaseScript'
+    dependsOn 'buildDockerImage'
+    dependsOn 'runDockerContainer'
 }
 
-tasks.register('executeInitDatabaseScript', Exec) {
-    commandLine './initdatabase.sh'
+
+tasks.register('buildDockerImage', Exec) {
+    commandLine 'docker', 'build', '-t', 'my-postgres', '.'
 }
+
+tasks.register('runDockerContainer', Exec) {
+    onlyIf { !isDockerContainerRunning() }
+    commandLine 'docker', 'run', '-d', '-p', '5432:5432', '--name', 'my-postgres-container', 'my-postgres'
+}
+
+def isDockerContainerRunning() {
+    try {
+        exec {
+            commandLine 'docker', 'inspect', '-f', '{{.State.Running}}', 'my-postgres-container'
+        }
+        return true
+    } catch (Exception e) {
+        e.printStackTrace()
+        return false
+    }
+}
+
 
 group = 'kdg.be'
 version = '0.0.1-SNAPSHOT'
@@ -47,7 +67,7 @@ dependencies {
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.9.2'
 
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.9.2'
-    runtimeOnly 'org.postgresql:postgresql'
+    implementation 'org.postgresql:postgresql'
 }
 
 test {
