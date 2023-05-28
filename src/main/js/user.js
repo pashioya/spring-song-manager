@@ -1,4 +1,4 @@
-import {deleteUser} from "./modules/userModule";
+import {deleteUser} from "./modules/userModule.js";
 
 let deleteButtons = document.querySelectorAll('.delete-user-button');
 deleteButtons.forEach(button => {

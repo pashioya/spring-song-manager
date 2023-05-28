@@ -1,4 +1,4 @@
-import {getAlbumsSongs} from "./modules/albumModule";
+import {getAlbumsSongs} from "./modules/albumModule.js";
 
 let allRows = document.getElementsByClassName("entity");
 let songPreviewColumn = document.getElementById("preview-song-names");

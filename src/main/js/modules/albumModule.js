@@ -1,24 +1,23 @@
 import {getCsrfHeader, getCsrfToken} from "./csrf";
+import axios from "axios";
 
 export async function addAlbum(albumName, albumStatus, albumTrackCount, albumGenre, albumReleaseDate, artistId) {
     try {
         const header = getCsrfHeader();
         const token = getCsrfToken();
-        return await fetch('/api/album/artist/' + artistId, {
-            method: "POST",
+        return axios.post('/api/album/artist/' + artistId, {
+            "albumName": albumName,
+            "officialTrackCount": parseInt(albumTrackCount),
+            "albumStatus": albumStatus,
+            "genre": albumGenre,
+            "releaseDate": albumReleaseDate
+        }, {
             headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json',
                 [header]: token
-            },
-            body: JSON.stringify({
-                "albumName": albumName,
-                "officialTrackCount": parseInt(albumTrackCount),
-                "albumStatus": albumStatus,
-                "genre": albumGenre,
-                "releaseDate": albumReleaseDate
-            })
-        });
+            }
+        })
     } catch (error) {
         console.error(error);
     }

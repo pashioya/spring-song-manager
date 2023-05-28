@@ -1,4 +1,4 @@
-import {deleteAlbum, getAlbum, getAlbumsArtists, getAlbumsSongs} from "./modules/albumModule";
+import {deleteAlbum, getAlbum, getAlbumsArtists, getAlbumsSongs} from "./modules/albumModule.js";
 
 async function init() {
     let deleteAlbumButton = document.getElementsByClassName("delete-button")[0];

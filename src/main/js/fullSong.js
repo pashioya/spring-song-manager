@@ -1,4 +1,4 @@
-import {deleteSong, getSong} from "./modules/songModule";
+import {deleteSong, getSong} from "./modules/songModule.js";
 
 const url = window.location.href;
 let songId = url.substring(url.lastIndexOf("/") + 1);

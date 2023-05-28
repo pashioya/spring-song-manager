@@ -1,4 +1,4 @@
-import {getSongByTitle, getSongs} from "./modules/songModule";
+import {getSongByTitle, getSongs} from "./modules/songModule.js";
 
 const allRows = document.getElementsByClassName("table-row");
 const songTableBody = document.getElementById("all-songs-table-body");

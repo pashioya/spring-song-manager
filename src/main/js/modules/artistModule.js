@@ -1,38 +1,33 @@
 import {getCsrfHeader, getCsrfToken} from "./csrf";
+import axios from "axios";
 
 export function addArtist(artistName, artistFollowers) {
     const header = getCsrfHeader();
     const token = getCsrfToken();
-    return fetch('/api/artist', {
-        method: "POST",
+    return axios.post('/api/artist', {
+        "artistName": artistName,
+        "artistFollowers": parseInt(artistFollowers)
+    }, {
         headers: {
             'Accept': 'application/json',
-            'Content-Type': 'application/json'
-            , [header]: token
-        },
-        body: JSON.stringify(
-            {
-                "artistName": artistName,
-                "artistFollowers": parseInt(artistFollowers)
-            })
-    });
+            'Content-Type': 'application/json',
+            [header]: token
+        }
+    })
 }
 
 export function getArtists() {
-    return fetch("/api/artist/artists",
-        {
-            method: "GET",
-            headers: {
-                'Accept': 'application/json',
-            }
-        })
+    return axios.get('/api/artist/artists', {
+        headers: {
+            Accept: "application/json"
+        }
+    })
 }
 
 export async function getArtist(artistId) {
-    return await fetch(`/api/artist/${artistId}`, {
-        method: "GET",
+    return axios.get(`/api/artist/${artistId}`, {
         headers: {
-            Accept: "application/json",
+            Accept: "application/json"
         }
     })
 }
@@ -51,9 +46,9 @@ export async function deleteArtist(artistId) {
 }
 
 export async function getArtistsAlbums(artistId) {
-    return await fetch(`/api/album/artist/${artistId}/albums`, {
+    return axios.get(`/api/artist/${artistId}/albums`, {
         headers: {
-            Accept: "application/json",
+            Accept: "application/json"
         }
     })
 }

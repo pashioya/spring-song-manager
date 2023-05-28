@@ -1,4 +1,4 @@
-import {deleteArtist, getArtist, getArtistsAlbums} from "./modules/artistModule";
+import {deleteArtist, getArtist, getArtistsAlbums} from "./modules/artistModule.js";
 
 const albumTableBody = document.getElementById("albums-table-body");
 const url = window.location.href;

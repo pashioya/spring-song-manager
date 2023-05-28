@@ -1,4 +1,5 @@
-import {addArtist} from "./modules/artistModule";
+import {addArtist} from "./modules/artistModule.js";
+import validator from "validator/es";
 
 let form = document.getElementById("add-artist-form");
 let artistName = document.getElementById("artistName");
@@ -18,6 +19,13 @@ submitButton.addEventListener("click", async function (event) {
     if (!form.checkValidity()) {
         return;
     }
+
+    // check if artistFollowers is a number
+    if (!validator.isInt(artistFollowers.value)) {
+        alert("Followers must be a number.");
+        return;
+    }
+
 
     try {
         const response = await addArtist(artistName.value, artistFollowers.value);

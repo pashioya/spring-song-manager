@@ -1,4 +1,4 @@
-import {editUser} from "./modules/userModule";
+import {editUser} from "./modules/userModule.js";
 
 const editUserForm = document.getElementById("edit-user-modal-form");
 const submitEditButton = document.getElementById("edit-user-modal-submit-button");

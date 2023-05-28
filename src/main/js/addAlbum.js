@@ -1,4 +1,5 @@
-import {addAlbum} from "./modules/albumModule";
+import {addAlbum} from "./modules/albumModule.js";
+import validator from "validator/es";
 
 const form = document.querySelector('.needs-validation');
 const albumName = document.getElementById("albumName");
@@ -22,6 +23,32 @@ submitButton.addEventListener("click", async function (event) {
     if (!form.checkValidity()) {
         return;
     }
+
+    if (!validator.isInt(albumTrackCount.value)) {
+        alert("Track count must be a number.");
+        return;
+    }
+
+    if (!validator.isAlpha(albumStatus.value.replace(/\s/g, ''))) {
+        alert("Status must only contain letters.");
+        return;
+    }
+
+    if (!validator.isInt(albumTrackCount.value)) {
+        alert("Official track count must be a number.");
+        return;
+    }
+
+    if (!validator.isAlpha(albumGenre.value.replace(/\s/g, ''))) {
+        alert("Genre must only contain letters.");
+        return;
+    }
+
+    if (!validator.isDate(albumReleaseDate.value)) {
+        alert("Release date must be a date.");
+        return;
+    }
+
 
     try {
         const response = await addAlbum(albumName.value, albumStatus.value, albumTrackCount.value, albumGenre.value, albumReleaseDate.value, artistId);

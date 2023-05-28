@@ -1,5 +1,6 @@
-import {deleteUser} from "./user";
-import {addUser} from "./modules/userModule";
+import {addUser, deleteUser} from "./modules/userModule.js";
+import validator from "validator/es";
+
 
 const submitAddButton = document.getElementById("add-user-modal-submit-button");
 const form = document.getElementById("add-user-modal-form");
@@ -16,6 +17,12 @@ submitAddButton.addEventListener("click", async function (event) {
     if (!form.checkValidity()) {
         return;
     }
+
+    if (!validator.isAlphanumeric(username.value.replace(/\s/g, ''))) {
+        alert("Username must only contain letters and numbers.");
+        return;
+    }
+
 
     try {
         const response = await addUser(username.value, password.value, role.value);

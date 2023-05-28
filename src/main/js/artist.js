@@ -1,4 +1,4 @@
-import {getArtistsAlbums} from "./modules/artistModule";
+import {getArtistsAlbums} from "./modules/artistModule.js";
 
 const albumPreviewColumn = document.getElementById("preview-album-names");
 const allRows = document.getElementsByClassName("entity");

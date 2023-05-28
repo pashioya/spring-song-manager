@@ -1,4 +1,5 @@
-import {addSong} from "./modules/songModule";
+import {addSong} from "./modules/songModule.js";
+import validator from "validator/es";
 
 const form = document.getElementById("add-song-form");
 const songTitle = document.getElementById("songTitle");
@@ -22,6 +23,25 @@ submitButton.addEventListener("click", async function (event) {
     if (!form.checkValidity()) {
         return;
     }
+
+    // check if durationMS is a number
+    if (!validator.isInt(durationMS.value)) {
+        alert("Duration must be a number.");
+        return;
+    }
+
+    // check if trackNumber is a number
+    if (!validator.isInt(trackNumber.value)) {
+        alert("Track number must be a number.");
+        return;
+    }
+
+    // check if explicit is a boolean
+    if (!validator.isBoolean(explicit.value)) {
+        alert("Explicit must be a boolean.");
+        return;
+    }
+
     try {
         const response = await addSong(songTitle.value, durationMS.value, trackNumber.value, explicit.value);
         const newSong = await response.json();

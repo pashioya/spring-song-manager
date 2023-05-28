@@ -1,4 +1,6 @@
-import '../css/site.scss'
+import '../scss/site.scss'
 import 'bootstrap'
 import 'bootstrap-icons/font/bootstrap-icons.css'
-import '../css/global.scss'
+import '../scss/global.scss'
+import 'lodash'
+import 'validator'
