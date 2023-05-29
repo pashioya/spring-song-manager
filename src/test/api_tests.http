@@ -12,7 +12,7 @@ X-Csrf-Token: uF8Rtj43_P6eBCcfoApcjNYHOqJ4_tbRV_sWMW4jKTsFW8x8iD0p1V0Ez8uzMR4mly
 }
 
 ###Response:
-#Response code: 201; Time: 8ms (8 ms); Content length: 70 bytes (70 B)
+//Response code: 201; Time: 8ms (8 ms); Content length: 70 bytes (70 B)
 #ResponseBody:
 //{
 //  "id": 1,
@@ -20,9 +20,9 @@ X-Csrf-Token: uF8Rtj43_P6eBCcfoApcjNYHOqJ4_tbRV_sWMW4jKTsFW8x8iD0p1V0Ez8uzMR4mly
 //  "artistFollowers": 1231.0
 //}
 
-#Response code: 404; Time: 8ms (8 ms); Content length: 70 bytes (70 B)
+//Response code: 404; Time: 8ms (8 ms); Content length: 70 bytes (70 B)
 
-#Response code: 500; Time: 8ms (8 ms); Content length: 70 bytes (70 B)
+//Response code: 500; Time: 8ms (8 ms); Content length: 70 bytes (70 B)
 
 ###
 #get an artist
@@ -105,7 +105,7 @@ Cookie: JSESSIONID=75400D8A8763ED4F6B3220A14694DA23
 #Response file saved.
 #> 2023-03-26T215223.200.json
 #
-#Response code: 200; Time: 8ms (8 ms); Content length: 140 bytes (140 B)
+//Response code: 200; Time: 8ms (8 ms); Content length: 140 bytes (140 B)
 
 ###
 #delete a album
@@ -150,7 +150,7 @@ Cookie: JSESSIONID=75400D8A8763ED4F6B3220A14694DA23
 #    "releaseDate": "1969-08-05"
 #  },
 #.....
-#Response code: 200; Time: 24ms (24 ms); Content length: 1414 bytes (1.41 kB)
+//Response code: 200; Time: 24ms (24 ms); Content length: 1414 bytes (1.41 kB)
 //Response code: 404; Time: 3ms (3 ms); Content length: 0 bytes (0 B)
 
 
@@ -174,7 +174,7 @@ Cookie: JSESSIONID=75400D8A8763ED4F6B3220A14694DA23
 #    "releaseDate": "1969-09-26"
 #  }
 #]
-#Response code: 200; Time: 8ms (8 ms); Content length: 140 bytes (140 B)
+//Response code: 200; Time: 8ms (8 ms); Content length: 140 bytes (140 B)
 //Response code: 401; Time: 3ms (3 ms); Content length: 0 bytes (0 B)
 //Response code: 401; Time: 3ms (3 ms); Content length: 0 bytes (0 B)
 
@@ -206,8 +206,8 @@ Cookie: JSESSIONID=75400D8A8763ED4F6B3220A14694DA23
 #    "url": "https://open.spotify.com/playlist/37i9dQZF1DX4sWSpwq3LiO"
 #  },
 //.....
-#Response code: 200; Time: 8ms (8 ms); Content length: 140 bytes (140 B)
-#Response code: 400; Time: 3ms (3 ms); Content length: 0 bytes (0 B)
+//Response code: 200; Time: 8ms (8 ms); Content length: 140 bytes (140 B)
+//Response code: 400; Time: 3ms (3 ms); Content length: 0 bytes (0 B)
 ###
 #get a song
 # @no-cookie-jar
@@ -225,7 +225,7 @@ Cookie: JSESSIONID=75400D8A8763ED4F6B3220A14694DA23
 #  "explicit": true,
 #  "url": "https://open.spotify.com/playlist/37i9dQZF1DX4sWSpwq3LiO"
 #}
-#Response code: 200; Time: 8ms (8 ms); Content length: 140 bytes (140 B)
+//Response code: 200; Time: 8ms (8 ms); Content length: 140 bytes (140 B)
 
 ###
 #get all songs
@@ -254,7 +254,7 @@ Cookie: JSESSIONID=75400D8A8763ED4F6B3220A14694DA23
 #    "url": "https://open.spotify.com/playlist/37i9dQZF1DX4sWSpwq3LiO"
 #  },
 #....
-#Response code: 200; Time: 8ms (8 ms); Content length: 140 bytes (140 B)
+//Response code: 200; Time: 8ms (8 ms); Content length: 140 bytes (140 B)
 
 ###
 #get all artists for an album
@@ -272,7 +272,7 @@ Cookie: JSESSIONID=75400D8A8763ED4F6B3220A14694DA23
 #    "artistFollowers": 1231.0
 #  }
 #]
-#Response code: 200; Time: 8ms (8 ms); Content length: 140 bytes (140 B)
+//Response code: 200; Time: 8ms (8 ms); Content length: 140 bytes (140 B)
 
 
 
@@ -294,7 +294,9 @@ X-CSRF-TOKEN: 8d8b076f-2ac7-4929-9427-0acf24d1e928
 }
 
 ### response
-#Response code: 401; Time: 4ms (4 ms); Content length: 0 bytes (0 B)
+//Response code: 401; Time: 4ms (4 ms); Content length: 0 bytes (0 B)
+//Response code: 400; Time: 4ms (4 ms); Content length: 0 bytes (0 B)
+//Response code: 201; Time: 4ms (4 ms); Content length: 0 bytes (0 B)
 
 
 ###
@@ -314,9 +316,9 @@ Cookie: JSESSIONID=75400D8A8763ED4F6B3220A14694DA23
 }
 
 ### response
-#Response code: 401; Time: 4ms (4 ms); Content length: 0 bytes (0 B)
+//Response code: 401; Time: 4ms (4 ms); Content length: 0 bytes (0 B)
 //Response code: 400; Time: 4ms (4 ms); Content length: 0 bytes (0 B)
-//Response code: 200; Time: 4ms (4 ms); Content length: 0 bytes (0 B)
+//Response code: 201; Time: 4ms (4 ms); Content length: 0 bytes (0 B)
 
 ###
 #delete a song
@@ -327,4 +329,16 @@ Content-Type: application/json
 Cookie: JSESSIONID=B282F54D6CEB53A022232BB1799DE503
 
 ### response
-#Response code: 401; Time: 4ms (4 ms); Content length: 0 bytes (0 B)
+//Response code: 401; Time: 4ms (4 ms); Content length: 0 bytes (0 B)
+//Response code: 200; Time: 4ms (4 ms); Content length: 0 bytes (0 B)
+//Response code: 404; Time: 4ms (4 ms); Content length: 0 bytes (0 B)
+
+
+
+GET http://localhost:8080/login
+
+###
+POST http://localhost:8080/register
+
+###
+GET http://localhost:8080/users/{{username}}

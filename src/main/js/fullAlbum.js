@@ -9,12 +9,9 @@ async function init() {
     }
     let songsList = document.getElementById("album-songsList");
 
-    let albumResponse = await getAlbum(albumId);
-    let album = await albumResponse.json();
-    let albumsArtistsResponse = await getAlbumsArtists(albumId);
-    let albumsArtists = await albumsArtistsResponse.json();
-    let albumsSongsResponse = await getAlbumsSongs(albumId);
-    let albumsSongs = await albumsSongsResponse.json();
+    let album = await getAlbum(albumId);
+    let albumsArtists = await getAlbumsArtists(albumId);
+    let albumsSongs = await getAlbumsSongs(albumId);
     let artistsList = document.getElementById("album-artistsList");
 
     document.getElementById("album-username").innerHTML = album.username;

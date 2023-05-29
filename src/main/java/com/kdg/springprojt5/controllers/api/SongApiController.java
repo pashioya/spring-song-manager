@@ -27,6 +27,24 @@ public class SongApiController {
     private final Logger logger = LoggerFactory.getLogger(this.getClass().getName());
     private final ModelMapper modelMapper;
 
+
+    @GetMapping
+    public ResponseEntity<List<SongDto>> getSongs() {
+        try {
+            var songs = songService.getAllSongs();
+            if (songs == null) {
+                return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+            }
+            List<SongDto> songDtos = songs.stream()
+                    .map(song -> modelMapper.map(song, SongDto.class))
+                    .toList();
+            return new ResponseEntity<>(songDtos, HttpStatus.OK);
+        } catch (Exception e) {
+            logger.error(e.getMessage());
+            return ResponseEntity.badRequest().build();
+        }
+    }
+
     @GetMapping("/{id}")
     public ResponseEntity<SongDto> getSong(@PathVariable("id") Long songId) {
         try {
@@ -60,25 +78,8 @@ public class SongApiController {
         }
     }
 
-    @GetMapping("/songs")
-    public ResponseEntity<List<SongDto>> getSongs() {
-        try {
-            var songs = songService.getAllSongs();
-            if (songs == null) {
-                return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
-            }
-            List<SongDto> songDtos = songs.stream()
-                    .map(song -> modelMapper.map(song, SongDto.class))
-                    .toList();
-            return new ResponseEntity<>(songDtos, HttpStatus.OK);
-        } catch (Exception e) {
-            logger.error(e.getMessage());
-            return ResponseEntity.badRequest().build();
-        }
-    }
 
-
-    @GetMapping("/album/{id}/songs")
+    @GetMapping("/album/{id}")
     public ResponseEntity<List<SongDto>> getAlbumSongs(@PathVariable("id") Long albumId) {
         try {
             var songs = songService.getSongsByAlbumId(albumId);

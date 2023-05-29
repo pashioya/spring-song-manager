@@ -11,6 +11,7 @@ import com.kdg.springprojt5.service.ArtistService;
 import com.kdg.springprojt5.service.SongService;
 import com.kdg.springprojt5.service.UserService;
 import jakarta.validation.Valid;
+import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -23,6 +24,7 @@ import java.util.List;
 
 
 @RestController
+@AllArgsConstructor
 @RequestMapping("/api/user")
 public class UserApiController {
 
@@ -31,21 +33,12 @@ public class UserApiController {
     private final SongService songService;
     private final ArtistService artistService;
 
-    private final Logger logger;
+    private final Logger logger = LoggerFactory.getLogger(UserApiController.class);
 
     private final ModelMapper modelMapper;
 
 
-    public UserApiController(UserService userService, AlbumService albumService, SongService songService, ArtistService artistService) {
-        this.userService = userService;
-        this.albumService = albumService;
-        this.songService = songService;
-        this.artistService = artistService;
-        this.logger = LoggerFactory.getLogger(UserApiController.class);
-        this.modelMapper = new ModelMapper();
-    }
-
-    @GetMapping("/users")
+    @GetMapping
     public ResponseEntity<List<User>> getUsers() {
         try {
             List<User> users = userService.getAllUsers();

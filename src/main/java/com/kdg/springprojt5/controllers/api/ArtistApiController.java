@@ -36,7 +36,7 @@ public class ArtistApiController {
     private final ModelMapper modelMapper;
 
 
-    @GetMapping("/artists")
+    @GetMapping
     public ResponseEntity<List<ArtistDto>> getAllArtists() {
         var artists = artistService.getAllArtists();
         if (artists == null) {
@@ -65,7 +65,7 @@ public class ArtistApiController {
     }
 
 
-    @GetMapping("/album/{albumId}/artists")
+    @GetMapping("/album/{albumId}")
     public ResponseEntity<List<ArtistDto>> getAllArtistsForAlbum(@PathVariable("albumId") Long albumId) {
         try {
             var artists = artistService.getAllArtistsForAlbum(albumId);

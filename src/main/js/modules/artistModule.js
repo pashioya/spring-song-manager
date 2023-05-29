@@ -21,7 +21,11 @@ export function getArtists() {
         headers: {
             Accept: "application/json"
         }
-    })
+    }).then(
+        resp => {
+            return resp.data;
+        }
+    )
 }
 
 export async function getArtist(artistId) {
@@ -29,7 +33,11 @@ export async function getArtist(artistId) {
         headers: {
             Accept: "application/json"
         }
-    })
+    }).then(
+        resp => {
+            return resp.data;
+        }
+    )
 }
 
 export async function deleteArtist(artistId) {
@@ -46,9 +54,13 @@ export async function deleteArtist(artistId) {
 }
 
 export async function getArtistsAlbums(artistId) {
-    return axios.get(`/api/artist/${artistId}/albums`, {
+    return axios.get(`/api/album/artist/${artistId}`, {
         headers: {
             Accept: "application/json"
         }
-    })
+    }).then(
+        resp => {
+            return resp.data;
+        }
+    )
 }

@@ -33,7 +33,7 @@ public class AlbumApiController {
     private final Logger logger = LoggerFactory.getLogger(this.getClass().getName());
     private final ModelMapper modelMapper;
 
-    @GetMapping("/albums")
+    @GetMapping
     public ResponseEntity<List<AlbumDto>> getAllAlbums() {
         var albums = albumService.getAllAlbums();
         if (albums != null) {
@@ -56,7 +56,7 @@ public class AlbumApiController {
         return ResponseEntity.notFound().build();
     }
 
-    @GetMapping("/artist/{id}/albums")
+    @GetMapping("/artist/{id}")
     public ResponseEntity<List<AlbumDto>> getAlbumsForArtist(@PathVariable("id") Long artistId) {
         try {
             var albums = albumService.getAlbumsByArtistId(artistId);

@@ -12,9 +12,8 @@ async function init() {
     try {
         const deleteArtistButton = document.querySelector(".delete-button");
         const response = await getArtistsAlbums(artistId);
-        const artistsAlbums = await response.json();
-        const artistResponse = await getArtist(artistId);
-        const artist = await artistResponse.json();
+        let artistsAlbums = await response;
+        const artist = await getArtist(artistId);
         document.getElementById("artist-username").innerText = artist.username;
         document.getElementById("artist-name").innerText = artist.name;
         document.getElementById("artist-followers").innerText = artist.artistFollowers;

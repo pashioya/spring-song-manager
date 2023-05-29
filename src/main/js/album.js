@@ -9,8 +9,7 @@ function setOnHover() {
         row.addEventListener("mouseover", async () => {
             songPreviewColumn.innerHTML = "";
             let id = row.getAttribute("data-href").split("/").pop();
-            let response = await getAlbumsSongs(id);
-            let albumsSongs = await response.json();
+            let albumsSongs = await getAlbumsSongs(id);
             for (let song of albumsSongs) {
                 if (!songPreviewColumn.innerHTML.includes(song.songTitle)) {
                     let songItem = document.createElement("tr");

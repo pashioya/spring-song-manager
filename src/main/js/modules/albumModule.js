@@ -26,48 +26,63 @@ export async function addAlbum(albumName, albumStatus, albumTrackCount, albumGen
 export function deleteAlbum(albId) {
     const header = getCsrfHeader();
     const token = getCsrfToken();
-    return fetch(`/api/album/${albId}`, {
-        method: "DELETE",
-        headers: {
-            Accept: "application/json",
-            "Content-Type": "application/json",
-            [header]: token,
-        },
-    })
+    return axios.delete(`/api/album/${albId}`, {
+            headers: {
+                Accept: "application/json",
+                [header]: token
+            }
+        }
+    )
 }
 
 export function getAlbum(albId) {
-    return fetch(`/api/album/${albId}`,
-        {
+    return axios.get(`/api/album/${albId}`, {
             headers: {
                 Accept: "application/json"
             }
-        })
+        }
+    ).then(
+        resp => {
+            return resp.data;
+        }
+    )
 }
 
 export function getAlbums() {
-    return fetch("/api/album/albums",
-        {
+    return axios.get('/api/album', {
             headers: {
                 Accept: "application/json"
             }
-        })
+        }
+    ).then(
+        resp => {
+            return resp.data;
+        }
+    )
 }
 
 export function getAlbumsArtists(alId) {
-    return fetch(`/api/artist/album/${alId}/artists`,
-        {
+    return axios.get(`/api/artist/album/${alId}`, {
             headers: {
                 Accept: "application/json"
             }
-        })
+        }
+    ).then(
+        resp => {
+            return resp.data;
+        }
+    )
 }
 
 export function getAlbumsSongs(alId) {
-    return fetch(`/api/song/album/${alId}/songs`
-        , {
+    return axios.get(`/api/song/album/${alId}`, {
             headers: {
                 Accept: "application/json"
             }
-        })
+        }
+    ).then(
+        resp => {
+            return resp.data;
+        }
+    )
 }
