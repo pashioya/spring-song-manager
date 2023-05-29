@@ -24,7 +24,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/artist")
+@RequestMapping("/api/artists")
 @AllArgsConstructor
 @Transactional
 public class ArtistApiController {

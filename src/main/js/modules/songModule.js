@@ -1,7 +1,7 @@
 import {getCsrfHeader, getCsrfToken} from "./csrf";
 
 export function getSongs() {
-    return fetch("/api/song/songs", {
+    return fetch("/api/songs/songs", {
         headers: {
             Accept: "application/json"
         }
@@ -21,7 +21,7 @@ export function getSongs() {
 }
 
 export function getSongByTitle(title) {
-    return fetch(`/api/song/title/${title}`, {
+    return fetch(`/api/songs/title/${title}`, {
         headers: {
             Accept: "application/json"
         }
@@ -43,7 +43,7 @@ export function getSongByTitle(title) {
 export function addSong(songTitle, durationMS, trackNumber, explicit, albumId) {
     const header = getCsrfHeader();
     const token = getCsrfToken();
-    return fetch('/api/song/album/' + albumId, {
+    return fetch('/api/songs/album/' + albumId, {
         method: "POST",
         headers: {
             'Accept': 'application/json',
@@ -63,7 +63,7 @@ export function addSong(songTitle, durationMS, trackNumber, explicit, albumId) {
 export function deleteSong(songId) {
     const header = getCsrfHeader();
     const token = getCsrfToken();
-    return fetch(`/api/song/${songId}`, {
+    return fetch(`/api/songs/${songId}`, {
         method: "DELETE",
         headers: {
             Accept: "application/json",
@@ -82,7 +82,7 @@ export function deleteSong(songId) {
 }
 
 export function getSong(songId) {
-    return fetch(`/api/song/${songId}`
+    return fetch(`/api/songs/${songId}`
         , {
             headers: {
                 Accept: "application/json"

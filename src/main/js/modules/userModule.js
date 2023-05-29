@@ -3,7 +3,7 @@ import {getCsrfHeader, getCsrfToken} from "./csrf";
 export function addUser(username, password, role) {
     const header = getCsrfHeader();
     const token = getCsrfToken();
-    return fetch('/api/user', {
+    return fetch('/api/users', {
         method: "POST",
         headers: {
             'Accept': 'application/json',
@@ -23,7 +23,7 @@ export function addUser(username, password, role) {
 export function editUser(id, newUsername, newRole) {
     const header = getCsrfHeader();
     const token = getCsrfToken();
-    return fetch(`/api/user/${id}`, {
+    return fetch(`/api/users/${id}`, {
         method: "PATCH",
         headers: {
             'Accept': 'application/json',
@@ -41,7 +41,7 @@ export function editUser(id, newUsername, newRole) {
 export function deleteUser(userId) {
     const header = getCsrfHeader();
     const token = getCsrfToken();
-    return fetch(`/api/user/${userId}`, {
+    return fetch(`/api/users/${userId}`, {
         method: "DELETE",
         headers: {
             'Accept': 'application/json',

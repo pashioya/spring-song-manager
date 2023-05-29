@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/song")
+@RequestMapping("/api/songs")
 @Transactional
 @AllArgsConstructor
 public class SongApiController {

@@ -1,5 +1,5 @@
 #create an artist
-POST http://localhost:8080/api/artist
+POST http://localhost:8080/api/artists
 //@no-cookie-jar
 Accept: application/json
 Content-Type: application/json
@@ -26,7 +26,7 @@ X-Csrf-Token: uF8Rtj43_P6eBCcfoApcjNYHOqJ4_tbRV_sWMW4jKTsFW8x8iD0p1V0Ez8uzMR4mly
 
 ###
 #get an artist
-GET http://localhost:8080/api/artist/1
+GET http://localhost:8080/api/artists/1
 //@no-cookie-jar
 Accept: application/json
 Content-Type: application/json
@@ -44,7 +44,7 @@ Cookie: JSESSIONID=75400D8A8763ED4F6B3220A14694DA23
 ###
 #delete an artist
 # @no-cookie-jar
-DELETE http://localhost:8080/api/artist/1/
+DELETE http://localhost:8080/api/artists/1/
 Accept: application/json
 Content-Type: application/json
 Cookie: JSESSIONID=75400D8A8763ED4F6B3220A14694DA23
@@ -87,7 +87,7 @@ Cookie: JSESSIONID=75400D8A8763ED4F6B3220A14694DA23
 ###
 #get a album
 # @no-cookie-jar
-GET http://localhost:8080/api/album/1
+GET http://localhost:8080/api/albumss/1
 Accept: application/json
 Content-Type: application/json
 Cookie: JSESSIONID=75400D8A8763ED4F6B3220A14694DA23
@@ -110,7 +110,7 @@ Cookie: JSESSIONID=75400D8A8763ED4F6B3220A14694DA23
 ###
 #delete a album
 # @no-cookie-jar
-DELETE http://localhost:8080/api/album/1
+DELETE http://localhost:8080/api/albums/1
 Accept: application/json
 Content-Type: application/json
 Cookie: JSESSIONID=75400D8A8763ED4F6B3220A14694DA23
@@ -157,7 +157,7 @@ Cookie: JSESSIONID=75400D8A8763ED4F6B3220A14694DA23
 ###
 # get a artists albums
 # @no-cookie-jar
-GET http://localhost:8080/api/artist/1/albums
+GET http://localhost:8080/api/artists/1/albums
 Accept: application/json
 Content-Type: application/json
 Cookie: JSESSIONID=75400D8A8763ED4F6B3220A14694DA23
@@ -182,7 +182,7 @@ Cookie: JSESSIONID=75400D8A8763ED4F6B3220A14694DA23
 ###
 #get a albums songs
 # @no-cookie-jar
-GET http://localhost:8080/api/album/1/songs
+GET http://localhost:8080/api/albums/1/songs
 Accept: application/json
 Content-Type: application/json
 Cookie: JSESSIONID=75400D8A8763ED4F6B3220A14694DA23
@@ -211,7 +211,7 @@ Cookie: JSESSIONID=75400D8A8763ED4F6B3220A14694DA23
 ###
 #get a song
 # @no-cookie-jar
-GET http://localhost:8080/api/song/1
+GET http://localhost:8080/api/songs/1
 Accept: application/json
 Content-Type: application/json
 Cookie: JSESSIONID=75400D8A8763ED4F6B3220A14694DA23
@@ -259,7 +259,7 @@ Cookie: JSESSIONID=75400D8A8763ED4F6B3220A14694DA23
 ###
 #get all artists for an album
 # @no-cookie-jar
-GET http://localhost:8080/api/album/1/artists
+GET http://localhost:8080/api/artists/album/1
 Accept: application/json
 Content-Type: application/json
 Cookie: JSESSIONID=75400D8A8763ED4F6B3220A14694DA23
@@ -279,7 +279,7 @@ Cookie: JSESSIONID=75400D8A8763ED4F6B3220A14694DA23
 ###
 #create a album for an artist
 # @no-cookie-jar
-POST http://localhost:8080/api/album/artist/1
+POST http://localhost:8080/api/albums/artist/1
 Accept: application/json
 Content-Type: application/json
 Cookie: JSESSIONID=75400D8A8763ED4F6B3220A14694DA23
@@ -302,7 +302,7 @@ X-CSRF-TOKEN: 8d8b076f-2ac7-4929-9427-0acf24d1e928
 ###
 #create a song for an album
 # @no-cookie-jar
-POST http://localhost:8080/api/song/album/1
+POST http://localhost:8080/api/songs/album/1
 Accept: application/json
 Content-Type: application/json
 Cookie: JSESSIONID=75400D8A8763ED4F6B3220A14694DA23
@@ -323,7 +323,7 @@ Cookie: JSESSIONID=75400D8A8763ED4F6B3220A14694DA23
 ###
 #delete a song
 # @no-cookie-jar
-DELETE http://localhost:8080/api/song/1
+DELETE http://localhost:8080/api/songs/1
 Accept: application/json
 Content-Type: application/json
 Cookie: JSESSIONID=B282F54D6CEB53A022232BB1799DE503

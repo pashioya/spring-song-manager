@@ -54,7 +54,7 @@ public class SongApiControllerTest {
         Song savedSong = songService.saveSong(song);
 
 
-        mockMvc.perform(delete("/api/song/" + savedSong.getId() + "/delete"))
+        mockMvc.perform(delete("/api/songs/" + savedSong.getId() + "/delete"))
                 .andExpect(status().isOk());
 
         assertNull(songService.getSongById(savedSong.getId()));

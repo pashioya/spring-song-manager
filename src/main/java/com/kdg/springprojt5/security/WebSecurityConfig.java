@@ -24,7 +24,7 @@ public class WebSecurityConfig {
                 .csrf()
                 .and()
                 .csrf()
-                .ignoringRequestMatchers("/api/song") // This is for testing the client side
+                .ignoringRequestMatchers("/api/songs") // This is for testing the client side
                 .and()
                 .cors()
                 .and()
@@ -39,7 +39,7 @@ public class WebSecurityConfig {
                         .authenticated()
                         .requestMatchers("/", "/register").permitAll()
                         .requestMatchers(HttpMethod.POST, "/register").permitAll()
-                        .requestMatchers(HttpMethod.POST, "/api/song/album/**").permitAll()  // This Is For testing the client side
+                        .requestMatchers(HttpMethod.POST, "/api/songs/album/**").permitAll()  // This Is For testing the client side
                         .anyRequest().authenticated())
                 .formLogin()
                 .loginPage("/login")

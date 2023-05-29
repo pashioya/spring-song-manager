@@ -59,7 +59,7 @@
 ```HttpRequests
       ###
       # @no-cookie-jar
-      GET http://localhost:8080/api/album/1
+      GET http://localhost:8080/api/albums/1
       
       Response:
             {
@@ -74,7 +74,7 @@
       
       ###
       # @no-cookie-jar
-      DELETE http://localhost:8080/api/album/1/delete
+      DELETE http://localhost:8080/api/albums/1/delete
 ```
 
 ## Week 2

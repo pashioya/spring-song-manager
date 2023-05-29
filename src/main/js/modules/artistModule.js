@@ -4,7 +4,7 @@ import axios from "axios";
 export function addArtist(artistName, artistFollowers) {
     const header = getCsrfHeader();
     const token = getCsrfToken();
-    return axios.post('/api/artist', {
+    return axios.post('/api/artists', {
         "artistName": artistName,
         "artistFollowers": parseInt(artistFollowers)
     }, {
@@ -17,7 +17,7 @@ export function addArtist(artistName, artistFollowers) {
 }
 
 export function getArtists() {
-    return axios.get('/api/artist/artists', {
+    return axios.get('/api/artists/artists', {
         headers: {
             Accept: "application/json"
         }
@@ -29,7 +29,7 @@ export function getArtists() {
 }
 
 export async function getArtist(artistId) {
-    return axios.get(`/api/artist/${artistId}`, {
+    return axios.get(`/api/artists/${artistId}`, {
         headers: {
             Accept: "application/json"
         }
@@ -43,7 +43,7 @@ export async function getArtist(artistId) {
 export async function deleteArtist(artistId) {
     const header = getCsrfHeader();
     const token = getCsrfToken();
-    return await fetch(`/api/artist/${artistId}`, {
+    return await fetch(`/api/artists/${artistId}`, {
         method: "DELETE",
         headers: {
             Accept: "application/json",
@@ -54,7 +54,7 @@ export async function deleteArtist(artistId) {
 }
 
 export async function getArtistsAlbums(artistId) {
-    return axios.get(`/api/album/artist/${artistId}`, {
+    return axios.get(`/api/albums/artist/${artistId}`, {
         headers: {
             Accept: "application/json"
         }

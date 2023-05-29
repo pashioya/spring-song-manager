@@ -22,7 +22,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/album")
+@RequestMapping("/api/albums")
 @Transactional
 @AllArgsConstructor
 public class AlbumApiController {
