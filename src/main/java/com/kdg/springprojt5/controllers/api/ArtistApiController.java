@@ -72,16 +72,12 @@ public class ArtistApiController {
             if (artists == null) {
                 return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
             }
-            List<ArtistDto> artistDtos = new ArrayList<>();
-            for (Artist artist : artists) {
-                ArtistDto artistDto = modelMapper.map(artist, ArtistDto.class);
-                artistDto.setId(artist.getId());
-                artistDtos.add(artistDto);
-            }
-            return new ResponseEntity<>(artistDtos, HttpStatus.OK);
+            return new ResponseEntity<>(
+                    artists.stream().map(artist -> modelMapper.map(artist, ArtistDto.class)).toList()
+                    , HttpStatus.OK);
         } catch (Exception e) {
             logger.error(e.getMessage());
-            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+            return ResponseEntity.badRequest().build();
         }
     }
 
@@ -103,7 +99,7 @@ public class ArtistApiController {
             return new ResponseEntity<>(HttpStatus.OK);
         } catch (Exception e) {
             logger.error(e.getMessage());
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+            return ResponseEntity.badRequest().build();
         }
     }
 
@@ -126,7 +122,7 @@ public class ArtistApiController {
             return new ResponseEntity<>(artistDto1, HttpStatus.CREATED);
         } catch (Exception e) {
             logger.error(e.getMessage());
-            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+            return ResponseEntity.badRequest().build();
         }
     }
 }

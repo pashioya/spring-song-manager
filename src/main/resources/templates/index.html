@@ -1,6 +1,9 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      xmlns:th="http://www.thymeleaf.org"
+>
 <head>
+    <title th:text="${title}"></title>
     <thymeleaf th:replace="~{fragments/meta :: meta (${title})}"></thymeleaf>
 </head>
 <body>
@@ -18,8 +21,11 @@
         <a href="/pageHistory">
             <button class="btn btn-secondary btn-lg" type="button">Page History</button>
         </a>
-        <a href="/adminPage">
-            <button class="btn btn-secondary btn-lg" type="button">Admin Only Page</button>
+        <a href="/allUsers" sec:authorize="hasRole('ROLE_ADMIN')">
+            <button class="btn btn-secondary btn-lg" type="button">All Users</button>
+        </a>
+        <a href="/addSong" sec:authorize="hasRole('ROLE_ADMIN')">
+            <button class="btn btn-secondary btn-lg" type="button">Add Bulk Songs</button>
         </a>
         <a href="/login">
             <button class="btn btn-secondary btn-lg" type="button">login</button>

@@ -46,18 +46,28 @@ public class IndexControllerMVC {
     }
 
     @AdminOnly
-    @GetMapping("/adminPage")
+    @GetMapping("/allUsers")
     public ModelAndView adminPage(HttpSession session, Authentication authentication) {
         setHistory(session, "Admin Page");
 
         CustomUserDetails currentUser = (CustomUserDetails) authentication.getPrincipal();
         Long userId = currentUser.getUserId();
 
-        ModelAndView mav = new ModelAndView("adminPage");
+        ModelAndView mav = new ModelAndView("allUsers");
         mav.addObject("title", "Admin Page");
         mav.addObject("users", userService.getAllUsers());
         mav.addObject("currentUser", userService.getUserById(userId));
         logger.info("Admin Page loading");
+        return mav;
+    }
+
+    @AdminOnly
+    @GetMapping("/addSongs")
+    public ModelAndView addSongs(HttpSession session) {
+        setHistory(session, "Add Songs");
+        ModelAndView mav = new ModelAndView("addSongs");
+        mav.addObject("title", "Add Songs");
+        logger.info("Add Songs page loading");
         return mav;
     }
 

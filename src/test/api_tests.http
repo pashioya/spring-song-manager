@@ -207,7 +207,7 @@ Cookie: JSESSIONID=75400D8A8763ED4F6B3220A14694DA23
 #  },
 //.....
 #Response code: 200; Time: 8ms (8 ms); Content length: 140 bytes (140 B)
-
+#Response code: 400; Time: 3ms (3 ms); Content length: 0 bytes (0 B)
 ###
 #get a song
 # @no-cookie-jar
@@ -279,7 +279,7 @@ Cookie: JSESSIONID=75400D8A8763ED4F6B3220A14694DA23
 ###
 #create a album for an artist
 # @no-cookie-jar
-POST http://localhost:8080/api/artist/1/album/create
+POST http://localhost:8080/api/album/artist/1
 Accept: application/json
 Content-Type: application/json
 Cookie: JSESSIONID=75400D8A8763ED4F6B3220A14694DA23
@@ -300,7 +300,7 @@ X-CSRF-TOKEN: 8d8b076f-2ac7-4929-9427-0acf24d1e928
 ###
 #create a song for an album
 # @no-cookie-jar
-POST http://localhost:8080/api/album/1/song/create
+POST http://localhost:8080/api/song/album/1
 Accept: application/json
 Content-Type: application/json
 Cookie: JSESSIONID=75400D8A8763ED4F6B3220A14694DA23
@@ -315,10 +315,13 @@ Cookie: JSESSIONID=75400D8A8763ED4F6B3220A14694DA23
 
 ### response
 #Response code: 401; Time: 4ms (4 ms); Content length: 0 bytes (0 B)
+//Response code: 400; Time: 4ms (4 ms); Content length: 0 bytes (0 B)
+//Response code: 200; Time: 4ms (4 ms); Content length: 0 bytes (0 B)
+
 ###
 #delete a song
 # @no-cookie-jar
-DELETE http://localhost:8080/api/song/1/delete
+DELETE http://localhost:8080/api/song/1
 Accept: application/json
 Content-Type: application/json
 Cookie: JSESSIONID=B282F54D6CEB53A022232BB1799DE503

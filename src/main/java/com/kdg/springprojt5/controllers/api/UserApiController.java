@@ -55,7 +55,7 @@ public class UserApiController {
             return new ResponseEntity<>(users, HttpStatus.OK);
         } catch (Exception e) {
             logger.error(e.getMessage());
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+            return ResponseEntity.badRequest().build();
         }
     }
 
@@ -70,7 +70,7 @@ public class UserApiController {
             return new ResponseEntity<>(userDto, HttpStatus.OK);
         } catch (Exception e) {
             logger.error(e.getMessage());
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+            return ResponseEntity.badRequest().build();
         }
     }
 
@@ -92,7 +92,7 @@ public class UserApiController {
             return new ResponseEntity<>(modelMapper.map(user, UserDto.class), HttpStatus.OK);
         } catch (Exception e) {
             logger.error(e.getMessage());
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+            return ResponseEntity.badRequest().build();
         }
     }
 
@@ -112,7 +112,7 @@ public class UserApiController {
             return new ResponseEntity<>(modelMapper.map(user, UserDto.class), HttpStatus.CREATED);
         } catch (Exception e) {
             logger.error(e.getMessage());
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+            return ResponseEntity.badRequest().build();
         }
     }
 
@@ -141,7 +141,7 @@ public class UserApiController {
             return new ResponseEntity<>(HttpStatus.OK);
         } catch (Exception e) {
             logger.error(e.getMessage());
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+            return ResponseEntity.badRequest().build();
         }
     }
 }

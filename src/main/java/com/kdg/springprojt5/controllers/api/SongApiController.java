@@ -5,7 +5,6 @@ import com.kdg.springprojt5.controllers.api.dto.SongDto;
 import com.kdg.springprojt5.domain.Song;
 import com.kdg.springprojt5.security.CustomUserDetails;
 import com.kdg.springprojt5.service.SongService;
-import com.kdg.springprojt5.service.UserService;
 import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
@@ -25,7 +24,6 @@ import java.util.List;
 @AllArgsConstructor
 public class SongApiController {
     private final SongService songService;
-    private final UserService userService;
     private final Logger logger = LoggerFactory.getLogger(this.getClass().getName());
     private final ModelMapper modelMapper;
 
@@ -40,7 +38,7 @@ public class SongApiController {
             return new ResponseEntity<>(songDto, HttpStatus.OK);
         } catch (Exception e) {
             logger.error(e.getMessage());
-            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+            return ResponseEntity.badRequest().build();
         }
     }
 
@@ -58,7 +56,7 @@ public class SongApiController {
             return new ResponseEntity<>(songDtos, HttpStatus.OK);
         } catch (Exception e) {
             logger.error(e.getMessage());
-            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+            return ResponseEntity.badRequest().build();
         }
     }
 
@@ -75,7 +73,7 @@ public class SongApiController {
             return new ResponseEntity<>(songDtos, HttpStatus.OK);
         } catch (Exception e) {
             logger.error(e.getMessage());
-            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+            return ResponseEntity.badRequest().build();
         }
     }
 
@@ -93,7 +91,7 @@ public class SongApiController {
             return new ResponseEntity<>(songDtos, HttpStatus.OK);
         } catch (Exception e) {
             logger.error(e.getMessage());
-            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+            return ResponseEntity.badRequest().build();
         }
     }
 
@@ -119,15 +117,12 @@ public class SongApiController {
                             songDto.isExplicit(),
                             currentUser.getUserId())
             );
-            if (song == null) {
-                return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
-            }
             SongDto songDto1 = modelMapper.map(song, SongDto.class);
             songDto1.setUsername(currentUser.getUsername());
             return new ResponseEntity<>(songDto1, HttpStatus.CREATED);
         } catch (Exception e) {
             logger.error(e.getMessage());
-            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+            return ResponseEntity.badRequest().build();
         }
     }
 

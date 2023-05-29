@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title th:text="${title}"></title>
+    <thymeleaf th:replace="~{fragments/meta :: meta (${title})}"></thymeleaf>
+</head>
+<body>
+<header th:replace="~{fragments/header :: header(page='AllSongs')}"></header>
+<section class="min-vh-100 h-100 transition-fade">
+
+</section>
+<footer th:replace="~{fragments/footer :: footer (${footerList})}"></footer>
+</body>
+</html>

@@ -13,25 +13,21 @@ bootRun {
 
 
 tasks.register('buildDockerImage', Exec) {
-    commandLine 'docker', 'build', '-t', 'my-postgres', '.'
+    commandLine 'docker', 'build', '-t', 'spring_postgres', '.'
 }
 
 tasks.register('runDockerContainer', Exec) {
     onlyIf { !isDockerContainerRunning() }
-    commandLine 'docker', 'run', '-d', '-p', '5433:5432', '--name', 'my-postgres-container', 'my-postgres'
+    commandLine 'docker', 'run', '-d', '-p', '5433:5432', '--name', 'spring_postgres_container', 'spring_postgres'
 }
 
 def isDockerContainerRunning() {
     try {
         exec {
-            commandLine 'docker', 'inspect', '-f', '{{.State.Running}}', 'my-postgres-container'
+            commandLine 'docker', 'inspect', '-f', '{{.State.Running}}', 'spring_postgres_container'
         }
         return true
     } catch (Exception e) {
-        e.printStackTrace()
-        exec {
-            commandLine 'docker', 'container', 'start', 'my-postgres-container'
-        }
         return false
     }
 }

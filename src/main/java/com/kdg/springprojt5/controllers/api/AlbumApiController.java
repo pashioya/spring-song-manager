@@ -62,19 +62,10 @@ public class AlbumApiController {
             var albums = albumService.getAlbumsByArtistId(artistId);
             if (albums.isEmpty())
                 return ResponseEntity.noContent().build();
-
-            List<AlbumDto> albumDtos = albums.stream()
-                    .map(album -> {
-                        AlbumDto albumDto = modelMapper.map(album, AlbumDto.class);
-                        albumDto.setUsername(album.getUser().getUsername());
-                        return albumDto;
-                    })
-                    .toList();
-
-            return ResponseEntity.ok(albumDtos);
+            return ResponseEntity.ok().body(albums.stream().map(album -> modelMapper.map(album, AlbumDto.class)).toList());
         } catch (Exception e) {
             logger.error("Failed to retrieve albums for artist", e);
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+            return ResponseEntity.badRequest().build();
         }
     }
 
@@ -92,7 +83,7 @@ public class AlbumApiController {
             return new ResponseEntity<>("Album not found", HttpStatus.NOT_FOUND);
         } catch (Exception e) {
             logger.error(e.getMessage());
-            return new ResponseEntity<>("Something went wrong", HttpStatus.INTERNAL_SERVER_ERROR);
+            return ResponseEntity.badRequest().build();
         }
     }
 
@@ -122,7 +113,7 @@ public class AlbumApiController {
             return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
         } catch (Exception e) {
             logger.error(e.getMessage());
-            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+            return ResponseEntity.badRequest().build();
         }
     }
 }

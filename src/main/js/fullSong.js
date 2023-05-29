@@ -10,8 +10,8 @@ const deleteSongButton = document.getElementsByClassName("delete-button")[0];
 let response = await getSong(songId);
 const song = await response.json();
 
-document.getElementById("song-user").innerText = song.user;
-document.getElementById("song-title").innerText = song.title;
+document.getElementById("song-user").innerText = song.username;
+document.getElementById("song-title").innerText = song.songTitle;
 document.getElementById("song-track-number").innerText = song.trackNumber;
 document.getElementById("song-duration-ms").innerText = song.durationMS;
 document.getElementById("song-explicit").innerText = song.explicit;
