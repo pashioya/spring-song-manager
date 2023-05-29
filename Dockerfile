@@ -1,6 +1,6 @@
-FROM postgres
+FROM postgres:15.2-alpine
 
-ENV POSTGRES_PASSWORD=Student_1234
+ENV POSTGRES_PASSWORD=admin
 
 # Create directories and files
 RUN mkdir -p /usr/local/share/postgresql
@@ -15,10 +15,10 @@ RUN echo "listen_addresses='*'" >> /usr/local/share/postgresql/postgresql.conf
 RUN mkdir -p /docker-entrypoint-initdb.d
 RUN touch /docker-entrypoint-initdb.d/init.sql
 
-# grant full access to 'multitenancy' database to user 'spring'
+# Grant full access to 'multitenancy' database to user 'spring'
 RUN echo "CREATE USER spring_proj WITH PASSWORD 'spring_proj';" >> /docker-entrypoint-initdb.d/init.sql
 RUN echo "CREATE DATABASE spring_proj OWNER spring_proj;" >> /docker-entrypoint-initdb.d/init.sql
 RUN echo "GRANT ALL PRIVILEGES ON DATABASE spring_proj TO spring_proj;" >> /docker-entrypoint-initdb.d/init.sql
-RUN echo "GRANT ALL PRIVILEGES ON DATABASE spring_proj TO postgres;" >> /docker-entrypoint-initdb.d/init.sql
 
-EXPOSE 5432
+# Expose port 5434
+EXPOSE 5434

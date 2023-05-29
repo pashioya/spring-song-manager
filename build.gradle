@@ -18,7 +18,7 @@ tasks.register('buildDockerImage', Exec) {
 
 tasks.register('runDockerContainer', Exec) {
     onlyIf { !isDockerContainerRunning() }
-    commandLine 'docker', 'run', '-d', '-p', '5432:5432', '--name', 'my-postgres-container', 'my-postgres'
+    commandLine 'docker', 'run', '-d', '-p', '5433:5432', '--name', 'my-postgres-container', 'my-postgres'
 }
 
 def isDockerContainerRunning() {
@@ -29,6 +29,9 @@ def isDockerContainerRunning() {
         return true
     } catch (Exception e) {
         e.printStackTrace()
+        exec {
+            commandLine 'docker', 'container', 'start', 'my-postgres-container'
+        }
         return false
     }
 }

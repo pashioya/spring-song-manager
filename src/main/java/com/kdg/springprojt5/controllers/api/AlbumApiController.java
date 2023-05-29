@@ -19,7 +19,6 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -38,15 +37,10 @@ public class AlbumApiController {
     public ResponseEntity<List<AlbumDto>> getAllAlbums() {
         var albums = albumService.getAllAlbums();
         if (albums != null) {
-            List<AlbumDto> albumDtos = new ArrayList<>();
-            for (Album album : albums) {
-                AlbumDto albumDto = modelMapper.map(album, AlbumDto.class);
-                albumDto.setUsername(album.getUser().getUsername());
-                albumDtos.add(albumDto);
-            }
-            return new ResponseEntity<>(albumDtos, HttpStatus.OK);
+            List<AlbumDto> albumDtos = albums.stream().map(album -> modelMapper.map(album, AlbumDto.class)).toList();
+            return ResponseEntity.ok().body(albumDtos);
         }
-        return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+        return ResponseEntity.notFound().build();
     }
 
 
@@ -56,38 +50,31 @@ public class AlbumApiController {
     ) {
         var album = albumService.getAlbumById(albumId);
         if (album != null) {
-            AlbumDto albumDto = modelMapper.map(album, AlbumDto.class);
-            return new ResponseEntity<>(
-                    albumDto, HttpStatus.OK);
-
+            return ResponseEntity.ok().body(modelMapper.map(album, AlbumDto.class));
         }
         logger.info("Album not found");
-        return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+        return ResponseEntity.notFound().build();
     }
 
     @GetMapping("/artist/{id}/albums")
-    public ResponseEntity<List<AlbumDto>> getAlbumsForArtist(
-            @PathVariable("id") Long artistId
-    ) {
+    public ResponseEntity<List<AlbumDto>> getAlbumsForArtist(@PathVariable("id") Long artistId) {
         try {
-            var artist = artistService.getArtistById(artistId);
-            if (artist == null) {
-                return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
-            }
-            List<AlbumDto> albumDtos = new ArrayList<>();
             var albums = albumService.getAlbumsByArtistId(artistId);
-            if (albums == null) {
-                return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
-            }
-            for (Album album : albums) {
-                AlbumDto albumDto = modelMapper.map(album, AlbumDto.class);
-                albumDto.setUsername(album.getUser().getUsername());
-                albumDtos.add(albumDto);
-            }
-            return new ResponseEntity<>(albumDtos, HttpStatus.OK);
+            if (albums.isEmpty())
+                return ResponseEntity.noContent().build();
+
+            List<AlbumDto> albumDtos = albums.stream()
+                    .map(album -> {
+                        AlbumDto albumDto = modelMapper.map(album, AlbumDto.class);
+                        albumDto.setUsername(album.getUser().getUsername());
+                        return albumDto;
+                    })
+                    .toList();
+
+            return ResponseEntity.ok(albumDtos);
         } catch (Exception e) {
-            logger.error(e.getMessage());
-            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+            logger.error("Failed to retrieve albums for artist", e);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
     }
 

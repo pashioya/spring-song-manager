@@ -18,7 +18,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -113,16 +112,12 @@ public class ArtistApiController {
     public ResponseEntity<ArtistDto> createArtist(
             @Valid
             @RequestBody NewArtistDto artistDto,
-            BindingResult errors,
             @AuthenticationPrincipal CustomUserDetails currentUser
     ) {
         try {
-            if (errors.hasErrors()) {
-                return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
-            }
             Artist artist = modelMapper.map(artistDto, Artist.class);
             if (artist == null) {
-                return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+                return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
             }
             artist.setUserId(currentUser.getUserId());
             artistService.saveArtist(artist);

@@ -6,13 +6,23 @@ Content-Type: application/json
 Cookie: JSESSIONID=75400D8A8763ED4F6B3220A14694DA23
 X-Csrf-Token: uF8Rtj43_P6eBCcfoApcjNYHOqJ4_tbRV_sWMW4jKTsFW8x8iD0p1V0Ez8uzMR4mlydo6bVhF5sdnLD8NsovUl4QTQg9Y_9M
 
-    {
-    "artistName" : "DongDing",
-    "artistFollowers" : 1
-    }
+{
+  "artistName": "DongDing",
+  "artistFollowers": 1
+}
 
 ###Response:
-//Response code: 401; Time: 3ms (3 ms); Content length: 0 bytes (0 B)
+#Response code: 201; Time: 8ms (8 ms); Content length: 70 bytes (70 B)
+#ResponseBody:
+//{
+//  "id": 1,
+//  "name": "The Beatles",
+//  "artistFollowers": 1231.0
+//}
+
+#Response code: 404; Time: 8ms (8 ms); Content length: 70 bytes (70 B)
+
+#Response code: 500; Time: 8ms (8 ms); Content length: 70 bytes (70 B)
 
 ###
 #get an artist
@@ -29,18 +39,20 @@ Cookie: JSESSIONID=75400D8A8763ED4F6B3220A14694DA23
 //  "name": "The Beatles",
 //  "artistFollowers": 1231.0
 //}
-#Response Code: 200; Time: 8ms (8 ms); Content length: 70 bytes (70 B)
+
 
 ###
 #delete an artist
 # @no-cookie-jar
-DELETE http://localhost:8080/api/artist/1/delete
+DELETE http://localhost:8080/api/artist/1/
 Accept: application/json
 Content-Type: application/json
 Cookie: JSESSIONID=75400D8A8763ED4F6B3220A14694DA23
 
 //Response:
-//Response code: 401; Time: 3ms (3 ms); Content length: 0 bytes (0 B)
+//Response code: 404; Time: 3ms (3 ms); Content length: 0 bytes (0 B)
+//Response code: 200; Time: 3ms (3 ms); Content length: 0 bytes (0 B)
+//Response code: 500; Time: 3ms (3 ms); Content length: 0 bytes (0 B)
 
 ###
 
@@ -69,6 +81,8 @@ Cookie: JSESSIONID=75400D8A8763ED4F6B3220A14694DA23
 #    "artistFollowers": 1231.0
 #  },
 #....
+//Response code: 200; Time: 3ms (3 ms); Content length: 0 bytes (0 B)
+//Response code: 204; Time: 3ms (3 ms); Content length: 0 bytes (0 B)
 
 ###
 #get a album
@@ -96,13 +110,16 @@ Cookie: JSESSIONID=75400D8A8763ED4F6B3220A14694DA23
 ###
 #delete a album
 # @no-cookie-jar
-DELETE http://localhost:8080/api/album/1/delete
+DELETE http://localhost:8080/api/album/1
 Accept: application/json
 Content-Type: application/json
 Cookie: JSESSIONID=75400D8A8763ED4F6B3220A14694DA23
 
 //Response:
-#Response code: 401; Time: 3ms (3 ms); Content length: 0 bytes (0 B)
+//Response code: 200; Time: 3ms (3 ms); Content length: 0 bytes (0 B)
+//Response code: 404; Time: 3ms (3 ms); Content length: 0 bytes (0 B)
+//Response code: 401; Time: 3ms (3 ms); Content length: 0 bytes (0 B)
+//Response code: 500; Time: 3ms (3 ms); Content length: 0 bytes (0 B)
 
 ###
 #Get All Albums
@@ -134,6 +151,7 @@ Cookie: JSESSIONID=75400D8A8763ED4F6B3220A14694DA23
 #  },
 #.....
 #Response code: 200; Time: 24ms (24 ms); Content length: 1414 bytes (1.41 kB)
+//Response code: 404; Time: 3ms (3 ms); Content length: 0 bytes (0 B)
 
 
 ###
@@ -157,7 +175,8 @@ Cookie: JSESSIONID=75400D8A8763ED4F6B3220A14694DA23
 #  }
 #]
 #Response code: 200; Time: 8ms (8 ms); Content length: 140 bytes (140 B)
-
+//Response code: 401; Time: 3ms (3 ms); Content length: 0 bytes (0 B)
+//Response code: 401; Time: 3ms (3 ms); Content length: 0 bytes (0 B)
 
 
 ###
@@ -273,6 +292,7 @@ X-CSRF-TOKEN: 8d8b076f-2ac7-4929-9427-0acf24d1e928
   "genre": "Progressive Rock",
   "releaseDate": "1973-03-01"
 }
+
 ### response
 #Response code: 401; Time: 4ms (4 ms); Content length: 0 bytes (0 B)
 
@@ -292,6 +312,7 @@ Cookie: JSESSIONID=75400D8A8763ED4F6B3220A14694DA23
   "genre": "Progressive Rock",
   "releaseDate": "1973-03-01"
 }
+
 ### response
 #Response code: 401; Time: 4ms (4 ms); Content length: 0 bytes (0 B)
 ###
