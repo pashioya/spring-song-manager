@@ -84,7 +84,7 @@ public class ArtistApiController {
 
     @AdminOnly
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteArtist(@PathVariable Long id) {
+    public ResponseEntity<HttpStatus> deleteArtist(@PathVariable Long id) {
         try {
             Artist artist = artistService.getArtistById(id);
             List<Album> artistAlbums = artist.getAlbums();
@@ -96,7 +96,7 @@ public class ArtistApiController {
                 albumService.deleteAlbum(album.getId());
             }
             artistService.deleteArtist(id);
-            return new ResponseEntity<>(HttpStatus.OK);
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         } catch (Exception e) {
             logger.error(e.getMessage());
             return ResponseEntity.badRequest().build();

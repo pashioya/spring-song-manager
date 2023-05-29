@@ -87,7 +87,7 @@ Cookie: JSESSIONID=75400D8A8763ED4F6B3220A14694DA23
 ###
 #get a album
 # @no-cookie-jar
-GET http://localhost:8080/api/albumss/1
+GET http://localhost:8080/api/albums/1
 Accept: application/json
 Content-Type: application/json
 Cookie: JSESSIONID=75400D8A8763ED4F6B3220A14694DA23
@@ -157,7 +157,7 @@ Cookie: JSESSIONID=75400D8A8763ED4F6B3220A14694DA23
 ###
 # get a artists albums
 # @no-cookie-jar
-GET http://localhost:8080/api/artists/1/albums
+GET http://localhost:8080/api/artists/1
 Accept: application/json
 Content-Type: application/json
 Cookie: JSESSIONID=75400D8A8763ED4F6B3220A14694DA23
@@ -182,7 +182,7 @@ Cookie: JSESSIONID=75400D8A8763ED4F6B3220A14694DA23
 ###
 #get a albums songs
 # @no-cookie-jar
-GET http://localhost:8080/api/albums/1/songs
+GET http://localhost:8080/api/songs/album/1
 Accept: application/json
 Content-Type: application/json
 Cookie: JSESSIONID=75400D8A8763ED4F6B3220A14694DA23
@@ -341,4 +341,4 @@ GET http://localhost:8080/login
 POST http://localhost:8080/register
 
 ###
-GET http://localhost:8080/users/{{username}}
+GET http://localhost:8080/api/users/1

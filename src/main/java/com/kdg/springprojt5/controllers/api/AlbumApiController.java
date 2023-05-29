@@ -71,16 +71,16 @@ public class AlbumApiController {
 
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<String> deleteAlbum(
+    public ResponseEntity<HttpStatus> deleteAlbum(
             @PathVariable("id") Long albumId
     ) {
         try {
             var album = albumService.getAlbumById(albumId);
             if (album != null) {
                 albumService.deleteAlbum(albumId);
-                return new ResponseEntity<>("Album deleted", HttpStatus.OK);
+                return ResponseEntity.noContent().build();
             }
-            return new ResponseEntity<>("Album not found", HttpStatus.NOT_FOUND);
+            return ResponseEntity.notFound().build();
         } catch (Exception e) {
             logger.error(e.getMessage());
             return ResponseEntity.badRequest().build();
@@ -93,27 +93,22 @@ public class AlbumApiController {
             @RequestBody NewAlbumDto albumDto,
             @AuthenticationPrincipal CustomUserDetails currentUser
     ) {
-        try {
-            var album = albumService.saveAlbum(new Album(
-                    albumDto.getAlbumName(),
-                    albumDto.getOfficialTrackCount(),
-                    StatusEnum.valueOf(albumDto.getAlbumStatus()),
-                    albumDto.getGenre(),
-                    albumDto.getReleaseDate(),
-                    currentUser.getUserId()), artistId);
-            if (album != null) {
-                albumArtistService.saveAlbumArtist(new AlbumArtist(
-                        album,
-                        artistService.getArtistById(artistId)
-                ));
-                AlbumDto albumDto1 = modelMapper.map(album, AlbumDto.class);
-                albumDto1.setUsername(currentUser.getUsername());
-                return new ResponseEntity<>(albumDto1, HttpStatus.CREATED);
-            }
-            return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
-        } catch (Exception e) {
-            logger.error(e.getMessage());
-            return ResponseEntity.badRequest().build();
+        var album = albumService.saveAlbum(new Album(
+                albumDto.getAlbumName(),
+                albumDto.getOfficialTrackCount(),
+                StatusEnum.valueOf(albumDto.getAlbumStatus()),
+                albumDto.getGenre(),
+                albumDto.getReleaseDate(),
+                currentUser.getUserId()), artistId);
+        if (album != null) {
+            albumArtistService.saveAlbumArtist(new AlbumArtist(
+                    album,
+                    artistService.getArtistById(artistId)
+            ));
+            AlbumDto albumDto1 = modelMapper.map(album, AlbumDto.class);
+            albumDto1.setUsername(currentUser.getUsername());
+            return ResponseEntity.ok().body(albumDto1);
         }
+        return ResponseEntity.badRequest().build();
     }
 }
