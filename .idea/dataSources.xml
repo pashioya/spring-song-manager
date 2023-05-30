@@ -1,11 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="DataSourceManagerImpl" format="xml" multifile-model="true">
-    <data-source source="LOCAL" name="proj3@localhost" uuid="ebcf6fad-4794-4bd9-b948-a99a588a8c28">
+    <data-source source="LOCAL" name="spring_proj@localhost" uuid="54511706-8ac0-4dc7-be06-0ed2dec3d507">
       <driver-ref>postgresql</driver-ref>
       <synchronize>true</synchronize>
       <jdbc-driver>org.postgresql.Driver</jdbc-driver>
-      <jdbc-url>jdbc:postgresql://localhost:5432/proj3</jdbc-url>
+      <jdbc-url>jdbc:postgresql://localhost:5433/spring_proj</jdbc-url>
+      <working-dir>$ProjectFileDir$</working-dir>
+    </data-source>
+    <data-source source="LOCAL" name="spring_test_db" uuid="bdc42354-cb1c-4169-9a6b-e1e95bb652eb">
+      <driver-ref>hsqldb.local</driver-ref>
+      <synchronize>true</synchronize>
+      <jdbc-driver>org.hsqldb.jdbc.JDBCDriver</jdbc-driver>
+      <jdbc-url>jdbc:hsqldb:file:./db/songManager;DB_CLOSE_DELAY=-1</jdbc-url>
       <working-dir>$ProjectFileDir$</working-dir>
     </data-source>
   </component>

@@ -5,7 +5,6 @@ import lombok.*;
 
 import java.time.LocalDate;
 import java.util.List;
-import java.util.Objects;
 
 
 @Table(name = "albums")
@@ -48,6 +47,7 @@ public class Album {
     private List<Song> songs;
 
     @ManyToOne(fetch = FetchType.LAZY)
+    @ToString.Exclude
     @JoinColumn(name = "user_id", insertable = false, updatable = false)
     private User user;
 
@@ -58,13 +58,5 @@ public class Album {
         this.genre = genre;
         this.releaseDate = releaseDate;
         this.userId = userId;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (o == null) return false;
-        if (this == o) return true;
-        if (!(o instanceof Album album)) return false;
-        return getOfficialTrackCount() == album.getOfficialTrackCount() && getAlbumName().equals(album.getAlbumName()) && getAlbumStatus() == album.getAlbumStatus() && Objects.equals(getGenre(), album.getGenre()) && getReleaseDate().equals(album.getReleaseDate());
     }
 }

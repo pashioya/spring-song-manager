@@ -6,9 +6,6 @@ import com.kdg.springprojt5.controllers.api.dto.UserDto;
 import com.kdg.springprojt5.domain.User;
 import com.kdg.springprojt5.domain.UserRole;
 import com.kdg.springprojt5.security.AdminOnly;
-import com.kdg.springprojt5.service.AlbumService;
-import com.kdg.springprojt5.service.ArtistService;
-import com.kdg.springprojt5.service.SongService;
 import com.kdg.springprojt5.service.UserService;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
@@ -29,10 +26,6 @@ import java.util.List;
 public class UserApiController {
 
     private final UserService userService;
-    private final AlbumService albumService;
-    private final SongService songService;
-    private final ArtistService artistService;
-
     private final Logger logger = LoggerFactory.getLogger(UserApiController.class);
 
     private final ModelMapper modelMapper;
@@ -57,7 +50,7 @@ public class UserApiController {
         try {
             User user = userService.getUserById(id);
             if (user == null) {
-                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+                return ResponseEntity.notFound().build();
             }
             UserDto userDto = modelMapper.map(user, UserDto.class);
             return new ResponseEntity<>(userDto, HttpStatus.OK);
@@ -71,18 +64,18 @@ public class UserApiController {
     @PatchMapping("/{id}")
     public ResponseEntity<UserDto> editUser(@PathVariable("id") Long id, @Valid @RequestBody UpdateUserDto userDto, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            return ResponseEntity.badRequest().build();
         }
         try {
             User user = userService.getUserById(id);
             if (user == null) {
-                return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+                return ResponseEntity.notFound().build();
             }
             System.out.println(userDto);
             user.setUsername(userDto.getUsername());
             user.setRole(UserRole.valueOf(userDto.getRole()));
             userService.saveUser(user);
-            return new ResponseEntity<>(modelMapper.map(user, UserDto.class), HttpStatus.OK);
+            return ResponseEntity.ok(modelMapper.map(user, UserDto.class));
         } catch (Exception e) {
             logger.error(e.getMessage());
             return ResponseEntity.badRequest().build();
@@ -94,15 +87,15 @@ public class UserApiController {
                                            BindingResult bindingResult
     ) {
         if (bindingResult.hasErrors()) {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            return ResponseEntity.badRequest().build();
         }
         try {
             User user = modelMapper.map(newUserDto, User.class);
             if (user == null) {
-                return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+                return ResponseEntity.notFound().build();
             }
             userService.saveUser(user);
-            return new ResponseEntity<>(modelMapper.map(user, UserDto.class), HttpStatus.CREATED);
+            return ResponseEntity.status(HttpStatus.CREATED).body(modelMapper.map(user, UserDto.class));
         } catch (Exception e) {
             logger.error(e.getMessage());
             return ResponseEntity.badRequest().build();
@@ -115,23 +108,10 @@ public class UserApiController {
         try {
             User user = userService.getUserById(id);
             if (user == null) {
-                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+                return ResponseEntity.notFound().build();
             }
-
-            artistService.getAllArtists().stream()
-                    .filter(artist -> artist.getUser().getId().equals(id))
-                    .forEach(artist -> artistService.deleteArtist(artist.getId()));
-
-            albumService.getAllAlbums().stream()
-                    .filter(album -> album.getUserId().equals(id))
-                    .forEach(album -> albumService.deleteAlbum(album.getId()));
-
-            songService.getAllSongs().stream()
-                    .filter(song -> song.getUserId().equals(id))
-                    .forEach(song -> songService.deleteSong(song.getId()));
-
             userService.deleteUser(id);
-            return new ResponseEntity<>(HttpStatus.OK);
+            return ResponseEntity.noContent().build();
         } catch (Exception e) {
             logger.error(e.getMessage());
             return ResponseEntity.badRequest().build();

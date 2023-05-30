@@ -30,6 +30,7 @@ public class Artist {
     private List<Album> albums = new ArrayList<>();
 
     @ManyToOne(fetch = FetchType.LAZY)
+    @ToString.Exclude
     @JoinColumn(name = "user_id", insertable = false, updatable = false)
     private User user;
 
@@ -37,14 +38,6 @@ public class Artist {
         this.artistName = artist_name;
         this.artistFollowers = artist_followers;
         this.userId = userId;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (o == null) return false;
-        if (this == o) return true;
-        if (!(o instanceof Artist artist)) return false;
-        return Double.compare(artist.getArtistFollowers(), getArtistFollowers()) == 0 && getArtistName().equals(artist.getArtistName());
     }
 
 }

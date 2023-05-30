@@ -68,7 +68,6 @@ public class SpringDataAlbumService implements AlbumService {
     public List<Album> getAlbumsByArtistId(Long artistId) {
         List<Album> albums = albumRepository.getAlbumsByArtistId(artistId);
         albums.forEach(album -> album.setSongs(songRepository.getSongsByAlbumId(album.getId())));
-        albums.forEach(album -> album.setArtists(artistRepository.getAlbumsArtists(album.getId())));
         albums.forEach(album -> logger.info(album.toString()));
         logger.info("Albums by artistId: " + artistId);
         return albums;

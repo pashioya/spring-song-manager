@@ -8,8 +8,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
-import static org.junit.jupiter.api.Assertions.assertThrows;
-
 @SpringBootTest
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class UserRepositoryTest {
@@ -19,7 +17,7 @@ public class UserRepositoryTest {
     @Autowired
     private BCryptPasswordEncoder passwordEncoder;
 
-    @BeforeEach
+    @BeforeAll
     public void setUp() {
         userRepository.save(new User(
                 "testuser",
@@ -50,10 +48,7 @@ public class UserRepositoryTest {
                 passwordEncoder.encode("password"),
                 UserRole.USER
         );
-        assertThrows(
-                DataIntegrityViolationException.class,
-                () -> userRepository.save(user)
-        );
+        Assertions.assertThrows(DataIntegrityViolationException.class, () -> userRepository.save(user));
     }
 
     @AfterAll

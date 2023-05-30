@@ -42,8 +42,12 @@ public class SpringDataArtistService implements ArtistService {
 
     @Override
     public void deleteArtist(Long id) {
-        albumRepository.getAlbumsByArtistId(id).forEach(album -> albumRepository.deleteById(album.getId()));
-        albumArtistRepository.deleteAlbumArtistByArtistId(id);
+        albumRepository.getAlbumsByArtistId(id).forEach(album -> {
+            if ((long) album.getArtists().size() == 1) {
+                albumRepository.deleteById(album.getId());
+                albumArtistRepository.deleteAlbumArtistByArtistId(id);
+            }
+        });
         artistRepository.deleteById(id);
     }
 

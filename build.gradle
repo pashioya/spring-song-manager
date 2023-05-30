@@ -51,7 +51,7 @@ dependencies {
     implementation "org.modelmapper:modelmapper:3.1.1"
 
     implementation 'com.google.code.gson:gson'
-    implementation 'org.json:json:20230227'
+//    implementation 'org.json:json:20230227'
     implementation 'org.webjars:webjars-locator:0.46'
 
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
@@ -67,6 +67,7 @@ dependencies {
 
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.9.2'
     implementation 'org.postgresql:postgresql'
+    runtimeOnly 'org.hsqldb:hsqldb:2.7.1'
 }
 
 test {

@@ -16,11 +16,11 @@ public class SongRepositoryTest {
 
     @Autowired
     private SongRepository songRepository;
+
     @Test
     public void testNullabilityConstraints() {
         // create a song with a null url
         Song song = new Song(1L, null, "Song 1", 1, 180000L, false, 1L);
-
         // attempt to persist the song (should fail due to nullability constraint)
         assertThrows(DataIntegrityViolationException.class, () -> songRepository.save(song));
     }

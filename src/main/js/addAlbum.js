@@ -38,11 +38,7 @@ submitButton.addEventListener("click", async function (event) {
         alert("Official track count must be a number.");
         return;
     }
-
-    if (!validator.isAlpha(albumGenre.value.replace(/\s/g, ''))) {
-        alert("Genre must only contain letters.");
-        return;
-    }
+    
 
     if (!validator.isDate(albumReleaseDate.value)) {
         alert("Release date must be a date.");

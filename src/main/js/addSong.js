@@ -36,14 +36,9 @@ submitButton.addEventListener("click", async function (event) {
         return;
     }
 
-    // check if explicit is a boolean
-    if (!validator.isBoolean(explicit.value)) {
-        alert("Explicit must be a boolean.");
-        return;
-    }
 
     try {
-        const response = await addSong(songTitle.value, durationMS.value, trackNumber.value, explicit.value);
+        const response = await addSong(songTitle.value, durationMS.value, trackNumber.value, explicit.value, albumId.value);
         const newSong = await response.json();
         const newSongRow = document.createElement("tr");
         newSongRow.setAttribute("data-href", `/allSongs/fullSong/${newSong.id}`);

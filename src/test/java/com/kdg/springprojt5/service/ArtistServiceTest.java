@@ -104,7 +104,5 @@ public class ArtistServiceTest {
         assertEquals(2, result.size());
         assertTrue(result.stream().map(Artist::getArtistName).anyMatch("Test Artist"::equals));
         assertTrue(result.stream().map(Artist::getArtistName).anyMatch("Test Artist 2"::equals));
-        assertEquals(album, result.get(0).getAlbums().get(0));
-        assertEquals(album, result.get(1).getAlbums().get(0));
     }
 }

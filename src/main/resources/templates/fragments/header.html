@@ -26,7 +26,7 @@
                         <a class="nav-link" href="/allArtists" th:fragment="allArtists (content)">All Artists</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/addSongs" sec:authorize="hasRole('ROLE_ADMIN')"
+                        <a class="nav-link" href="/allSongs/addSongs" sec:authorize="hasRole('ROLE_ADMIN')"
                            th:fragment="allArtists (content)">Add Bulk Songs</a>
                     </li>
                 </ul>

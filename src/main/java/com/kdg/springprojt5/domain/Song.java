@@ -3,13 +3,13 @@ package com.kdg.springprojt5.domain;
 import jakarta.persistence.*;
 import lombok.*;
 
-@ToString
+@Entity
+@Table(name = "songs")
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "songs")
-@Entity
+@ToString
 public class Song {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -28,8 +28,9 @@ public class Song {
     private boolean explicit;
     @ManyToOne
     @JoinColumn(name = "album_id", insertable = false, updatable = false)
+    @ToString.Exclude
     private Album album;
-
+    @ToString.Exclude
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", insertable = false, updatable = false)
     private User user;
@@ -42,13 +43,5 @@ public class Song {
         this.durationMS = durationMS;
         this.explicit = explicit;
         this.userId = userId;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (o == null) return false;
-        if (this == o) return true;
-        if (!(o instanceof Song song)) return false;
-        return getTrackNumber() == song.getTrackNumber() && Double.compare(song.getDurationMS(), getDurationMS()) == 0 && getAlbumId().equals(song.getAlbumId()) && getUrl().equals(song.getUrl()) && getSongTitle().equals(song.getSongTitle());
     }
 }

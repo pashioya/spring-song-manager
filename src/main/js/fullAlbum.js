@@ -57,7 +57,7 @@ async function init() {
     if (deleteAlbumButton) {
         deleteAlbumButton.addEventListener("click", async () => {
             let response = await deleteAlbum(albumId);
-            if (response.status === 200) {
+            if (response.status === 204) {
                 window.location.href = "/allAlbums";
             } else {
                 alert("Error deleting album");

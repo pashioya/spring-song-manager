@@ -90,6 +90,16 @@ public class SongsControllerMVC {
         session.setAttribute("history", history);
     }
 
+    @AdminOnly
+    @GetMapping("/addSongs")
+    public ModelAndView addSongs(HttpSession session) {
+        setHistory(session, "Add Songs");
+        ModelAndView mav = new ModelAndView("addSongs");
+        mav.addObject("title", "Add Songs");
+        logger.info("Add Songs page loading");
+        return mav;
+    }
+
 
     @PostMapping(path = "/upload", consumes = {"multipart/form-data"})
     @AdminOnly
@@ -98,10 +108,7 @@ public class SongsControllerMVC {
         if (file.isEmpty()) {
             return new ModelAndView("addSongs");
         }
-
-        // Start a new thread to handle file processing
         executorService.execute(() -> processCsvFile(file, userDetails.getUserId()));
-
         return new ModelAndView("redirect:/allSongs");
     }
 
@@ -111,29 +118,20 @@ public class SongsControllerMVC {
              BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream))) {
             String line;
             while ((line = reader.readLine()) != null) {
-                // Process each line of the CSV file
                 if (!StringUtils.isEmpty(line)) {
-                    // Simulate processing time
                     Thread.sleep(1000);
-                    // Parse the line and create a RecordDto object
                     songService.saveSong(parseCsvLine(line, userId));
                 }
             }
-
-            // Notify completion or update status if required
             logger.info("File processing complete");
 
         } catch (IOException | InterruptedException e) {
-            // Handle exceptions appropriately
             e.printStackTrace();
         }
     }
 
     private Song parseCsvLine(String line, long userId) {
-        // Split the line by comma or any other delimiter as per your CSV format
         String[] fields = line.split(",");
-
-        // Create a new Song object and set the fields accordingly
         return new Song(
                 Long.valueOf(fields[0]),
                 fields[5],

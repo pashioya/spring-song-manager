@@ -61,16 +61,6 @@ public class IndexControllerMVC {
         return mav;
     }
 
-    @AdminOnly
-    @GetMapping("/addSongs")
-    public ModelAndView addSongs(HttpSession session) {
-        setHistory(session, "Add Songs");
-        ModelAndView mav = new ModelAndView("addSongs");
-        mav.addObject("title", "Add Songs");
-        logger.info("Add Songs page loading");
-        return mav;
-    }
-
 
     private void setHistory(HttpSession session, String message) {
         List<HistoryItem> history = (List<HistoryItem>) session.getAttribute("history");

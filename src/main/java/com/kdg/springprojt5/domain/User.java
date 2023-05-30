@@ -5,7 +5,6 @@ import lombok.*;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 @Entity(name = "app_users")
 @ToString
@@ -37,13 +36,5 @@ public class User {
         this.username = username;
         this.password = password;
         this.role = role;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (o == null) return false;
-        if (this == o) return true;
-        if (!(o instanceof User user)) return false;
-        return Objects.equals(getId(), user.getId()) && Objects.equals(getUsername(), user.getUsername()) && Objects.equals(getPassword(), user.getPassword()) && getRole() == user.getRole();
     }
 }

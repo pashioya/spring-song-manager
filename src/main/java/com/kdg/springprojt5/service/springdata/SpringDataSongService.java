@@ -38,12 +38,6 @@ public class SpringDataSongService implements SongService {
 
     @Override
     public Song saveSong(Song song) {
-        for (Song s : songRepository.findAll()) {
-            if (s.equals(song)) {
-                logger.debug("Song already exists");
-                return s;
-            }
-        }
         logger.info("Song does not exist, adding song");
         songRepository.save(song);
         return song;
@@ -52,7 +46,6 @@ public class SpringDataSongService implements SongService {
     @Override
     public List<Song> getSongsByTitle(String title) {
         List<Song> songs = songRepository.findAll();
-//        filter the song titles that contain the title
         songs.removeIf(song -> !song.getSongTitle().toLowerCase().contains(title.toLowerCase()));
         return songs;
     }

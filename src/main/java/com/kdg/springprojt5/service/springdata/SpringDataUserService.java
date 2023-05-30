@@ -1,6 +1,9 @@
 package com.kdg.springprojt5.service.springdata;
 
 import com.kdg.springprojt5.domain.User;
+import com.kdg.springprojt5.repository.AlbumRepository;
+import com.kdg.springprojt5.repository.ArtistRepository;
+import com.kdg.springprojt5.repository.SongRepository;
 import com.kdg.springprojt5.repository.UserRepository;
 import com.kdg.springprojt5.service.UserService;
 import lombok.AllArgsConstructor;
@@ -13,6 +16,9 @@ import java.util.List;
 @AllArgsConstructor
 public class SpringDataUserService implements UserService {
     private final UserRepository userRepository;
+    private final ArtistRepository artistRepository;
+    private final AlbumRepository albumRepository;
+    private final SongRepository songRepository;
     private final BCryptPasswordEncoder passwordEncoder;
 
     @Override
@@ -39,6 +45,15 @@ public class SpringDataUserService implements UserService {
 
     @Override
     public void deleteUser(Long id) {
+        songRepository.findAll().stream()
+                .filter(song -> song.getUserId().equals(id))
+                .forEach(song -> songRepository.deleteById(song.getId()));
+        albumRepository.findAll().stream()
+                .filter(album -> album.getUserId().equals(id))
+                .forEach(album -> albumRepository.deleteById(album.getId()));
+        artistRepository.getAllArtists().stream()
+                .filter(artist -> artist.getUser().getId().equals(id))
+                .forEach(artist -> artistRepository.deleteById(artist.getId()));
         userRepository.deleteById(id);
     }
 }

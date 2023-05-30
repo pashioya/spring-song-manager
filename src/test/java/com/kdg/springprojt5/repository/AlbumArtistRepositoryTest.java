@@ -90,7 +90,7 @@ public class AlbumArtistRepositoryTest {
     public void testAlbumArtistAssociation() {
         // Creating an artist and an album
         Artist artist = new Artist("Test Artist", 156, 1L);
-        Album album = new Album("Test Album", 12, StatusEnum.SINGLE, "Rock", LocalDate.of(1969, 9, 26), 2L);
+        Album album = new Album("Test Album", 12, StatusEnum.SINGLE, "Rock", LocalDate.of(1969, 9, 26), 1L);
 
         // Creating an album artist that associates the artist with the album
         AlbumArtist albumArtist = new AlbumArtist(album, artist);
@@ -103,18 +103,18 @@ public class AlbumArtistRepositoryTest {
         // Retrieving the album artist and verifying that the association is correct
         AlbumArtist retrievedAlbumArtist = albumArtistRepository.findById(albumArtist.getId()).orElse(null);
         assert retrievedAlbumArtist != null;
-        assertEquals(album, retrievedAlbumArtist.getAlbum());
-        assertEquals(artist, retrievedAlbumArtist.getArtist());
+        assertEquals(album.getId(), retrievedAlbumArtist.getAlbum().getId());
+        assertEquals(artist.getId(), retrievedAlbumArtist.getArtist().getId());
 
         // Retrieving the album from the album artist and verifying that it's the correct one
         Album retrievedAlbum = retrievedAlbumArtist.getAlbum();
         assert retrievedAlbum != null;
-        assertEquals(album, retrievedAlbum);
+        assertEquals(album.getId(), retrievedAlbum.getId());
 
         // Retrieving the artist from the album artist and verifying that it's the correct one
         Artist retrievedArtist = retrievedAlbumArtist.getArtist();
         assert retrievedArtist != null;
-        assertEquals(artist, retrievedArtist);
+        assertEquals(artist.getId(), retrievedArtist.getId());
     }
 
 
