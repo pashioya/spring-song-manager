@@ -13,7 +13,7 @@ const song = await response.json();
 document.getElementById("song-user").innerText = song.username;
 document.getElementById("song-title").innerText = song.songTitle;
 document.getElementById("song-track-number").innerText = song.trackNumber;
-document.getElementById("song-duration-ms").innerText = song.durationMS;
+document.getElementById("song-duration-ms").innerText = song.durationMs;
 document.getElementById("song-explicit").innerText = song.explicit;
 document.getElementById("song-url").innerText = song.url;
 

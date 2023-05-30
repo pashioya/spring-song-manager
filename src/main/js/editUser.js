@@ -1,4 +1,4 @@
-import {editUser} from "./modules/userModule.js";
+import {editUser, getUser} from "./modules/userModule.js";
 
 const editUserForm = document.getElementById("edit-user-modal-form");
 const submitEditButton = document.getElementById("edit-user-modal-submit-button");
@@ -47,8 +47,8 @@ editUserButtons.forEach(button => {
     button.addEventListener('click', async () => {
         const userId = button.dataset.userId;
         id = userId;
-        const response = await fetch(`api/user/${userId}`);
-        const userData = await response.json();
+        const response = getUser(userId);
+        const userData = await response;
         const usernameInput = document.querySelector('#new-username');
         const roleInput = document.querySelector('#new-role');
         usernameInput.value = userData.username;

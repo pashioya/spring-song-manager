@@ -67,7 +67,7 @@ public class ModelMapperConfig {
                 destination.setUrl(source.getUrl());
                 destination.setTrackNumber(source.getTrackNumber());
                 destination.setSongTitle(source.getSongTitle());
-
+                destination.setDurationMs(source.getDurationMS());
                 return destination;
             }
         };

@@ -1,21 +1,38 @@
 import {getCsrfHeader, getCsrfToken} from "./csrf";
+import axios from "axios";
+
+
+export function getUsers() {
+    return axios.get('/api/users').then(r => {
+            return r.data;
+        }
+    );
+}
+
+export function getUser(userId) {
+    return axios.get(`/api/users/${userId}`).then(r => {
+        return r.data;
+    });
+}
+
 
 export function addUser(username, password, role) {
     const header = getCsrfHeader();
     const token = getCsrfToken();
-    return fetch('/api/users', {
-        method: "POST",
-        headers: {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json'
-            , [header]: token
+    return axios.post('/api/users', {
+            "username": username,
+            "password": password,
+            "role": role
         },
-        body: JSON.stringify(
-            {
-                "username": username,
-                "password": password,
-                "role": role
-            })
+        {
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+                , [header]: token
+            }
+        }
+    ).then(r => {
+        return r.data;
     });
 }
 
@@ -23,17 +40,20 @@ export function addUser(username, password, role) {
 export function editUser(id, newUsername, newRole) {
     const header = getCsrfHeader();
     const token = getCsrfToken();
-    return fetch(`/api/users/${id}`, {
-        method: "PATCH",
-        headers: {
-            'Accept': 'application/json',
-            "Content-Type": "application/json",
-            [header]: token,
+
+    return axios.patch(`/api/users/${id}`, {
+            "username": newUsername,
+            "role": newRole
         },
-        body: JSON.stringify({
-            username: newUsername,
-            role: newRole
-        }),
+        {
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+                , [header]: token
+            }
+        }
+    ).then(r => {
+        return r.data;
     });
 }
 
@@ -41,12 +61,12 @@ export function editUser(id, newUsername, newRole) {
 export function deleteUser(userId) {
     const header = getCsrfHeader();
     const token = getCsrfToken();
-    return fetch(`/api/users/${userId}`, {
-        method: "DELETE",
+
+    return axios.delete(`/api/users/${userId}`, {
         headers: {
             'Accept': 'application/json',
-            "Content-Type": "application/json",
-            [header]: token,
+            'Content-Type': 'application/json'
+            , [header]: token
         }
     }).then(r => {
         return r;
