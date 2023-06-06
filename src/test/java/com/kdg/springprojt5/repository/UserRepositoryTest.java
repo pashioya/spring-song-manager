@@ -26,6 +26,12 @@ public class UserRepositoryTest {
         ));
     }
 
+    @AfterAll
+    public void tearDown() {
+        userRepository.deleteAll();
+    }
+
+
     @Test
     public void findByUsernameIscaseSensitive() {
         User foundUser = userRepository.findByUsername("testuser");
@@ -51,9 +57,5 @@ public class UserRepositoryTest {
         Assertions.assertThrows(DataIntegrityViolationException.class, () -> userRepository.save(user));
     }
 
-    @AfterAll
-    public void tearDown() {
-        userRepository.deleteAll();
-    }
 
 }

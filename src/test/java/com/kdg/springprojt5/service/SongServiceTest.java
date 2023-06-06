@@ -40,8 +40,8 @@ class SongServiceTest {
 
     @BeforeEach
     void setUp() {
-        User testUser = new User("Lars", passwordEncoder.encode("lars"), UserRole.USER);
-        Artist testArtist = new Artist("test Artist", 156, 1L);
+        User testUser = new User("Lars", passwordEncoder.encode("lars"), UserRole.ADMIN);
+        Artist testArtist = new Artist("testArtist", 156, 1L);
         Album testAlbum = new Album("Test Album", 12, StatusEnum.SINGLE, "Rock", LocalDate.of(1969, 9, 26), 1L);
         Song testSong = new Song(1L, "https://www.youtube.com/watch?v=1", "Test Song", 1, 180000L, false, 1L);
         Song testSong2 = new Song(1L, "https://www.youtube.com/watch?v=1", "Test Song 2", 1, 180000L, false, 1L);

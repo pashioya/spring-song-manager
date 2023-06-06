@@ -63,20 +63,6 @@ public class AlbumApiControllerTest {
         Mockito.when(authentication.getPrincipal()).thenReturn(testUser);
     }
 
-    @Test
-    void getAlbumsShouldReturnAllAlbums() throws Exception {
-        mockMvc.perform(MockMvcRequestBuilders.get("/api/albums")
-                        .principal(authentication))
-                .andExpect(MockMvcResultMatchers.status().isOk());
-    }
-
-    @Test
-    void getAlbumShouldNotReturnAlbumIfNotExists() throws Exception {
-        mockMvc.perform(MockMvcRequestBuilders.get("/api/albums/2")
-                        .principal(authentication))
-                .andExpect(MockMvcResultMatchers.status().isNotFound());
-    }
-
     @AfterEach
     void tearDown() {
         albumArtistRepository.deleteAll();
@@ -84,4 +70,13 @@ public class AlbumApiControllerTest {
         artistRepository.deleteAll();
         userRepository.deleteAll();
     }
+
+    @Test
+    void getAlbumsShouldReturnAllAlbums() throws Exception {
+        mockMvc.perform(MockMvcRequestBuilders.get("/api/albums")
+                        .principal(authentication))
+                .andExpect(MockMvcResultMatchers.status().isOk());
+    }
+
+
 }

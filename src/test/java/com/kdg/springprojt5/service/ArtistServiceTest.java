@@ -36,12 +36,24 @@ public class ArtistServiceTest {
     private BCryptPasswordEncoder passwordEncoder;
 
     @BeforeEach
-    public void setUp() {
+    void setUp() {
         userRepository.save(new User(
                 "testuser",
                 passwordEncoder.encode("password"),
-                UserRole.USER
+                UserRole.ADMIN
         ));
+    }
+
+    @AfterEach
+    void tearDown() {
+        albumArtistRepository.deleteAll();
+        albumRepository.deleteAll();
+        artistRepository.deleteAll();
+        userRepository.deleteAll();
+    }
+
+    @Test
+    void testGetAllArtistsForAlbum() {
 
         artistRepository.save(new Artist(
                 "Test Artist",
@@ -76,18 +88,6 @@ public class ArtistServiceTest {
                         artistRepository.getReferenceById(2L)
                 )
         );
-    }
-
-    @AfterEach
-    public void tearDown() {
-        albumArtistRepository.deleteAll();
-        albumRepository.deleteAll();
-        artistRepository.deleteAll();
-        userRepository.deleteAll();
-    }
-
-    @Test
-    void testGetAllArtistsForAlbum() {
         // Create test data
         Long albumId = 1L;
         Artist artist1 = artistRepository.findAll().get(0);

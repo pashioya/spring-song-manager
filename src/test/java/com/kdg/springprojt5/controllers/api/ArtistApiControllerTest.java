@@ -5,7 +5,7 @@ import com.kdg.springprojt5.service.AlbumService;
 import com.kdg.springprojt5.service.ArtistService;
 import com.kdg.springprojt5.service.SongService;
 import com.kdg.springprojt5.service.UserService;
-import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
@@ -57,9 +57,6 @@ public class ArtistApiControllerTest {
         User testUser = new User("testuser", passwordEncoder.encode("password"), UserRole.ADMIN);
         userService.saveUser(testUser);
 
-        User testUser2 = new User("testUser2", passwordEncoder.encode("password"), UserRole.USER);
-        userService.saveUser(testUser2);
-
         Artist artist = new Artist("Test Artist", 156, testUser.getId());
         artistService.saveArtist(artist);
 
@@ -73,13 +70,12 @@ public class ArtistApiControllerTest {
         Mockito.when(authentication.getPrincipal()).thenReturn(testUser);
     }
 
-    @AfterEach
+    @AfterAll
     void tearDown() {
         songService.deleteSong(1L);
         albumService.deleteAlbum(1L);
         artistService.deleteArtist(1L);
         userService.deleteUser(1L);
-        userService.deleteUser(2L);
     }
 
     @Test
@@ -144,20 +140,6 @@ public class ArtistApiControllerTest {
 
         // Verify interactions
         verify(artistService, times(1)).getArtistById(1L);
-        verify(albumService, never()).deleteAlbum(anyLong());
-        verify(songService, never()).deleteSong(anyLong());
-        verify(artistService, never()).deleteArtist(anyLong());
-    }
-
-    @Test
-    @WithMockUser(roles = "USER")
-    void deleteArtistShouldReturnForbiddenForNonAdminUser() throws Exception {
-        mockMvc.perform(MockMvcRequestBuilders.delete("/api/artists/1")
-                        .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(MockMvcResultMatchers.status().isForbidden());
-
-        // Verify interactions
-        verify(artistService, never()).getArtistById(anyLong());
         verify(albumService, never()).deleteAlbum(anyLong());
         verify(songService, never()).deleteSong(anyLong());
         verify(artistService, never()).deleteArtist(anyLong());

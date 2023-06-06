@@ -41,11 +41,21 @@ public class SongApiControllerTest {
 
     @BeforeEach
     void setUp() {
+        userService.saveUser(new User("testuser", passwordEncoder.encode("password"), UserRole.ADMIN));
         Artist artist = artistService.saveArtist(new Artist("Test Artist", 12, 1L));
         Album album = albumService.saveAlbum(new Album("Test Album", 12, StatusEnum.SINGLE, "Rock", LocalDate.of(1969, 9, 26), 1L), artist.getId());
         AlbumArtist albumArtist = new AlbumArtist(album, artist);
         albumArtistService.saveAlbumArtist(albumArtist);
     }
+
+    @AfterEach
+    public void tearDown() {
+        songService.getAllSongs().forEach(song -> songService.deleteSong(song.getId()));
+        albumArtistService.getAllAlbumArtists().forEach(albumArtist -> albumArtistService.deleteAlbumArtist(albumArtist));
+        albumService.getAllAlbums().forEach(album -> albumService.deleteAlbum(album.getId()));
+        artistService.getAllArtists().forEach(artist -> artistService.deleteArtist(artist.getId()));
+    }
+
 
     @Test
     public void testDeleteSong() throws Exception {
@@ -56,12 +66,5 @@ public class SongApiControllerTest {
         assertTrue(songService.getAllSongs().isEmpty());
     }
 
-    @AfterEach
-    public void tearDown() {
-        songService.getAllSongs().forEach(song -> songService.deleteSong(song.getId()));
-        albumArtistService.getAllAlbumArtists().forEach(albumArtist -> albumArtistService.deleteAlbumArtist(albumArtist));
-        albumService.getAllAlbums().forEach(album -> albumService.deleteAlbum(album.getId()));
-        artistService.getAllArtists().forEach(artist -> artistService.deleteArtist(artist.getId()));
-    }
 
 }

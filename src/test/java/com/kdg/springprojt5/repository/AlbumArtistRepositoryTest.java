@@ -4,10 +4,7 @@ import com.kdg.springprojt5.domain.*;
 import jakarta.persistence.EntityManager;
 import jakarta.transaction.Transactional;
 import org.hibernate.Hibernate;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestInstance;
+import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -37,14 +34,21 @@ public class AlbumArtistRepositoryTest {
     @Autowired
     private BCryptPasswordEncoder passwordEncoder;
 
-    @BeforeEach
+    @BeforeAll
     public void setUp() {
-
         userRepository.save(new User(
-                "testuser",
+                "tester",
                 passwordEncoder.encode("password"),
-                UserRole.USER
+                UserRole.ADMIN
         ));
+    }
+
+    @AfterAll
+    public void tearDown() {
+        albumArtistRepository.deleteAll();
+        albumRepository.deleteAll();
+        artistRepository.deleteAll();
+        userRepository.deleteAll();
     }
 
     @Test
